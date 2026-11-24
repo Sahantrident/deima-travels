@@ -6,6 +6,7 @@
 <title>Deima Travels</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="builder.css">
+<link rel="stylesheet" href="explore.css">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
 <style>
 /* VOICE: warm, confident travel desk — "we handle it, you go".
@@ -136,10 +137,11 @@ footer img{height:46px}
 <body>
 <header>
   <nav class="nav" aria-label="Main">
-    <a class="brand" href="#top" aria-label="Deima Travels home"><img src="assets/logo-light.png" alt="Deima Group"><span>Travels</span></a>
+    <a class="brand" href="#top" aria-label="Deima Travels home"><img src="assets/logo-light.png" alt="Deima Group"><span translate="no">Travels</span></a>
     <div class="links" id="links">
-      <a href="#destinations">Destinations</a><a href="#services">Services</a><a href="#how">How it works</a><a href="#group">Deima Group</a><a href="#contact">Contact</a>
+      <a href="#destinations">Destinations</a><a href="#explore">Explore</a><a href="#airlines">Airlines</a><a href="#services">Services</a><a href="#how">How it works</a><a href="#group">Deima Group</a><a href="#contact">Contact</a>
     </div>
+    <div class="lang"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></svg><select id="langSel" aria-label="Language"><option value="en">English</option><option value="ja">日本語</option><option value="ko">한국어</option></select></div>
     <a class="btn" href="#plan">Plan my trip</a>
     <button class="menu" id="menu" aria-label="Open menu" aria-expanded="false" aria-controls="links"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
   </nav>
@@ -173,6 +175,93 @@ footer img{height:46px}
       </div>
     </div>
     <div class="gates" id="gates"></div>
+  </div>
+</section>
+
+
+<section class="band explore" id="explore">
+  <div class="wrap">
+    <p class="eyebrow">Explore the world</p>
+    <h2>Spin the globe. Pick a country.</h2>
+    <p class="lead">Drag to turn the world and tap a glowing country to see the best places to visit, and why. The dotted line shows your route from Colombo.</p>
+    <div class="exGrid">
+      <div class="globeWrap" id="globeWrap">
+        <svg id="globe" viewBox="0 0 600 600" role="img" aria-label="Interactive globe. Use the country list to open each guide."></svg>
+        <div class="gctl"><button type="button" id="gIn" aria-label="Zoom in">+</button><button type="button" id="gOut" aria-label="Zoom out">−</button><button type="button" id="gReset" aria-label="Reset view"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5"/></svg></button></div>
+        <div class="gtip" id="gtip" hidden></div>
+        <div class="gtoast" id="gtoast" hidden role="status"></div>
+        <p class="ghint">Drag to spin · tap a green country</p>
+      </div>
+      <div class="clist" id="clist"></div>
+    </div>
+  </div>
+</section>
+<div class="xm" id="xm" hidden role="dialog" aria-modal="true" aria-labelledby="xmT"></div>
+
+<section class="band air-sec" id="airlines">
+  <div class="wrap">
+    <p class="eyebrow">Choose your airline</p>
+    <h2>Which airline is right for this trip?</h2>
+    <p class="lead">Pick a region to see the airlines our travellers use from Colombo. Compare up to three side by side, then see the best seats on board.</p>
+    <div class="regTabs" id="regTabs" role="tablist" aria-label="Region"></div>
+    <div class="tlegend"><span><span class="pill full">Full-service</span>bag, meals and seat included</span><span><span class="pill hybrid">Hybrid</span>choose a fare with or without extras</span><span><span class="pill budget">Budget</span>low fare, pay for every extra</span></div>
+    <div class="airGrid" id="airGrid"></div>
+    <div class="cmp" id="cmp" aria-live="polite"></div>
+    <p class="note2">Ratings are our planners' general guide. Routes, planes and fare rules change by season; your planner confirms what is flying before you book.</p>
+  </div>
+</section>
+
+<section class="band" id="fares" style="padding-top:0">
+  <div class="wrap">
+    <p class="eyebrow">Budget or full-service?</p>
+    <h2>The cheapest ticket isn't always the cheapest trip</h2>
+    <p class="lead">Budget airlines sell a seat and charge for everything else. Full-service airlines include the basics. Here's what you get with each.</p>
+    <div class="fareGrid">
+      <div class="ftable"><table>
+        <thead><tr><th scope="col"></th><th scope="col">Budget</th><th scope="col">Hybrid</th><th scope="col">Full-service</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Checked bag</th><td><span class="mk2 n">✕</span>Paid extra</td><td><span class="mk2 p">~</span>On some fares</td><td><span class="mk2 y">✓</span>Usually included</td></tr>
+          <tr><th scope="row">Seat choice</th><td><span class="mk2 n">✕</span>Paid, or random</td><td><span class="mk2 p">~</span>Depends on fare</td><td><span class="mk2 y">✓</span>Free at check-in</td></tr>
+          <tr><th scope="row">Meals</th><td><span class="mk2 n">✕</span>Buy on board</td><td><span class="mk2 p">~</span>Some fares</td><td><span class="mk2 y">✓</span>Included</td></tr>
+          <tr><th scope="row">Entertainment</th><td><span class="mk2 n">✕</span>Bring your own</td><td><span class="mk2 p">~</span>Varies</td><td><span class="mk2 y">✓</span>Seat-back screens</td></tr>
+          <tr><th scope="row">Date changes</th><td><span class="mk2 n">✕</span>Fee + fare difference</td><td><span class="mk2 p">~</span>Fee on cheap fares</td><td><span class="mk2 y">✓</span>Flexible fares available</td></tr>
+          <tr><th scope="row">Legroom</th><td><span class="mk2 n">✕</span>Tightest</td><td><span class="mk2 p">~</span>Standard</td><td><span class="mk2 y">✓</span>Standard or better</td></tr>
+          <tr><th scope="row">Best for</th><td>Short trips, light bags</td><td>Mid-range trips</td><td>Long-haul, families, big bags</td></tr>
+        </tbody></table></div>
+      <div class="calc">
+        <h3>True-cost check</h3>
+        <p>Example fares in US dollars, to show how extras add up. These are not live prices.</p>
+        <label>Route<select id="cRoute"></select></label>
+        <div class="toggles" id="cTog" role="group" aria-label="Extras you need"></div>
+        <div id="cBars"></div>
+        <div class="ckey"><span><i class="seg-base"></i>Fare</span><span><i class="seg-bag"></i>Bag</span><span><i class="seg-seat"></i>Seat</span><span><i class="seg-meal"></i>Meal</span><span><i class="seg-chg"></i>Change</span><span><i class="seg-full"></i>All-in fare</span></div>
+        <div class="verdict" id="cVerdict" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band seatSec" id="seats">
+  <div class="wrap">
+    <div class="seatTop">
+      <div><p class="eyebrow">Best seats on board</p><h2 id="seatTitle">Seat guide</h2></div>
+      <label>Airline<select id="seatAir"></select></label>
+    </div>
+    <div class="prios" id="prios" role="group" aria-label="What matters most to you?"></div>
+    <p class="prioNote" id="prioNote" aria-live="polite"></p>
+    <div class="seatGrid">
+      <div class="planeBox"><div class="plane" id="plane"></div></div>
+      <aside class="sinfo" id="sinfo" aria-live="polite"></aside>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="planning">
+  <div class="wrap">
+    <p class="eyebrow">How to plan a flight</p>
+    <h2>The best way to plan, in six steps</h2>
+    <p class="lead">Tap each step. The plane follows your progress.</p>
+    <div class="steps"><div class="track" id="track" role="tablist" aria-label="Planning steps"></div><div class="stepBody" id="stepBody"></div></div>
   </div>
 </section>
 
@@ -238,6 +327,9 @@ footer img{height:46px}
     </form>
 </div></div>
 <button class="qfab" id="qfab" aria-label="Get a quote: build your trip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3H6v18h12V7z M14 3v4h4 M9 12h6 M9 16h4"/></svg>Get a quote<span class="more">· build your trip in 6 steps</span></button>
+<button class="adCard" id="adCard" type="button" aria-label="Watch the Bingo app video from Deima Travels"><video muted loop playsinline autoplay preload="metadata" aria-hidden="true"><source src="videos/bingo-ad.mp4" type="video/mp4"></video><span class="adLab">Ad · New app</span><span class="adFoot"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="11"/><path d="M10 8l6 4-6 4z" fill="#0F1B38"/></svg>Bingo by Deima</span></button>
+<button class="adX" id="adX" type="button" aria-label="Hide ad">×</button>
+<div class="adM" id="adM" hidden role="dialog" aria-modal="true" aria-label="Bingo app video"><div class="adBox"><span class="adBrand">Bingo · a Deima Travels app</span><button class="adClose" type="button" aria-label="Close video">×</button><video id="adVideo" controls playsinline preload="none"><source src="videos/bingo-ad.mp4" type="video/mp4"></video></div></div>
 <footer>
   <div class="foot">
     <img src="assets/logo-light.png" alt="Deima Group">
@@ -248,6 +340,8 @@ footer img{height:46px}
 
 <script src="lkpath.js"></script>
 <script src="builder.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
 <script>
 {
 const D=[
@@ -294,14 +388,14 @@ $('#dest-list').innerHTML=D.map(d=>`<option value="${d.name}, ${d.place}">`).joi
 /* attach video files when present: the drawn scene stays as poster otherwise */
 document.querySelectorAll('video').forEach(v=>{
   v.addEventListener('loadeddata',()=>v.parentElement.classList.add('has-video'));
-  v.querySelector('source').addEventListener('error',()=>v.remove());
+  const so=v.querySelector('source');if(so)so.addEventListener('error',()=>v.remove());
 });
 const io=new IntersectionObserver(es=>es.forEach(e=>{const v=e.target.querySelector('video');if(!v)return;e.isIntersecting?v.play().catch(()=>{}):v.pause()}),{threshold:.35});
 document.querySelectorAll('.gate').forEach(g=>io.observe(g));
 show(0);auto();
 
 const openQQ=to=>{$('#qq').hidden=false;if(to)$('#f-to').value=to;setTimeout(()=>$('#f-to').focus(),50)};
-const closeQQ=()=>{$('#qq').hidden=true};
+const closeQQ=()=>{$('#qq').hidden=true};window.DeimaQQ=openQQ;
 $('#qqX').addEventListener('click',closeQQ);$('#qq').addEventListener('click',e=>{if(e.target.id==='qq')closeQQ()});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#qq').hidden)closeQQ()});
 const LKMAP={sigiriya:'sigiriya',ella:'ella',galle:'galle'};
 document.querySelectorAll('.gate').forEach(g=>g.addEventListener('click',e=>{e.preventDefault();const d=D.find(x=>x.name===g.dataset.to);if(d.r==='lk')window.DeimaTrip.open({place:LKMAP[d.id]});else openQQ(`${d.name}, ${d.place}`)}));
@@ -338,5 +432,7 @@ $('#menu').addEventListener('click',()=>{const o=$('#links').classList.toggle('o
 document.querySelectorAll('#links a').forEach(a=>a.addEventListener('click',()=>{$('#links').classList.remove('open');$('#menu').setAttribute('aria-expanded',false)}));
 }
 </script>
+<script src="explore.js"></script>
+<script src="i18n.js"></script>
 </body>
 </html>
