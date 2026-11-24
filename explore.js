@@ -556,11 +556,14 @@ function setActive(id){$$('.pbn[data-sec]').forEach(x=>x.classList.toggle('act',
  const top=document.getElementById('top');if(top)new IntersectionObserver(es=>{if(es[0].isIntersecting&&es[0].intersectionRatio>.5)setActive('')},{threshold:[.5]}).observe(top)}
 
 {const tick=()=>{const el=$('#cmbTime');if(el)el.textContent=new Intl.DateTimeFormat('en-GB',{hour:'2-digit',minute:'2-digit',hour12:false,timeZone:'Asia/Colombo'}).format(new Date())};tick();setInterval(tick,15000)}
-/* visitor's local time in the nav, from the device time zone */
-{const lt=$('#localTime'),tz=$('#tzName');if(lt){let zone='';try{zone=Intl.DateTimeFormat().resolvedOptions().timeZone||''}catch(e){}
+/* visitor's local time, date and seconds in the nav, from the device time zone */
+{const lt=$('#localTime'),ld=$('#localDate'),tz=$('#tzName');if(lt){let zone='';try{zone=Intl.DateTimeFormat().resolvedOptions().timeZone||''}catch(e){}
  const city=(zone.split('/').pop()||'Local').replace(/_/g,' ').toUpperCase();if(tz)tz.textContent=city.length>12?city.slice(0,12):city;
- const fmt=new Intl.DateTimeFormat('en-GB',{hour:'2-digit',minute:'2-digit',hour12:false});
- const tick=()=>{lt.textContent=fmt.format(new Date());lt.parentElement.title=zone?`${zone} · ${new Date().toDateString()}`:''};tick();setTimeout(()=>{tick();setInterval(tick,60000)},(60-new Date().getSeconds())*1000+50)}}
+ const LOC={en:'en-GB',ja:'ja-JP',ko:'ko-KR'};const tf=new Intl.DateTimeFormat('en-GB',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});
+ const tick=()=>{const d=new Date(),lang=(window.DeimaLang&&window.DeimaLang.get())||'en';lt.textContent=tf.format(d);
+  if(ld)ld.textContent=new Intl.DateTimeFormat(LOC[lang]||'en-GB',lang==='en'?{weekday:'short',day:'numeric',month:'short'}:{month:'short',day:'numeric',weekday:'short'}).format(d);
+  lt.parentElement.title=zone?`${zone} · ${d.toDateString()}`:''};
+ tick();setTimeout(()=>{tick();setInterval(tick,1000)},1000-new Date().getMilliseconds()+5)}}
 /* tips rail */
 if($('#tipRail'))$('#tipRail').innerHTML=STEPS.map((t,i)=>`<div class="tipCard"><span class="tipN">${String(i+1).padStart(2,'0')}</span><b>${t.t}</b><p>${t.tip}</p></div>`).join('');
 /* videos that play only while visible */

@@ -6,7 +6,7 @@
 <title>Deima Travels</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="builder.css?v=4">
-<link rel="stylesheet" href="explore.css?v=15">
+<link rel="stylesheet" href="explore.css?v=16">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
 <style>
 /* VOICE: warm, confident travel desk — "we handle it, you go".
@@ -142,9 +142,9 @@ footer img{height:46px}
       <span class="cpScrew a"></span><span class="cpScrew b"></span>
       <a class="pbn" href="#explore" data-sec="explore"><span class="pbL" aria-hidden="true"></span><span class="pbT">EXPLORE</span></a><a class="pbn" href="#packages" data-sec="packages"><span class="pbL" aria-hidden="true"></span><span class="pbT">TRIPS</span></a><a class="pbn" href="#services" data-sec="services"><span class="pbL" aria-hidden="true"></span><span class="pbT">SERVICES</span></a><a class="pbn" href="#contact" data-sec="contact"><span class="pbL" aria-hidden="true"></span><span class="pbT">CONTACT</span></a><button type="button" class="pbn hot" data-dtool="quote"><span class="pbL" aria-hidden="true"></span><span class="pbT">QUOTE</span></button><button type="button" class="mute" id="muteSw" aria-pressed="true" aria-label="Panel sound" title="Panel sound"><span class="mLed"></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z"/><path class="wv" d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg></button>
     </div>
-    <div class="lang"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></svg><select id="langSel" aria-label="Language"><option value="en">English</option><option value="ja">日本語</option><option value="ko">한국어</option></select></div>
-    <div class="navClock" role="timer" aria-live="off" aria-label="Your local time"><small id="tzName" translate="no">LOCAL</small><b id="localTime" translate="no">--:--</b></div>
-    <button class="menu" id="menu" aria-label="Open menu" aria-expanded="false" aria-controls="links"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <div class="navR"><div class="lang"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></svg><select id="langSel" aria-label="Language"><option value="en">English</option><option value="ja">日本語</option><option value="ko">한국어</option></select></div>
+    <div class="navClock" role="timer" aria-live="off" aria-label="Your local time" translate="no"><span class="ncTop"><small id="tzName">LOCAL</small><small id="localDate">—</small></span><b id="localTime">--:--:--</b></div>
+    <button class="menu" id="menu" aria-label="Open menu" aria-expanded="false" aria-controls="links"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button></div>
   </nav>
 </header>
 
@@ -475,7 +475,7 @@ $('#menu').addEventListener('click',()=>{const o=$('#links').classList.toggle('o
 document.querySelectorAll('#links a').forEach(a=>a.addEventListener('click',()=>{$('#links').classList.remove('open');$('#menu').setAttribute('aria-expanded',false)}));
 }
 </script>
-<script src="explore.js?v=15"></script>
+<script src="explore.js?v=16"></script>
 <script src="packages.js?v=6"></script>
 <script src="i18n.js?v=15"></script>
 </body>

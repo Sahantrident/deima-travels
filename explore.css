@@ -786,3 +786,19 @@
 .contact .ent.here{box-shadow:inset 0 0 0 2px var(--navy)}
 @media(max-width:980px){.contact .ents{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){.contact .ents{grid-template-columns:minmax(0,1fr)}.contact .aboutRow{flex-direction:column;align-items:flex-start}}
+
+/* balanced header: logo | panel | language + clock */
+.nav{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;column-gap:16px}
+.nav .brand{justify-self:start}
+@media(min-width:1181px){.nav .links.cp{justify-self:center;margin:0}}
+.navR{justify-self:end;display:flex;align-items:center;gap:10px}
+.nav .navR .lang{margin:0}
+.navClock{display:grid;justify-items:center;gap:2px;min-width:122px;height:46px;align-content:center;padding:4px 12px;margin:0}
+.ncTop{display:flex;gap:8px;align-items:center}
+.ncTop small{font:700 8.5px "DM Sans",sans-serif;letter-spacing:.12em;color:#7d9a63;white-space:nowrap;text-transform:uppercase}
+.ncTop small+small::before{content:"·";margin-right:8px;color:#4f6640}
+.navClock b{font:700 18px ui-monospace,"SF Mono",Menlo,monospace;color:#b6ff7a;text-shadow:0 0 6px rgba(146,255,80,.7);letter-spacing:.05em;line-height:1.05;font-variant-numeric:tabular-nums}
+.brand img{height:42px}
+@media(max-width:1180px){.nav{grid-template-columns:minmax(0,1fr) auto}.navR .menu{margin-left:0}}
+@media(max-width:600px){.navClock{min-width:0;height:40px;padding:3px 8px}.ncTop #tzName{display:none}.ncTop small+small::before{content:none;margin:0}.navClock b{font-size:14px}.navR{gap:6px}.nav .navR .lang select{width:92px}}
+@media(max-width:360px){.ncTop{display:none}.nav .navR .lang select{width:80px}}
