@@ -6,7 +6,7 @@
 <title>Deima Travels</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="builder.css?v=4">
-<link rel="stylesheet" href="explore.css?v=5">
+<link rel="stylesheet" href="explore.css?v=9">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
 <style>
 /* VOICE: warm, confident travel desk — "we handle it, you go".
@@ -139,7 +139,7 @@ footer img{height:46px}
   <nav class="nav" aria-label="Main">
     <a class="brand" href="#top" aria-label="Deima Travels home"><img src="assets/logo-light.png" alt="Deima Group"><span translate="no">Travels</span></a>
     <div class="links" id="links">
-      <a href="#explore">Explore</a><a href="#destinations">Destinations</a><a href="#packages">Packages</a><a href="#airline-studio" data-studio="airlines">Airlines</a><a href="#services">Services</a><a href="#group">Deima Group</a><a href="#contact">Contact</a>
+      <a href="#explore">Explore</a><a href="#packages">Trips</a><a href="#pro">Pro tools</a><a href="#services">Offers</a><a href="#group">About</a><a href="#contact">Contact</a>
     </div>
     <div class="lang"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></svg><select id="langSel" aria-label="Language"><option value="en">English</option><option value="ja">日本語</option><option value="ko">한국어</option></select></div>
     <a class="btn" href="#plan">Plan my trip</a>
@@ -166,81 +166,89 @@ footer img{height:46px}
   </div>
 </section>
 
-
-<nav class="dock" aria-label="Travel toolkit">
-  <div class="dockIn">
-    <button type="button" class="tool" data-tool="builder"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2zM9 4v14M15 6v14"/></svg></i><span>Trip builder</span></button>
-    <a class="tool" href="#explore"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></svg></i><span>Globe</span></a>
-    <a class="tool" href="#packages"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M4 8h16v12H4zM9 8V5h6v3M4 13h16"/></svg></i><span>Packages</span></a>
-    <button type="button" class="tool" data-studio="airlines"><i><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5Z"/></svg></i><span>Airlines</span></button>
-    <button type="button" class="tool" data-studio="seats"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M7 3v10h10M7 13l-2 8M17 13l2 8M7 9h8"/></svg></i><span>Seat finder</span></button>
-    <button type="button" class="tool" data-studio="fares"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18v12H3zM7 12h.01M17 12h.01"/><circle cx="12" cy="12" r="2.5"/></svg></i><span>True cost</span></button>
-    <button type="button" class="tool" data-studio="planning"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16v15H4zM4 9h16M8 3v4M16 3v4"/></svg></i><span>Flight plan</span></button>
-    <button type="button" class="tool hot" data-tool="quote"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M14 3H6v18h12V7zM14 3v4h4M9 12h6M9 16h4"/></svg></i><span>Quick quote</span></button>
+<section class="deck" aria-label="Travel controls">
+  <div class="panel">
+    <span class="screw s1"></span><span class="screw s2"></span><span class="screw s3"></span><span class="screw s4"></span>
+    <div class="grp"><p class="grpT"><span>PLAN</span></p><div class="ctrls">
+      <button type="button" class="sw" data-dtool="builder"><span class="led" aria-hidden="true"></span><span class="tog" aria-hidden="true"><span class="nut"></span><span class="bat"></span></span><b>TRIP BUILDER</b></button>
+      <button type="button" class="pb" data-dtool="quote"><span class="pbFace">QUOTE</span><b>GET A QUOTE</b></button>
+    </div></div>
+    <div class="grp"><p class="grpT"><span>EXPLORE</span></p><div class="ctrls">
+      <button type="button" class="sw" data-dgo="#explore"><span class="led" aria-hidden="true"></span><span class="tog" aria-hidden="true"><span class="nut"></span><span class="bat"></span></span><b>GLOBE</b></button>
+      <button type="button" class="sw" data-dgo="#packages"><span class="led" aria-hidden="true"></span><span class="tog" aria-hidden="true"><span class="nut"></span><span class="bat"></span></span><b>TRIPS</b></button>
+    </div></div>
+    <div class="grp"><p class="grpT"><span>FLIGHT</span></p><div class="ctrls">
+      <button type="button" class="sw" data-dstudio="airlines"><span class="led" aria-hidden="true"></span><span class="tog" aria-hidden="true"><span class="nut"></span><span class="bat"></span></span><b>AIRLINES</b></button>
+      <button type="button" class="sw" data-dstudio="seats"><span class="led" aria-hidden="true"></span><span class="tog" aria-hidden="true"><span class="nut"></span><span class="bat"></span></span><b>SEATS</b></button>
+    </div></div>
+    <div class="grp stat"><p class="grpT"><span>STATUS</span></p><div class="lcds">
+      <div class="lcd"><small>COLOMBO</small><b id="cmbTime" translate="no">--:--</b></div>
+      <div class="lcd"><small>PLACES</small><b translate="no">21</b></div>
+      <div class="lcd"><small>TRIPS</small><b translate="no">05</b></div>
+      <button type="button" class="mute" id="muteSw" aria-pressed="false" aria-label="Panel sound"><span class="mLed"></span><span>SOUND</span></button>
+    </div></div>
   </div>
-</nav>
+</section>
 
 <section class="band explore" id="explore">
   <div class="wrap">
-    <p class="eyebrow">Explore the world</p>
-    <h2>Spin the globe. Pick a country.</h2>
-    <p class="lead">Tap a glowing country for the best places to go.</p>
+    <div class="exTop">
+      <div><p class="eyebrow">Explore the world</p><h2>Where to next?</h2></div>
+      <div class="dsearch" role="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        <input id="dSearch" type="search" placeholder="Search a country, city or place" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="dResults" aria-autocomplete="list" aria-label="Search destinations">
+        <ul class="dResults" id="dResults" role="listbox" hidden></ul>
+      </div>
+    </div>
+    <div class="popular" id="popular" aria-label="Popular destinations"></div>
     <div class="exGrid">
       <div class="globeWrap" id="globeWrap">
-        <svg id="globe" viewBox="0 0 600 600" role="img" aria-label="Interactive globe. Use the country list to open each guide."></svg>
+        <svg id="globe" viewBox="0 0 600 600" role="img" aria-label="Interactive globe. Use the search box to find each destination."></svg>
         <div class="gctl"><button type="button" id="gIn" aria-label="Zoom in">+</button><button type="button" id="gOut" aria-label="Zoom out">−</button><button type="button" id="gReset" aria-label="Reset view"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5"/></svg></button></div>
         <div class="gtip" id="gtip" hidden></div>
         <div class="gtoast" id="gtoast" hidden role="status"></div>
         <p class="ghint">Drag to spin · tap a green country</p>
       </div>
-      <div class="clist" id="clist"></div>
+      <div class="screen">
+        <div class="monitor" id="monitor" aria-live="polite"></div>
+        <div class="tray" id="tray" aria-label="My route"></div>
+      </div>
     </div>
-    <div class="trend" id="trend" aria-label="Trending now"></div>
   </div>
 </section>
 <div class="xm" id="xm" hidden role="dialog" aria-modal="true" aria-labelledby="xmT"></div>
 
-<section class="band board" id="destinations">
-  <div class="wrap">
-    <div class="boardHead">
-      <div><h2>Departures</h2><p class="lead">Real footage. Tap a gate to plan it.</p></div>
-      <div class="filters" role="group" aria-label="Filter destinations">
-        <button aria-pressed="true" data-f="all">All</button><button aria-pressed="false" data-f="lk">Sri Lanka</button><button aria-pressed="false" data-f="world">Abroad</button>
-      </div>
-    </div>
-    <div class="gates" id="gates"></div>
-  </div>
-</section>
-
-
-
-
-
-
-
-
-
-
-
-
-
 <section class="band packs" id="packages">
   <div class="wrap">
-    <div class="packHead"><div><p class="eyebrow">Tour packages</p><h2>Ready-made trips, priced and planned</h2><p class="lead">Fixed dates, flights sorted. Tap for the full itinerary.</p></div></div>
+    <div class="packHead"><div><p class="eyebrow">Tour packages</p><h2>Ready-made trips</h2><p class="lead">Fixed dates, flights sorted. Tap for the full itinerary.</p></div></div>
     <div class="packGrid" id="packGrid"></div>
+    <form class="cq" id="cq" novalidate>
+      <div class="cqHead"><p class="eyebrow">Custom quote</p><h3>Make it your own</h3><p>Pick the basics. We price the best options and reply the same working day.</p></div>
+      <div class="cqGrid">
+        <label class="cqTo">Where<input id="cqTo" placeholder="e.g. Japan, South Korea" autocomplete="off"></label>
+        <label>When<select id="cqWhen"></select></label>
+        <div class="cqPax"><span class="cqL">Travellers</span><div class="cqStep"><button type="button" data-pax="a" data-d="-1" aria-label="Fewer adults">−</button><b id="cqA">2</b><span>Adults</span><button type="button" data-pax="a" data-d="1" aria-label="More adults">+</button></div><div class="cqStep"><button type="button" data-pax="k" data-d="-1" aria-label="Fewer children">−</button><b id="cqK">0</b><span>Children</span><button type="button" data-pax="k" data-d="1" aria-label="More children">+</button></div></div>
+        <div><span class="cqL">Style</span><div class="seg" id="cqStyle" role="radiogroup" aria-label="Style"><button type="button" role="radio" aria-checked="false" data-v="Budget">Budget</button><button type="button" role="radio" aria-checked="true" data-v="Comfort">Comfort</button><button type="button" role="radio" aria-checked="false" data-v="Luxury">Luxury</button></div></div>
+        <div class="cqInc"><span class="cqL">Include</span><div class="chipsX" id="cqInc"><button type="button" aria-pressed="true" data-v="Flights">Flights</button><button type="button" aria-pressed="true" data-v="Hotels">Hotels</button><button type="button" aria-pressed="false" data-v="Visa">Visa</button><button type="button" aria-pressed="false" data-v="Transfers">Transfers</button><button type="button" aria-pressed="false" data-v="Tours">Tours</button><button type="button" aria-pressed="false" data-v="Insurance">Insurance</button></div></div>
+        <label class="cqFlex"><input type="checkbox" id="cqFlex" checked><span><b>Flexible by ±3 days</b><small>Often the biggest saving</small></span></label>
+      </div>
+      <div class="cqActs"><button class="btn" type="submit">Get my custom quote</button><button class="btn line" type="button" data-tool="builder">Sri Lanka? Build it day by day</button></div>
+      <div class="cqOut" id="cqOut" hidden role="status"><b>Your request is ready.</b><pre id="cqText"></pre><div class="cqOutActs"><a class="btn wa sm" id="cqWa" target="_blank" rel="noopener">Share on WhatsApp</a><button type="button" class="btn line sm" id="cqCopy">Copy</button><span id="cqCopied"></span></div></div>
+    </form>
   </div>
 </section>
 <div class="pkm" id="pkm" hidden role="dialog" aria-modal="true" aria-labelledby="pkT"></div>
 
-<section class="band studioSec" id="airline-studio">
-  <div class="wrap studioTeaser">
-    <div>
-      <p class="eyebrow">Airline Studio</p>
-      <h2>Choose your airline like a pro</h2>
-      <p class="lead">Carriers, true costs and seats, in one app.</p>
-      <button class="btn" type="button" data-studio="airlines" style="margin-top:22px">Open Airline Studio</button>
-    </div>
-    <div class="appCard" role="group" aria-label="Airline Studio shortcuts">
+<section class="band pro" id="pro">
+  <div class="wrap">
+    <p class="eyebrow">Travel like a pro</p>
+    <h2>Pro tools, built in</h2>
+    <div class="bento">
+      <article class="bx bxApp">
+        <div class="phone"><video muted loop playsinline preload="none" aria-hidden="true" data-inview><source src="videos/bingo-ad.mp4" type="video/mp4"></video><span class="notch"></span></div>
+        <div class="bxIn"><span class="newTag">New app</span><h3>Bingo by Deima</h3><p>Your travel buddy, from Deima Travels.</p><button class="btn sm" type="button" data-ad>Watch the video</button></div>
+      </article>
+      <article class="bx bxStudio"><div class="appCard" role="group" aria-label="Airline Studio shortcuts">
       <div class="appTop"><span class="appDot"></span><b>Airline Studio</b><small>by Deima Travels</small></div>
       <div class="appTiles">
         <button type="button" class="appTile" data-studio="airlines"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5Z"/></svg><b>Choose an airline</b><small>Compare up to 3</small></button>
@@ -250,6 +258,11 @@ footer img{height:46px}
       </div>
       <div class="quick" id="quickPick"></div>
       <div class="logoRail" id="logoRail" aria-hidden="true"></div>
+    </div></article>
+      <article class="bx bxTips">
+        <div class="tipsHead"><h3>Tips & tricks</h3><button class="btn line sm" type="button" data-studio="planning">Flight plan</button></div>
+        <div class="tipRail" id="tipRail"></div>
+      </article>
     </div>
   </div>
 </section>
@@ -333,15 +346,10 @@ footer img{height:46px}
 
 <section class="band" id="services">
   <div class="wrap">
+    <p class="eyebrow">What Deima offers</p>
     <h2>One desk for the whole trip</h2>
     <p class="lead">Tell us once. We handle the rest.</p>
     <div class="services" id="svcs"></div>
-  </div>
-</section>
-
-<section class="band" id="how" style="padding-top:0">
-  <div class="wrap">
-    <h2>From idea to boarding gate</h2>
     <div class="route">
       <div class="stop"><div class="pin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a8 8 0 0 1-11.7 7.1L4 20l1-4.8A8 8 0 1 1 21 12Z"/></svg></div><h3>Tell us where</h3><p>Send dates and budget.</p></div>
       <div class="stop"><div class="pin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16v14H4zM4 9h16M9 13h6"/></svg></div><h3>We plan and book</h3><p>Clear options, then we book.</p></div>
@@ -352,7 +360,7 @@ footer img{height:46px}
 
 <section class="band" id="group" style="padding-top:0">
   <div class="wrap family">
-    <div><img class="dark-logo" src="assets/logo-dark.png" alt="Deima Group logo"><h2 style="margin-top:28px">Part of Deima Group</h2><p class="lead">Visas, tickets and careers, planned together.</p></div>
+    <div><img class="dark-logo" src="assets/logo-dark.png" alt="Deima Group logo"><p class="eyebrow" style="margin-top:28px">About us</p><h2>Part of Deima Group</h2><p class="lead">Visas, tickets and careers, planned together.</p></div>
     <div class="ents">
       <div class="ent here"><b>Deima Travels</b><span>Air tickets, visas, packaged tours, hotels and corporate travel.</span></div>
       <div class="ent"><b>Deima Consultancy</b><span>Overseas job placement. SLBFE licence no. 3533.</span></div>
@@ -448,7 +456,7 @@ dotEls.forEach((b,i)=>b.addEventListener('click',()=>{show(i);auto()}));
 
 /* departures board */
 const gates=$('#gates');
-gates.innerHTML=D.map((d,i)=>`<a class="gate${d.wide?' wide':''}" href="#plan" data-r="${d.r}" data-to="${d.name}">${scene(d,'g'+i)}${vid(d)}<div class="info"><div class="row"><span>${d.place}</span><span class="code">${d.code}</span></div><h3>${d.name}</h3><p>${d.tag}</p><span class="ask">${d.r==='lk'?'Build this trip →':'Get a quote →'}</span></div></a>`).join('');
+if(gates)gates.innerHTML=D.map((d,i)=>`<a class="gate${d.wide?' wide':''}" href="#plan" data-r="${d.r}" data-to="${d.name}">${scene(d,'g'+i)}${vid(d)}<div class="info"><div class="row"><span>${d.place}</span><span class="code">${d.code}</span></div><h3>${d.name}</h3><p>${d.tag}</p><span class="ask">${d.r==='lk'?'Build this trip →':'Get a quote →'}</span></div></a>`).join('');
 $('#dest-list').innerHTML=D.map(d=>`<option value="${d.name}, ${d.place}">`).join('');
 
 /* attach video files when present: the drawn scene stays as poster otherwise */
@@ -498,8 +506,8 @@ $('#menu').addEventListener('click',()=>{const o=$('#links').classList.toggle('o
 document.querySelectorAll('#links a').forEach(a=>a.addEventListener('click',()=>{$('#links').classList.remove('open');$('#menu').setAttribute('aria-expanded',false)}));
 }
 </script>
-<script src="explore.js?v=4"></script>
-<script src="packages.js?v=4"></script>
-<script src="i18n.js?v=4"></script>
+<script src="explore.js?v=7"></script>
+<script src="packages.js?v=6"></script>
+<script src="i18n.js?v=8"></script>
 </body>
 </html>

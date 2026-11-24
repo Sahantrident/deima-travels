@@ -138,6 +138,19 @@ const C=[
  ['adventure','Great Barrier Reef','Snorkel or dive the world\'s largest reef from Cairns.','Jun–Oct is the dry season up north.']]}
 ];
 const byIso=Object.fromEntries(C.map(c=>[c.iso,c]));
+const VID={mv:'maldives',ae:'dubai',jp:'tokyo',gb:'london',sg:'singapore',lk:'sigiriya'};
+const LKS=[
+ {id:'sigiriya',name:'Sigiriya',parent:'lk',ll:[80.76,7.957],area:'Asia',video:'sigiriya',fly:'In Sri Lanka',best:[1,2,3,4,5,6,7,8,9],bn:'Jan–Sep',tag:'Lion Rock, cave temples and the Cultural Triangle.',builder:'sigiriya'},
+ {id:'ella',name:'Ella',parent:'lk',ll:[81.05,6.87],area:'Asia',video:'ella',fly:'In Sri Lanka',best:[1,2,3,4,12],bn:'Dec–Apr',tag:'Tea hills, Nine Arch Bridge and the famous train ride.',builder:'ella'},
+ {id:'galle',name:'South Coast',parent:'lk',ll:[80.22,6.03],area:'Asia',video:'galle',fly:'In Sri Lanka',best:[1,2,3,4,11,12],bn:'Nov–Apr',tag:'Galle Fort, stilt fishermen and palm beaches.',builder:'galle'}
+];
+const DEST=[...C,...LKS];
+const ORIG=[['CMB','Colombo',[79.88,7.18]],['MAA','Chennai',[80.27,12.99]],['BOM','Mumbai',[72.87,19.09]],['DEL','Delhi',[77.10,28.56]],['MLE','Malé',[73.53,4.19]],['DXB','Dubai',[55.36,25.25]],['DOH','Doha',[51.61,25.27]],['SIN','Singapore',[103.99,1.36]],['KUL','Kuala Lumpur',[101.71,2.75]],['BKK','Bangkok',[100.75,13.69]],['NRT','Tokyo',[140.39,35.77]],['ICN','Seoul',[126.45,37.46]],['LHR','London',[-0.45,51.47]],['MEL','Melbourne',[144.84,-37.67]],['SYD','Sydney',[151.18,-33.94]]];
+const R={from:'CMB',stops:[],ret:true};
+try{const v=JSON.parse(localStorage.getItem('deimaRoute')||'null');if(v&&Array.isArray(v.stops)){R.from=ORIG.some(o=>o[0]===v.from)?v.from:'CMB';R.stops=v.stops.filter(id=>DEST.some(d=>d.id===id)).slice(0,6);R.ret=v.ret!==false}}catch(e){}
+const saveR=()=>{try{localStorage.setItem('deimaRoute',JSON.stringify(R))}catch(e){}};
+const origin=()=>ORIG.find(o=>o[0]===R.from);
+const HOME={home:1,name:'Colombo',ll:CMB};
 
 /* ---------- globe ---------- */
 const G={k:1,base:280,idle:0,drag:false,anim:false,inView:false,sel:null};
@@ -161,12 +174,12 @@ function initGlobe(){
  sel.arc=svg.append('path').attr('class','g-arc');
  sel.shine=svg.append('circle').attr('class','g-shine').attr('cx',W/2).attr('cy',W/2);
  sel.marks=svg.append('g');
- const mk=sel.marks.selectAll('g').data([{home:1,name:'Colombo',ll:CMB},...C.filter(c=>c.id!=='lk')]).join('g')
+ const mk=sel.marks.selectAll('g').data([HOME,...DEST.filter(c=>c.id!=='lk')]).join('g')
   .attr('class',d=>d.home?'mk home':'mk').attr('tabindex',d=>d.home?null:0).attr('role',d=>d.home?null:'button').attr('aria-label',d=>d.home?null:`Open ${d.name} guide`);
  mk.append('circle').attr('class','hit').attr('r',16);
  mk.filter(d=>!d.home).append('circle').attr('class','pulse').attr('r',6);
  mk.append('circle').attr('class','dot').attr('r',d=>d.home?6:5);
- mk.append('text').attr('x',10).attr('y',4).text(d=>d.home?'Colombo':d.name);
+ mk.append('text').attr('x',10).attr('y',4).text(d=>d.name);
  mk.filter(d=>!d.home).on('click',(e,d)=>{e.stopPropagation();pick(d)}).on('keydown',(e,d)=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();pick(d)}});
  sel.mk=mk;
  svg.call(d3.drag().clickDistance(5)
@@ -189,7 +202,7 @@ function initGlobe(){
   const r=proj.rotate();proj.rotate([r[0]+dt*.007,r[1]+(-12-r[1])*.01,0]);draw()});
  $('#gIn').onclick=()=>zoomTo(Math.min(3,G.k*1.35));
  $('#gOut').onclick=()=>zoomTo(Math.max(.8,G.k/1.35));
- $('#gReset').onclick=()=>{G.sel=null;setChip();fly({ll:[80,12],z:1},null)};
+ $('#gReset').onclick=()=>{fly({ll:origin()[2],z:1},null)};
 }
 function draw(){
  if(!proj)return;
@@ -197,9 +210,11 @@ function draw(){
  sel.ocean.attr('r',s);sel.shine.attr('r',s);sel.glow.attr('r',s+4);
  sel.grat.attr('d',path);
  if(sel.c)sel.c.attr('d',path).classed('sel',d=>G.sel&&d.id===G.sel.iso);
- sel.arc.attr('d',G.sel&&G.sel.id!=='lk'?path({type:'LineString',coordinates:[CMB,G.sel.ll]}):null);
+ const rc=routeCoords();sel.arc.attr('d',rc?path({type:'LineString',coordinates:rc}):null);
  sel.mk.each(function(d){const vis=d3.geoDistance(d.ll,ctr)<1.5;this.style.display=vis?'':'none';if(vis){const p=proj(d.ll);this.setAttribute('transform',`translate(${p[0]},${p[1]})`)}this.classList.toggle('sel',G.sel===d)});
 }
+function routeCoords(){const o=origin()[2];if(R.stops.length){const c=[o,...R.stops.map(id=>DEST.find(d=>d.id===id).ll)];if(R.ret)c.push(o);return c}if(G.sel&&!(G.sel.id==='lk'&&R.from==='CMB'))return [o,G.sel.ll];return null}
+function syncMarks(){if(!sel.mk)return;const o=origin();HOME.ll=o[2];HOME.name=o[1];sel.mk.filter(d=>d.home).select('text').text(o[1]);sel.mk.filter(d=>!d.home).each(function(d){const n=R.stops.indexOf(d.id);this.classList.toggle('inTrip',n>=0);d3.select(this).select('text').text(n>=0?`${n+1}. ${d.name}`:d.name)});draw()}
 function zoomTo(k){const k0=G.k,t0=performance.now(),dur=RM?1:450;G.idle=Date.now()+6000;
  const st=now=>{const e=d3.easeCubicOut(Math.min(1,(now-t0)/dur));G.k=k0+(k-k0)*e;proj.scale(G.base*G.k);draw();if(e<1)requestAnimationFrame(st)};requestAnimationFrame(st)}
 function fly(c,cb){
@@ -212,7 +227,7 @@ function fly(c,cb){
   if(k<1)requestAnimationFrame(st);else{G.anim=false;cb&&cb()}};
  requestAnimationFrame(st);
 }
-function pick(c){G.sel=c;setChip();hideTip();$('#gtoast').hidden=true;fly(c,()=>openCountry(c))}
+function pick(c){G.sel=c;setChip();hideTip();$('#gtoast').hidden=true;showMonitor(c);fly(c)}
 function showTip(e,name,sub){const t=$('#gtip'),b=$('#globeWrap').getBoundingClientRect();t.innerHTML=`${name}${sub?`<small>${sub}</small>`:''}`;t.style.left=(e.clientX-b.left)+'px';t.style.top=(e.clientY-b.top)+'px';t.hidden=false}
 function hideTip(){const t=$('#gtip');if(t)t.hidden=true}
 function toast(name){if(!name)return;G.idle=Date.now()+8000;const t=$('#gtoast');
@@ -220,13 +235,57 @@ function toast(name){if(!name)return;G.idle=Date.now()+8000;const t=$('#gtoast')
  t.hidden=false;t.querySelector('[data-q]').onclick=()=>{t.hidden=true;quote(name)};t.querySelector('.x').onclick=()=>t.hidden=true}
 function quote(to){if(window.DeimaQQ)window.DeimaQQ(to);else location.hash='#plan'}
 
-/* country list */
-function buildList(){
- const order=['Asia','Indian Ocean','Middle East','Europe','Oceania'];
- $('#clist').innerHTML=order.map(a=>`<h3>${a}</h3><div class="chips">${C.filter(c=>c.area===a).map(c=>`<button class="chip" type="button" aria-pressed="false" data-c="${c.id}"><i></i>${c.name}</button>`).join('')}</div>`).join('');
- $$('#clist .chip').forEach(b=>b.onclick=()=>pick(C.find(c=>c.id===b.dataset.c)));
+/* search, popular, monitor, route tray */
+const tl=x=>(window.DeimaLang&&window.DeimaLang.t)?window.DeimaLang.t(x):x;
+const IDX=DEST.flatMap(d=>[{label:d.name,sub:d.parent?'Sri Lanka':d.area,d},...(d.p||[]).map(p=>({label:p[1],sub:d.name,d}))]);
+function buildSearch(){
+ const inp=$('#dSearch'),ul=$('#dResults');let hits=[],hi=-1;
+ const close=()=>{ul.hidden=true;inp.setAttribute('aria-expanded','false');hi=-1};
+ const go=h=>{close();inp.value='';pick(h.d);if(matchMedia('(max-width:980px)').matches)$('#monitor').scrollIntoView({block:'nearest',behavior:RM?'auto':'smooth'})};
+ const paint=()=>{ul.innerHTML=hits.map((h,k)=>`<li role="option" id="dr${k}" aria-selected="${k===hi}" data-k="${k}"><b>${h.label}</b><small>${h.sub}</small>${(h.d.video||VID[h.d.id])?'<i>▶</i>':''}</li>`).join('')||'<li class="none">No match yet — ask us anyway</li>';ul.hidden=false;inp.setAttribute('aria-expanded','true');inp.setAttribute('aria-activedescendant',hi>=0?'dr'+hi:'');$$('#dResults li[data-k]').forEach(li=>li.onmousedown=e=>{e.preventDefault();go(hits[+li.dataset.k])})};
+ inp.addEventListener('input',()=>{const q=inp.value.trim().toLowerCase();if(!q){close();return}hits=IDX.filter(h=>h.label.toLowerCase().includes(q)||tl(h.label).toLowerCase().includes(q)||tl(h.d.name).toLowerCase().includes(q)).sort((a,b)=>(a.label.toLowerCase().startsWith(q)?0:1)-(b.label.toLowerCase().startsWith(q)?0:1)).slice(0,8);hi=hits.length?0:-1;paint()});
+ inp.addEventListener('keydown',e=>{if(ul.hidden)return;if(e.key==='ArrowDown'){e.preventDefault();hi=Math.min(hits.length-1,hi+1);paint()}else if(e.key==='ArrowUp'){e.preventDefault();hi=Math.max(0,hi-1);paint()}else if(e.key==='Enter'){e.preventDefault();if(hits[hi])go(hits[hi]);else{close();quote(inp.value.trim())}}else if(e.key==='Escape')close()});
+ inp.addEventListener('blur',()=>setTimeout(close,120));
+ const POP=['jp','th','mv','ae','sigiriya','kr','sg'];
+ $('#popular').innerHTML=POP.map(id=>{const d=DEST.find(x=>x.id===id);return `<button type="button" class="chip" data-c="${id}"><i></i>${d.name}</button>`}).join('');
+ $$('#popular .chip').forEach(b=>b.onclick=()=>pick(DEST.find(x=>x.id===b.dataset.c)));
 }
-function setChip(){$$('#clist .chip').forEach(b=>b.setAttribute('aria-pressed',!!G.sel&&b.dataset.c===G.sel.id))}
+function setChip(){$$('#popular .chip').forEach(b=>b.setAttribute('aria-pressed',!!G.sel&&b.dataset.c===G.sel.id))}
+function showMonitor(c){
+ const v=c.video||VID[c.id],g=AREA[c.area],inT=R.stops.includes(c.id);
+ const places=c.p?c.p.slice(0,3).map(x=>x[1]):[];
+ $('#monitor').innerHTML=`<div class="mScreen" style="--a:${g[0]};--b:${g[1]}">
+  ${v?`<video muted loop playsinline autoplay preload="auto" poster="videos/${v}.jpg" aria-hidden="true"><source src="videos/${v}.mp4" type="video/mp4"></video>`:`<div class="mArt">${ico(c.p?c.p[0][0]:'nature')}</div>`}
+  <div class="mTop"><span class="mTag">${c.parent?'Sri Lanka':c.area}</span><span class="mFly">${ico('plane')}${flyFrom(c)}</span></div>
+  <div class="mInfo"><h3>${c.name}</h3><p>${c.tag}</p>
+   <div class="mMonths" aria-label="Best months">${MON.map((m,j)=>`<i class="${c.best.includes(j+1)?'on':''}"><b>${m[0]}</b></i>`).join('')}</div>
+   ${places.length?`<div class="mPlaces">${places.map(x=>`<span>${x}</span>`).join('')}</div>`:''}</div></div>
+ <div class="mActs"><button type="button" class="btn sm${inT?' line':''}" data-add>${inT?'✓ In my route':'+ Add to route'}</button>${c.p?'<button type="button" class="btn line sm" data-guide>Full guide</button>':''}<button type="button" class="btn line sm" data-mq>${c.builder||c.id==='lk'?'Build this trip':'Get a quote'}</button></div>`;
+ const vv=$('#monitor video');if(vv){vv.play().catch(()=>{});vv.querySelector('source').addEventListener('error',()=>vv.remove())}
+ $('#monitor [data-add]').onclick=()=>{toggleStop(c);showMonitor(c)};
+ const gd=$('#monitor [data-guide]');if(gd)gd.onclick=()=>openCountry(c);
+ $('#monitor [data-mq]').onclick=()=>{if(c.builder&&window.DeimaTrip)window.DeimaTrip.open({place:c.builder});else if(c.id==='lk'&&window.DeimaTrip)window.DeimaTrip.open({});else quote(c.name)};
+}
+function flyFrom(c){if(R.from==='CMB'||c.parent)return c.fly;const o=origin(),km=d3.geoDistance(o[2],c.ll)*6371;if(km<150)return o[1];const h=Math.round((km/780+.5)*2)/2;return `≈ ${h}h from ${o[1]}`}
+function toggleStop(c){const k=R.stops.indexOf(c.id);if(k>=0)R.stops.splice(k,1);else{if(R.stops.length>=6){R.stops.shift()}R.stops.push(c.id)}saveR();renderTray();syncMarks()}
+function routeKm(){const rc=routeCoords();if(!rc||!R.stops.length)return 0;let k=0;for(let i=1;i<rc.length;i++)k+=d3.geoDistance(rc[i-1],rc[i])*6371;return Math.round(k/100)*100}
+function routeNames(){return R.stops.map(id=>DEST.find(d=>d.id===id).name)}
+function renderTray(){
+ const o=origin(),km=window.d3?routeKm():0,legs=R.stops.length+(R.ret&&R.stops.length?1:0),hrs=km?Math.round(km/780+legs*.5):0;
+ $('#tray').innerHTML=`<div class="trayHead"><b>My route</b>${km?`<span class="trayInfo">≈ ${km.toLocaleString('en')} km · ~${hrs} h flying</span>`:'<span class="trayInfo">Multi-city</span>'}</div>
+ <div class="rWrap"><label class="rFrom"><span class="rDot o"></span><span class="rL">From</span><select id="rOrig" aria-label="Departure city">${ORIG.map(x=>`<option value="${x[0]}"${x[0]===R.from?' selected':''}>${x[1]} (${x[0]})</option>`).join('')}</select></label>
+ ${R.stops.length?`<ol class="rStops">${R.stops.map((id,k)=>{const d=DEST.find(x=>x.id===id);return `<li><span class="rDot">${k+1}</span><button type="button" class="rName" data-show="${id}">${d.name}</button><span class="rBtns"><button type="button" data-mv="${k}" data-d="-1" aria-label="Move ${d.name} earlier"${k?'':' disabled'}>↑</button><button type="button" data-mv="${k}" data-d="1" aria-label="Move ${d.name} later"${k<R.stops.length-1?'':' disabled'}>↓</button><button type="button" data-rm="${k}" aria-label="Remove ${d.name}">×</button></span></li>`}).join('')}</ol>`:`<p class="rEmpty">Search or tap a country, then <b>+ Add to route</b>. Up to 6 stops.</p>`}
+ <label class="rRet"><input type="checkbox" id="rRet"${R.ret?' checked':''}><span>Return to ${o[1]}</span></label></div>
+ ${R.stops.length?`<div class="trayActs"><button type="button" class="btn sm" data-rq>Quote this route</button><button type="button" class="btn line sm" data-rc>Custom quote</button><button type="button" class="rClear" data-rx>Clear</button></div>`:''}`;
+ $('#rOrig').onchange=e=>{R.from=e.target.value;saveR();renderTray();syncMarks();if(G.sel)showMonitor(G.sel);fly({ll:origin()[2],z:G.k})};
+ $('#rRet').onchange=e=>{R.ret=e.target.checked;saveR();renderTray();syncMarks()};
+ $$('#tray [data-mv]').forEach(b=>b.onclick=()=>{const k=+b.dataset.mv,n=k+ +b.dataset.d;[R.stops[k],R.stops[n]]=[R.stops[n],R.stops[k]];saveR();renderTray();syncMarks()});
+ $$('#tray [data-rm]').forEach(b=>b.onclick=()=>{const id=R.stops[+b.dataset.rm];R.stops.splice(+b.dataset.rm,1);saveR();renderTray();syncMarks();if(G.sel&&G.sel.id===id)showMonitor(G.sel)});
+ $$('#tray [data-show]').forEach(b=>b.onclick=()=>pick(DEST.find(d=>d.id===b.dataset.show)));
+ const rq=$('#tray [data-rq]');if(rq)rq.onclick=()=>{const t=`${routeNames().join(' → ')}${R.ret?' → '+o[1]:''} (multi-city)`;quote(t);const f=$('#f-from');if(f)f.value=`${o[1]} (${o[0]})`};
+ const rc=$('#tray [data-rc]');if(rc)rc.onclick=()=>{$('#cqTo').value=routeNames().join(', ');$('#cq').scrollIntoView({behavior:RM?'auto':'smooth',block:'start'});setTimeout(()=>$('#cqTo').focus({preventScroll:true}),500)};
+ const rx=$('#tray [data-rx]');if(rx)rx.onclick=()=>{R.stops=[];saveR();renderTray();syncMarks();if(G.sel)showMonitor(G.sel)};
+}
 
 /* country modal */
 let lastFocus=null;
@@ -470,11 +529,43 @@ document.addEventListener('click',e=>{const t=e.target.closest('[data-tool]');if
  $('#quickPick').innerHTML=`<p class="qpH">Quick pick</p>`+QP.map(([n,k,w])=>`<button type="button" class="qp" data-qp="${k}">${logo(k)}<span><b>${n}</b><small>${w}</small></span></button>`).join('');
  $$('#quickPick [data-qp]').forEach(b=>b.onclick=()=>{const k=b.dataset.qp,r=Object.keys(REG).find(r=>r!=='south'&&REG[r].a.includes(k))||'gulf';focusAirline(k==='MH'?'asia':r,k)});
  const TR=['jp','th','mv','ae'];
- $('#trend').innerHTML=`<p class="trH">Trending now</p><div class="trRow">${TR.map(id=>{const c=C.find(x=>x.id===id);return `<button type="button" class="tr" data-c="${id}" style="--a:${AREA[c.area][0]};--b:${AREA[c.area][1]}"><b>${c.name}</b><span class="trFly">${ico('plane')}${c.fly.replace(' from Colombo','')}</span><span class="trM">${MON.map((m,j)=>`<i class="${c.best.includes(j+1)?'on':''}"></i>`).join('')}</span><span class="trP">${c.p.slice(0,2).map(p=>p[1]).join(' · ')}</span></button>`}).join('')}</div>`;
+ if($('#trend'))$('#trend').innerHTML=`<p class="trH">Trending now</p><div class="trRow">${TR.map(id=>{const c=C.find(x=>x.id===id);return `<button type="button" class="tr" data-c="${id}" style="--a:${AREA[c.area][0]};--b:${AREA[c.area][1]}"><b>${c.name}</b><span class="trFly">${ico('plane')}${c.fly.replace(' from Colombo','')}</span><span class="trM">${MON.map((m,j)=>`<i class="${c.best.includes(j+1)?'on':''}"></i>`).join('')}</span><span class="trP">${c.p.slice(0,2).map(p=>p[1]).join(' · ')}</span></button>`}).join('')}</div>`;
  $$('#trend .tr').forEach(b=>b.onclick=()=>pick(C.find(x=>x.id===b.dataset.c)));
 }
+/* cockpit switches */
+let actx=null,muted=false;try{muted=localStorage.getItem('deimaMute')==='1'}catch(e){}
+function clack(kind){if(muted)return;try{actx=actx||new(window.AudioContext||window.webkitAudioContext)();if(actx.state==='suspended')actx.resume();const t=actx.currentTime,sr=actx.sampleRate;
+ const len=Math.floor(.045*sr),buf=actx.createBuffer(1,len,sr),d=buf.getChannelData(0);for(let i=0;i<len;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/len,7);
+ const src=actx.createBufferSource();src.buffer=buf;const bp=actx.createBiquadFilter();bp.type='bandpass';bp.frequency.value=kind==='pb'?2600:1700;bp.Q.value=1.4;const g=actx.createGain();g.gain.value=.7;src.connect(bp);bp.connect(g);g.connect(actx.destination);src.start(t);
+ const o=actx.createOscillator(),og=actx.createGain();o.type='square';o.frequency.setValueAtTime(kind==='pb'?240:150,t);o.frequency.exponentialRampToValueAtTime(55,t+.06);og.gain.setValueAtTime(.16,t);og.gain.exponentialRampToValueAtTime(.001,t+.08);o.connect(og);og.connect(actx.destination);o.start(t);o.stop(t+.09);
+ const bz=actx.createOscillator(),bg=actx.createGain();bz.type='sine';bz.frequency.value=kind==='pb'?1560:1240;bg.gain.setValueAtTime(0,t+.14);bg.gain.linearRampToValueAtTime(.05,t+.15);bg.gain.setValueAtTime(.05,t+.2);bg.gain.linearRampToValueAtTime(0,t+.21);bg.gain.setValueAtTime(0,t+.27);bg.gain.linearRampToValueAtTime(.05,t+.28);bg.gain.exponentialRampToValueAtTime(.001,t+.4);bz.connect(bg);bg.connect(actx.destination);bz.start(t+.14);bz.stop(t+.42);
+}catch(e){}}
+const muteSw=$('#muteSw');if(muteSw){const set=()=>{muteSw.setAttribute('aria-pressed',!muted);muteSw.classList.toggle('off',muted)};set();muteSw.onclick=()=>{muted=!muted;try{localStorage.setItem('deimaMute',muted?'1':'0')}catch(e){}set();clack('pb')}}
+$$('.deck .sw,.deck .pb').forEach(b=>b.addEventListener('click',()=>{
+ $$('.deck .sw.on,.deck .pb.on').forEach(x=>{if(x!==b)x.classList.remove('on','blink')});
+ b.classList.add('on','blink');clack(b.classList.contains('pb')?'pb':'sw');setTimeout(()=>b.classList.remove('blink'),700);setTimeout(()=>b.classList.remove('on'),6000);
+ const d=b.dataset,wait=RM?0:480;
+ setTimeout(()=>{if(d.dtool==='builder'&&window.DeimaTrip)window.DeimaTrip.open({});else if(d.dtool==='quote')quote('');else if(d.dstudio)openStudio(d.dstudio);else if(d.dgo){const t=$(d.dgo);if(t)t.scrollIntoView({behavior:RM?'auto':'smooth'})}},wait);
+}));
+{const tick=()=>{const el=$('#cmbTime');if(el)el.textContent=new Intl.DateTimeFormat('en-GB',{hour:'2-digit',minute:'2-digit',hour12:false,timeZone:'Asia/Colombo'}).format(new Date())};tick();setInterval(tick,15000)}
+/* tips rail */
+if($('#tipRail'))$('#tipRail').innerHTML=STEPS.map((t,i)=>`<div class="tipCard"><span class="tipN">${String(i+1).padStart(2,'0')}</span><b>${t.t}</b><p>${t.tip}</p></div>`).join('');
+/* videos that play only while visible */
+{const io2=new IntersectionObserver(es=>es.forEach(e=>{const v=e.target;if(e.isIntersecting){v.preload='auto';v.play().catch(()=>{})}else v.pause()}),{threshold:.3});$$('video[data-inview]').forEach(v=>io2.observe(v));window.DeimaInview=v=>io2.observe(v)}
+/* custom quote */
+{const f=$('#cq');if(f){
+ const now=new Date(),opts=['Flexible'];for(let k=0;k<12;k++){const d=new Date(now.getFullYear(),now.getMonth()+k,1);opts.push(`${MON[d.getMonth()]} ${d.getFullYear()}`)}
+ $('#cqWhen').innerHTML=opts.map(o=>`<option>${o}</option>`).join('');
+ const pax={a:2,k:0};$$('#cq [data-pax]').forEach(b=>b.onclick=()=>{const t=b.dataset.pax;pax[t]=Math.max(t==='a'?1:0,Math.min(20,pax[t]+ +b.dataset.d));$('#cqA').textContent=pax.a;$('#cqK').textContent=pax.k});
+ $$('#cqStyle button').forEach(b=>b.onclick=()=>$$('#cqStyle button').forEach(x=>x.setAttribute('aria-checked',x===b)));
+ $$('#cqInc button').forEach(b=>b.onclick=()=>b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true'));
+ f.addEventListener('submit',e=>{e.preventDefault();const to=$('#cqTo').value.trim();if(!to){$('#cqTo').focus();$('#cqTo').classList.add('need');return}$('#cqTo').classList.remove('need');
+  const o=origin(),style=($('#cqStyle [aria-checked=true]')||{}).dataset?.v||'Comfort',inc=$$('#cqInc [aria-pressed=true]').map(b=>b.dataset.v);
+  const txt=`Hello Deima Travels,\nI'd like a custom quote.\nFrom: ${o[1]} (${o[0]})\nTo: ${to}\nWhen: ${$('#cqWhen').value}${$('#cqFlex').checked?' (flexible ±3 days)':''}\nTravellers: ${pax.a} adult(s)${pax.k?`, ${pax.k} child(ren)`:''}\nStyle: ${style}\nInclude: ${inc.join(', ')||'Flights only'}`;
+  $('#cqText').textContent=txt;$('#cqWa').href='https://wa.me/?text='+encodeURIComponent(txt);$('#cqOut').hidden=false;$('#cqCopied').textContent='';$('#cqOut').scrollIntoView({block:'nearest',behavior:RM?'auto':'smooth'})});
+ $('#cqCopy').onclick=()=>navigator.clipboard.writeText($('#cqText').textContent).then(()=>$('#cqCopied').textContent='Copied').catch(()=>$('#cqCopied').textContent='Select the text to copy it')}}
 /* ---------- init ---------- */
-buildList();initGlobe();
+buildSearch();initGlobe();renderTray();syncMarks();pick(DEST.find(d=>d.id==='mv'));
 renderAir();
 $('#cRoute').innerHTML=Object.entries(ROUTES).map(([k,v])=>`<option value="${k}">${v.n}</option>`).join('');
 $('#cRoute').onchange=renderCalc;renderCalc();
@@ -489,7 +580,8 @@ let adClosed=false;try{adClosed=sessionStorage.getItem('deimaAdClosed')==='1'}ca
 if(adC){
  if(adClosed){adC.hidden=true;adX.hidden=true}
  const pv=adC.querySelector('video');pv.play().catch(()=>{});
- adC.onclick=()=>{adM.hidden=false;document.body.style.overflow='hidden';adV.currentTime=0;adV.muted=false;adV.play().catch(()=>{adV.muted=true;adV.play().catch(()=>{})});pv.pause();adM.querySelector('.adClose').focus()};
+ const openAd=()=>{adM.hidden=false;document.body.style.overflow='hidden';adV.currentTime=0;adV.muted=false;adV.play().catch(()=>{adV.muted=true;adV.play().catch(()=>{})});pv.pause();adM.querySelector('.adClose').focus()};
+ adC.onclick=openAd;document.addEventListener('click',e=>{if(e.target.closest('[data-ad]'))openAd()});
  const closeAd=()=>{adM.hidden=true;adV.pause();document.body.style.overflow='';pv.play().catch(()=>{})};
  adM.querySelector('.adClose').onclick=closeAd;
  adM.onclick=e=>{if(e.target===adM)closeAd()};

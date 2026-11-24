@@ -382,6 +382,24 @@ const T={
 "Ancient capital":["古都","고대 도시"],"Polonnaruwa":["ポロンナルワ","폴론나루와"],"Cycle between royal ruins and the Gal Vihara Buddhas.":["王宮跡とガル・ヴィハーラの仏像を自転車で巡ります。","왕궁 유적과 갈 비하라 불상을 자전거로."],"Kandy":["キャンディ","캔디"],"Sri Lanka's most sacred temple.":["スリランカで最も神聖な寺院。","스리랑카에서 가장 신성한 사원."],"Orchids, spice trees and giant bamboo.":["ラン、スパイスの木、巨大な竹。","난초, 향신료 나무, 거대한 대나무."],
 "Colombo and fly home":["コロンボと帰国","콜롬보 후 귀국"],"Galle Face Green, Colombo":["ゴール・フェイス・グリーン(コロンボ)","골 페이스 그린, 콜롬보"],"Sea-front walk and street food.":["海辺の散歩と屋台グルメ。","해변 산책과 길거리 음식."],"Transfer for your flight.":["空港へお送りします。","공항으로 이동."],
 
+// v4 additions: cockpit, explore monitor, route, custom quote, pro section
+"Trips":["ツアー","여행 상품"],"Pro tools":["プロツール","프로 도구"],"Offers":["サービス","서비스"],"About":["会社概要","회사 소개"],
+"PLAN":["計画","계획"],"QUOTE":["見積","견적"],"GET A QUOTE":["見積もり","견적 받기"],"EXPLORE":["探す","탐색"],"GLOBE":["地球儀","지구본"],"TRIPS":["ツアー","여행"],"FLIGHT":["フライト","비행"],"AIRLINES":["航空会社","항공사"],"SEATS":["座席","좌석"],"STATUS":["ステータス","상태"],"COLOMBO":["コロンボ","콜롬보"],"PLACES":["行き先","여행지"],"SOUND":["サウンド","사운드"],"TRIP BUILDER":["旅程づくり","여행 만들기"],
+"Travel controls":["旅のコントロールパネル","여행 컨트롤 패널"],"Panel sound":["パネルの効果音","패널 효과음"],
+"Where to next?":["次はどこへ?","다음 여행지는?"],"Search destinations":["行き先を検索","여행지 검색"],"Search a country, city or place":["国・都市・場所を検索","나라, 도시, 장소 검색"],"Popular destinations":["人気の行き先","인기 여행지"],"Interactive globe. Use the search box to find each destination.":["操作できる地球儀。検索ボックスで行き先を探せます。","조작 가능한 지구본. 검색창에서 여행지를 찾으세요."],
+"No match yet — ask us anyway":["見つかりません。お気軽にご相談ください","검색 결과가 없어요. 그래도 문의해 주세요"],"Full guide":["詳しいガイド","전체 가이드"],"✓ In my route":["✓ ルートに追加済み","✓ 경로에 포함"],"Build this trip":["この旅を作る","이 여행 만들기"],
+"In Sri Lanka":["スリランカ国内","스리랑카 국내"],"Lion Rock, cave temples and the Cultural Triangle.":["ライオンロック、石窟寺院、文化三角地帯。","사자 바위, 동굴 사원, 문화 삼각지대."],"Tea hills, Nine Arch Bridge and the famous train ride.":["茶畑の丘、ナイン・アーチ橋、有名な列車の旅。","차밭 언덕, 나인 아치 브리지, 유명한 기차 여행."],"Galle Fort, stilt fishermen and palm beaches.":["ゴール要塞、竹馬漁、ヤシのビーチ。","골 요새, 장대 낚시꾼, 야자수 해변."],
+"My route":["マイルート","내 경로"],"Multi-city":["周遊","다구간"],"Departure city":["出発都市","출발 도시"],"Quote this route":["このルートの見積もり","이 경로 견적"],"Custom quote":["カスタム見積もり","맞춤 견적"],"Clear":["クリア","지우기"],
+"Search or tap a country, then":["国を検索またはタップして、","나라를 검색하거나 누른 뒤"],". Up to 6 stops.":["。最大6か所まで。",". 최대 6곳까지."],
+"Chennai":["チェンナイ","첸나이"],"Mumbai":["ムンバイ","뭄바이"],"Delhi":["デリー","델리"],"Malé":["マレ","말레"],"Doha":["ドーハ","도하"],"Seoul":["ソウル","서울"],
+"Ready-made trips":["おすすめツアー","추천 여행 상품"],"Itinerary & map →":["行程と地図 →","일정과 지도 →"],
+"Make it your own":["自分だけの旅に","나만의 여행으로"],"Pick the basics. We price the best options and reply the same working day.":["基本を選ぶだけ。最適なプランに料金をつけて、当日中にお返事します。","기본만 고르세요. 최적의 선택지에 가격을 매겨 당일 답변드려요."],"Where":["行き先","어디로"],"When":["時期","언제"],"Style":["スタイル","스타일"],"Include":["含めるもの","포함"],"Tours":["ツアー","투어"],"Insurance":["保険","보험"],
+"Flexible by ±3 days":["±3日の柔軟性","±3일 유연하게"],"Often the biggest saving":["一番の節約になることが多い","가장 크게 절약되는 경우가 많아요"],"Get my custom quote":["カスタム見積もりを受け取る","맞춤 견적 받기"],"Sri Lanka? Build it day by day":["スリランカなら日ごとに作成","스리랑카라면 하루씩 만들기"],
+"Your request is ready.":["リクエストの準備ができました。","요청이 준비되었습니다."],"Share on WhatsApp":["WhatsAppで送る","WhatsApp으로 공유"],"Copy":["コピー","복사"],"Copied":["コピーしました","복사됨"],"Select the text to copy it":["テキストを選択してコピーしてください","텍스트를 선택해 복사하세요"],"Flexible":["日程自由","날짜 자유"],
+"e.g. Japan, South Korea":["例:日本、韓国","예: 일본, 대한민국"],"adults":["大人","성인"],"children":["子ども","어린이"],
+"Travel like a pro":["プロのように旅する","프로처럼 여행하기"],"Pro tools, built in":["プロのツールを搭載","프로 도구 내장"],"New app":["新アプリ","새 앱"],"Your travel buddy, from Deima Travels.":["Deima Travelsの旅の相棒アプリ。","Deima Travels의 여행 친구 앱."],"Watch the video":["動画を見る","영상 보기"],"Tips & tricks":["ヒントとコツ","팁과 요령"],
+"What Deima offers":["Deimaのサービス","Deima가 제공하는 것"],"About us":["私たちについて","회사 소개"],
+
 "A rough guide.":["目安です。","대략적인 기준입니다."],"Hello Deima Travels,":["Hello Deima Travels,","Hello Deima Travels,"]
 };
 
@@ -455,6 +473,11 @@ const P=[
  [/^≈ (\d+)h( (\d+)m)? (direct|with one stop)( to (.+))?$/,m=>{const t=pick(`${m[1]}時間${m[3]?m[3]+'分':''}`,`${m[1]}시간${m[3]?' '+m[3]+'분':''}`);const k=m[4]==='direct'?pick('直行','직항'):pick('乗り継ぎ1回','1회 경유');return m[6]?pick(`${tw(m[6])}へ${k}約${t}`,`${tw(m[6])} ${k} 약 ${t}`):pick(`${k}約${t}`,`${k} 약 ${t}`)}],
  [/^WhatsApp (\w+)( · (.+))?$/,m=>pick(`WhatsAppで${m[1]}に連絡${m[3]?' · '+m[3]:''}`,`WhatsApp으로 ${m[1]}에게 문의${m[3]?' · '+m[3]:''}`)],
  [/^Call (.+)$/,m=>pick(`${m[1]}に電話`,`${m[1]}로 전화`)],
+ [/^≈ ([\d.]+)h from (.+)$/,m=>pick(`${tw(m[2])}から約${m[1]}時間`,`${tw(m[2])}에서 약 ${m[1]}시간`)],
+ [/^≈ ([\d,]+) km · ~(\d+) h flying$/,m=>pick(`約${m[1]}km · 飛行約${m[2]}時間`,`약 ${m[1]}km · 비행 약 ${m[2]}시간`)],
+ [/^Return to (.+)$/,m=>pick(`${tw(m[1])}に戻る`,`${tw(m[1])}(으)로 귀환`)],
+ [/^Remove (.+)$/,m=>pick(`${tw(m[1])}を削除`,`${tw(m[1])} 삭제`)],
+ [/^(.+) \(([A-Z]{3})\)$/,m=>`${tw(m[1])} (${m[2]})`],
  [/^Fewer$/,()=>pick('減らす','줄이기')]
 ];
 function tr(raw){
@@ -514,5 +537,5 @@ if(sel){sel.setAttribute('translate','no');sel.addEventListener('change',()=>app
 let saved='en';try{saved=localStorage.getItem('deimaLang')||'en'}catch(e){}
 const q=new URLSearchParams(location.search).get('lang');if(q&&LANGS.includes(q))saved=q;
 apply(saved);
-window.DeimaLang={set:apply,get:()=>LANGS[L]};
+window.DeimaLang={set:apply,get:()=>LANGS[L],t:s=>L?tr(s):s};
 })();
