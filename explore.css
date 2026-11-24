@@ -771,3 +771,18 @@
 @media(max-width:1180px){.nav .links.cp.open{background:linear-gradient(180deg,#36445a,#222c3f);opacity:1;animation:none;border:1px solid #0c121c;z-index:30}}
 @media(max-width:600px){.brand span{display:none}.nav{gap:8px}.nav .lang{margin-left:auto}.nav .lang select{min-width:0;width:104px}.navClock{margin-left:0}}
 @media(max-width:360px){.nav .lang select{width:88px;font-size:12px}}
+
+/* merged sections */
+.subH{font-size:clamp(22px,2.4vw,28px);margin:48px 0 0}
+#services .bento{margin-top:18px}
+#services .route{margin-top:28px}
+.contact .aboutRow{display:flex;align-items:center;gap:18px;margin-top:40px;padding-top:28px;border-top:1px solid rgba(15,27,56,.18)}
+.contact .aboutRow img{height:52px;width:auto}
+.contact .aboutRow b{display:block;font:700 22px Outfit,sans-serif}
+.contact .aboutRow span{color:#22340c}
+.contact .ents{margin-top:16px;grid-template-columns:repeat(4,minmax(0,1fr))}
+.contact .ent{background:rgba(255,255,255,.55);border-color:transparent;color:var(--navy)}
+.contact .ent span{color:#33421f}
+.contact .ent.here{box-shadow:inset 0 0 0 2px var(--navy)}
+@media(max-width:980px){.contact .ents{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.contact .ents{grid-template-columns:minmax(0,1fr)}.contact .aboutRow{flex-direction:column;align-items:flex-start}}

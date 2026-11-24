@@ -6,7 +6,7 @@
 <title>Deima Travels</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="builder.css?v=4">
-<link rel="stylesheet" href="explore.css?v=14">
+<link rel="stylesheet" href="explore.css?v=15">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
 <style>
 /* VOICE: warm, confident travel desk — "we handle it, you go".
@@ -140,7 +140,7 @@ footer img{height:46px}
     <a class="brand" href="#top" aria-label="Deima Travels home"><img src="assets/logo-light.png" alt="Deima Group"><span translate="no">Travels</span></a>
     <div class="links cp" id="links">
       <span class="cpScrew a"></span><span class="cpScrew b"></span>
-      <a class="pbn" href="#explore" data-sec="explore"><span class="pbL" aria-hidden="true"></span><span class="pbT">EXPLORE</span></a><a class="pbn" href="#packages" data-sec="packages"><span class="pbL" aria-hidden="true"></span><span class="pbT">TRIPS</span></a><button type="button" class="pbn" data-dstudio="airlines"><span class="pbL" aria-hidden="true"></span><span class="pbT">AIRLINES</span></button><a class="pbn" href="#pro" data-sec="pro"><span class="pbL" aria-hidden="true"></span><span class="pbT">PRO</span></a><a class="pbn" href="#services" data-sec="services"><span class="pbL" aria-hidden="true"></span><span class="pbT">OFFERS</span></a><a class="pbn" href="#group" data-sec="group"><span class="pbL" aria-hidden="true"></span><span class="pbT">ABOUT</span></a><a class="pbn" href="#contact" data-sec="contact"><span class="pbL" aria-hidden="true"></span><span class="pbT">CONTACT</span></a><button type="button" class="pbn hot" data-dtool="quote"><span class="pbL" aria-hidden="true"></span><span class="pbT">QUOTE</span></button><button type="button" class="mute" id="muteSw" aria-pressed="true" aria-label="Panel sound" title="Panel sound"><span class="mLed"></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z"/><path class="wv" d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg></button>
+      <a class="pbn" href="#explore" data-sec="explore"><span class="pbL" aria-hidden="true"></span><span class="pbT">EXPLORE</span></a><a class="pbn" href="#packages" data-sec="packages"><span class="pbL" aria-hidden="true"></span><span class="pbT">TRIPS</span></a><a class="pbn" href="#services" data-sec="services"><span class="pbL" aria-hidden="true"></span><span class="pbT">SERVICES</span></a><a class="pbn" href="#contact" data-sec="contact"><span class="pbL" aria-hidden="true"></span><span class="pbT">CONTACT</span></a><button type="button" class="pbn hot" data-dtool="quote"><span class="pbL" aria-hidden="true"></span><span class="pbT">QUOTE</span></button><button type="button" class="mute" id="muteSw" aria-pressed="true" aria-label="Panel sound" title="Panel sound"><span class="mLed"></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z"/><path class="wv" d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg></button>
     </div>
     <div class="lang"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></svg><select id="langSel" aria-label="Language"><option value="en">English</option><option value="ja">日本語</option><option value="ko">한국어</option></select></div>
     <div class="navClock" role="timer" aria-live="off" aria-label="Your local time"><small id="tzName" translate="no">LOCAL</small><b id="localTime" translate="no">--:--</b></div>
@@ -215,34 +215,6 @@ footer img{height:46px}
   </div>
 </section>
 <div class="pkm" id="pkm" hidden role="dialog" aria-modal="true" aria-labelledby="pkT"></div>
-
-<section class="band pro" id="pro">
-  <div class="wrap">
-    <p class="eyebrow">Travel like a pro</p>
-    <h2>Pro tools, built in</h2>
-    <div class="bento">
-      <article class="bx bxApp">
-        <div class="phone"><video muted loop playsinline preload="none" aria-hidden="true" data-inview><source src="videos/bingo-ad.mp4" type="video/mp4"></video><span class="notch"></span></div>
-        <div class="bxIn"><span class="newTag">New app</span><h3>Bingo by Deima</h3><p>Your travel buddy, from Deima Travels.</p><button class="btn sm" type="button" data-ad>Watch the video</button></div>
-      </article>
-      <article class="bx bxStudio"><div class="appCard" role="group" aria-label="Airline Studio shortcuts">
-      <div class="appTop"><span class="appDot"></span><b>Airline Studio</b><small>by Deima Travels</small></div>
-      <div class="appTiles">
-        <button type="button" class="appTile" data-studio="airlines"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5Z"/></svg><b>Choose an airline</b><small>Compare up to 3</small></button>
-        <button type="button" class="appTile" data-studio="fares"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 6h18v12H3zM7 12h.01M17 12h.01"/><circle cx="12" cy="12" r="2.5"/></svg><b>True cost</b><small>Budget vs full-service</small></button>
-        <button type="button" class="appTile" data-studio="seats"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M7 3v10h10M7 13l-2 8M17 13l2 8M7 9h8"/></svg><b>Best seats</b><small>Tap the seat map</small></button>
-        <button type="button" class="appTile" data-studio="planning"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 5h16v15H4zM4 9h16M8 3v4M16 3v4"/></svg><b>Plan in 6 steps</b><small>When and how to book</small></button>
-      </div>
-      <div class="quick" id="quickPick"></div>
-      <div class="logoRail" id="logoRail" aria-hidden="true"></div>
-    </div></article>
-      <article class="bx bxTips">
-        <div class="tipsHead"><h3>Tips & tricks</h3><button class="btn line sm" type="button" data-studio="planning">Flight plan</button></div>
-        <div class="tipRail" id="tipRail"></div>
-      </article>
-    </div>
-  </div>
-</section>
 
 <div class="studio" id="studio" hidden role="dialog" aria-modal="true" aria-label="Airline Studio">
   <div class="studioBox">
@@ -327,6 +299,29 @@ footer img{height:46px}
     <h2>One desk for the whole trip</h2>
     <p class="lead">Tell us once. We handle the rest.</p>
     <div class="services" id="svcs"></div>
+    <h3 class="subH">Pro tools, built in</h3>
+    <div class="bento">
+      <article class="bx bxApp">
+        <div class="phone"><video muted loop playsinline preload="none" aria-hidden="true" data-inview><source src="videos/bingo-ad.mp4" type="video/mp4"></video><span class="notch"></span></div>
+        <div class="bxIn"><span class="newTag">New app</span><h3>Bingo by Deima</h3><p>Your travel buddy, from Deima Travels.</p><button class="btn sm" type="button" data-ad>Watch the video</button></div>
+      </article>
+      <article class="bx bxStudio"><div class="appCard" role="group" aria-label="Airline Studio shortcuts">
+      <div class="appTop"><span class="appDot"></span><b>Airline Studio</b><small>by Deima Travels</small></div>
+      <div class="appTiles">
+        <button type="button" class="appTile" data-studio="airlines"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5Z"/></svg><b>Choose an airline</b><small>Compare up to 3</small></button>
+        <button type="button" class="appTile" data-studio="fares"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 6h18v12H3zM7 12h.01M17 12h.01"/><circle cx="12" cy="12" r="2.5"/></svg><b>True cost</b><small>Budget vs full-service</small></button>
+        <button type="button" class="appTile" data-studio="seats"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M7 3v10h10M7 13l-2 8M17 13l2 8M7 9h8"/></svg><b>Best seats</b><small>Tap the seat map</small></button>
+        <button type="button" class="appTile" data-studio="planning"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 5h16v15H4zM4 9h16M8 3v4M16 3v4"/></svg><b>Plan in 6 steps</b><small>When and how to book</small></button>
+      </div>
+      <div class="quick" id="quickPick"></div>
+      <div class="logoRail" id="logoRail" aria-hidden="true"></div>
+    </div></article>
+      <article class="bx bxTips">
+        <div class="tipsHead"><h3>Tips & tricks</h3><button class="btn line sm" type="button" data-studio="planning">Flight plan</button></div>
+        <div class="tipRail" id="tipRail"></div>
+      </article>
+    </div>
+    <h3 class="subH">How it works</h3>
     <div class="route">
       <div class="stop"><div class="pin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a8 8 0 0 1-11.7 7.1L4 20l1-4.8A8 8 0 1 1 21 12Z"/></svg></div><h3>Tell us where</h3><p>Send dates and budget.</p></div>
       <div class="stop"><div class="pin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16v14H4zM4 9h16M9 13h6"/></svg></div><h3>We plan and book</h3><p>Clear options, then we book.</p></div>
@@ -335,25 +330,22 @@ footer img{height:46px}
   </div>
 </section>
 
-<section class="band" id="group" style="padding-top:0">
-  <div class="wrap family">
-    <div><img class="dark-logo" src="assets/logo-dark.png" alt="Deima Group logo"><p class="eyebrow" style="margin-top:28px">About us</p><h2>Part of Deima Group</h2><p class="lead">Visas, tickets and careers, planned together.</p></div>
+<section class="band contact" id="contact">
+  <div class="wrap">
+    <div class="contactIn">
+      <div><p class="eyebrow" style="color:#2f4f10">About & contact</p><h2>Talk to a travel planner</h2><p class="lead">Free quotes, back the same working day.</p><a class="btn" style="background:var(--navy);color:#fff;margin-top:22px" href="#plan">Start an enquiry</a></div>
+      <div class="offices">
+      <div class="office"><b>Head office, Colombo</b>No 483, Galle Road, Colombo 3</div>
+      <div class="office"><b>Embilipitiya branch</b>Embilipitiya, Sri Lanka</div>
+      <div class="office"><b>Phone and WhatsApp</b>+94 11 000 0000 · travels@deimagroup.com</div>
+    </div>
+    </div>
+    <div class="aboutRow"><img src="assets/logo-dark.png" alt="Deima Group logo"><div><b>Part of Deima Group</b><span>Visas, tickets and careers, planned together.</span></div></div>
     <div class="ents">
       <div class="ent here"><b>Deima Travels</b><span>Air tickets, visas, packaged tours, hotels and corporate travel.</span></div>
       <div class="ent"><b>Deima Consultancy</b><span>Overseas job placement. SLBFE licence no. 3533.</span></div>
       <div class="ent"><b>Deima Language Academy</b><span>Language classes for study, work and life abroad.</span></div>
       <div class="ent"><b>Deima Campus</b><span>Digital and career skills courses. Coming 2027.</span></div>
-    </div>
-  </div>
-</section>
-
-<section class="band contact" id="contact">
-  <div class="wrap contactIn">
-    <div><h2>Talk to a travel planner</h2><p class="lead">Free quotes, back the same working day.</p><a class="btn" style="background:var(--navy);color:#fff;margin-top:22px" href="#plan">Start an enquiry</a></div>
-    <div class="offices">
-      <div class="office"><b>Head office, Colombo</b>No 483, Galle Road, Colombo 3</div>
-      <div class="office"><b>Embilipitiya branch</b>Embilipitiya, Sri Lanka</div>
-      <div class="office"><b>Phone and WhatsApp</b>+94 11 000 0000 · travels@deimagroup.com</div>
     </div>
   </div>
 </section>
@@ -483,8 +475,8 @@ $('#menu').addEventListener('click',()=>{const o=$('#links').classList.toggle('o
 document.querySelectorAll('#links a').forEach(a=>a.addEventListener('click',()=>{$('#links').classList.remove('open');$('#menu').setAttribute('aria-expanded',false)}));
 }
 </script>
-<script src="explore.js?v=11"></script>
+<script src="explore.js?v=15"></script>
 <script src="packages.js?v=6"></script>
-<script src="i18n.js?v=11"></script>
+<script src="i18n.js?v=15"></script>
 </body>
 </html>

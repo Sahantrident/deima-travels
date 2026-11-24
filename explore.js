@@ -551,7 +551,7 @@ $$('.pbn').forEach(b=>b.addEventListener('click',e=>{
  setTimeout(()=>{if(d.dtool==='quote')quote('');else if(d.dstudio)openStudio(d.dstudio);else if(d.sec){const t=$('#'+d.sec);if(t)t.scrollIntoView({behavior:RM?'auto':'smooth'});history.replaceState(null,'','#'+d.sec)}},wait);
 }));
 function setActive(id){$$('.pbn[data-sec]').forEach(x=>x.classList.toggle('act',x.dataset.sec===id))}
-{const secs=['explore','packages','pro','services','group','contact'].map(id=>document.getElementById(id)).filter(Boolean);
+{const secs=['explore','packages','services','contact'].map(id=>document.getElementById(id)).filter(Boolean);
  const spy=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)setActive(e.target.id)})},{rootMargin:'-45% 0px -50% 0px'});secs.forEach(x=>spy.observe(x));
  const top=document.getElementById('top');if(top)new IntersectionObserver(es=>{if(es[0].isIntersecting&&es[0].intersectionRatio>.5)setActive('')},{threshold:[.5]}).observe(top)}
 
