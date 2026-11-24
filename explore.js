@@ -541,13 +541,26 @@ function clack(kind){if(muted)return;try{actx=actx||new(window.AudioContext||win
  const bz=actx.createOscillator(),bg=actx.createGain();bz.type='sine';bz.frequency.value=kind==='pb'?1560:1240;bg.gain.setValueAtTime(0,t+.14);bg.gain.linearRampToValueAtTime(.05,t+.15);bg.gain.setValueAtTime(.05,t+.2);bg.gain.linearRampToValueAtTime(0,t+.21);bg.gain.setValueAtTime(0,t+.27);bg.gain.linearRampToValueAtTime(.05,t+.28);bg.gain.exponentialRampToValueAtTime(.001,t+.4);bz.connect(bg);bg.connect(actx.destination);bz.start(t+.14);bz.stop(t+.42);
 }catch(e){}}
 const muteSw=$('#muteSw');if(muteSw){const set=()=>{muteSw.setAttribute('aria-pressed',!muted);muteSw.classList.toggle('off',muted)};set();muteSw.onclick=()=>{muted=!muted;try{localStorage.setItem('deimaMute',muted?'1':'0')}catch(e){}set();clack('pb')}}
-$$('.deck .sw,.deck .pb').forEach(b=>b.addEventListener('click',()=>{
- $$('.deck .sw.on,.deck .pb.on').forEach(x=>{if(x!==b)x.classList.remove('on','blink')});
- b.classList.add('on','blink');clack(b.classList.contains('pb')?'pb':'sw');setTimeout(()=>b.classList.remove('blink'),700);setTimeout(()=>b.classList.remove('on'),6000);
- const d=b.dataset,wait=RM?0:480;
- setTimeout(()=>{if(d.dtool==='builder'&&window.DeimaTrip)window.DeimaTrip.open({});else if(d.dtool==='quote')quote('');else if(d.dstudio)openStudio(d.dstudio);else if(d.dgo){const t=$(d.dgo);if(t)t.scrollIntoView({behavior:RM?'auto':'smooth'})}},wait);
+$$('.pbn').forEach(b=>b.addEventListener('click',e=>{
+ e.preventDefault();
+ $$('.pbn.blink').forEach(x=>x.classList.remove('blink'));
+ b.classList.add('blink','press');clack(b.classList.contains('hot')?'pb':'sw');setTimeout(()=>b.classList.remove('blink'),700);setTimeout(()=>b.classList.remove('press'),160);
+ if(b.dataset.sec)setActive(b.dataset.sec);
+ const d=b.dataset,wait=RM?0:260;
+ const menu=$('#links');if(menu&&menu.classList.contains('open')){menu.classList.remove('open');const m=$('#menu');if(m)m.setAttribute('aria-expanded',false)}
+ setTimeout(()=>{if(d.dtool==='quote')quote('');else if(d.dstudio)openStudio(d.dstudio);else if(d.sec){const t=$('#'+d.sec);if(t)t.scrollIntoView({behavior:RM?'auto':'smooth'});history.replaceState(null,'','#'+d.sec)}},wait);
 }));
+function setActive(id){$$('.pbn[data-sec]').forEach(x=>x.classList.toggle('act',x.dataset.sec===id))}
+{const secs=['explore','packages','pro','services','group','contact'].map(id=>document.getElementById(id)).filter(Boolean);
+ const spy=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)setActive(e.target.id)})},{rootMargin:'-45% 0px -50% 0px'});secs.forEach(x=>spy.observe(x));
+ const top=document.getElementById('top');if(top)new IntersectionObserver(es=>{if(es[0].isIntersecting&&es[0].intersectionRatio>.5)setActive('')},{threshold:[.5]}).observe(top)}
+
 {const tick=()=>{const el=$('#cmbTime');if(el)el.textContent=new Intl.DateTimeFormat('en-GB',{hour:'2-digit',minute:'2-digit',hour12:false,timeZone:'Asia/Colombo'}).format(new Date())};tick();setInterval(tick,15000)}
+/* visitor's local time in the nav, from the device time zone */
+{const lt=$('#localTime'),tz=$('#tzName');if(lt){let zone='';try{zone=Intl.DateTimeFormat().resolvedOptions().timeZone||''}catch(e){}
+ const city=(zone.split('/').pop()||'Local').replace(/_/g,' ').toUpperCase();if(tz)tz.textContent=city.length>12?city.slice(0,12):city;
+ const fmt=new Intl.DateTimeFormat('en-GB',{hour:'2-digit',minute:'2-digit',hour12:false});
+ const tick=()=>{lt.textContent=fmt.format(new Date());lt.parentElement.title=zone?`${zone} · ${new Date().toDateString()}`:''};tick();setTimeout(()=>{tick();setInterval(tick,60000)},(60-new Date().getSeconds())*1000+50)}}
 /* tips rail */
 if($('#tipRail'))$('#tipRail').innerHTML=STEPS.map((t,i)=>`<div class="tipCard"><span class="tipN">${String(i+1).padStart(2,'0')}</span><b>${t.t}</b><p>${t.tip}</p></div>`).join('');
 /* videos that play only while visible */

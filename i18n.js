@@ -384,7 +384,7 @@ const T={
 
 // v4 additions: cockpit, explore monitor, route, custom quote, pro section
 "Trips":["ツアー","여행 상품"],"Pro tools":["プロツール","프로 도구"],"Offers":["サービス","서비스"],"About":["会社概要","회사 소개"],
-"PLAN":["計画","계획"],"QUOTE":["見積","견적"],"GET A QUOTE":["見積もり","견적 받기"],"EXPLORE":["探す","탐색"],"GLOBE":["地球儀","지구본"],"TRIPS":["ツアー","여행"],"FLIGHT":["フライト","비행"],"AIRLINES":["航空会社","항공사"],"SEATS":["座席","좌석"],"STATUS":["ステータス","상태"],"COLOMBO":["コロンボ","콜롬보"],"PLACES":["行き先","여행지"],"SOUND":["サウンド","사운드"],"TRIP BUILDER":["旅程づくり","여행 만들기"],
+"PLAN":["計画","계획"],"QUOTE":["見積","견적"],"GET A QUOTE":["見積もり","견적 받기"],"EXPLORE":["探す","탐색"],"GLOBE":["地球儀","지구본"],"TRIPS":["ツアー","여행"],"FLIGHT":["フライト","비행"],"AIRLINES":["航空会社","항공사"],"SEATS":["座席","좌석"],"STATUS":["ステータス","상태"],"COLOMBO":["コロンボ","콜롬보"],"PLACES":["行き先","여행지"],"SOUND":["サウンド","사운드"],"PRO":["プロ","프로"],"OFFERS":["サービス","서비스"],"ABOUT":["会社概要","회사 소개"],"CONTACT":["連絡先","문의"],"Your local time":["現在の現地時刻","현재 현지 시각"],"TRIP BUILDER":["旅程づくり","여행 만들기"],
 "Travel controls":["旅のコントロールパネル","여행 컨트롤 패널"],"Panel sound":["パネルの効果音","패널 효과음"],
 "Where to next?":["次はどこへ?","다음 여행지는?"],"Search destinations":["行き先を検索","여행지 검색"],"Search a country, city or place":["国・都市・場所を検索","나라, 도시, 장소 검색"],"Popular destinations":["人気の行き先","인기 여행지"],"Interactive globe. Use the search box to find each destination.":["操作できる地球儀。検索ボックスで行き先を探せます。","조작 가능한 지구본. 검색창에서 여행지를 찾으세요."],
 "No match yet — ask us anyway":["見つかりません。お気軽にご相談ください","검색 결과가 없어요. 그래도 문의해 주세요"],"Full guide":["詳しいガイド","전체 가이드"],"✓ In my route":["✓ ルートに追加済み","✓ 경로에 포함"],"Build this trip":["この旅を作る","이 여행 만들기"],

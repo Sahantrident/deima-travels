@@ -6,7 +6,7 @@
 <title>Deima Travels</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="builder.css?v=4">
-<link rel="stylesheet" href="explore.css?v=9">
+<link rel="stylesheet" href="explore.css?v=14">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
 <style>
 /* VOICE: warm, confident travel desk — "we handle it, you go".
@@ -138,11 +138,12 @@ footer img{height:46px}
 <header>
   <nav class="nav" aria-label="Main">
     <a class="brand" href="#top" aria-label="Deima Travels home"><img src="assets/logo-light.png" alt="Deima Group"><span translate="no">Travels</span></a>
-    <div class="links" id="links">
-      <a href="#explore">Explore</a><a href="#packages">Trips</a><a href="#pro">Pro tools</a><a href="#services">Offers</a><a href="#group">About</a><a href="#contact">Contact</a>
+    <div class="links cp" id="links">
+      <span class="cpScrew a"></span><span class="cpScrew b"></span>
+      <a class="pbn" href="#explore" data-sec="explore"><span class="pbL" aria-hidden="true"></span><span class="pbT">EXPLORE</span></a><a class="pbn" href="#packages" data-sec="packages"><span class="pbL" aria-hidden="true"></span><span class="pbT">TRIPS</span></a><button type="button" class="pbn" data-dstudio="airlines"><span class="pbL" aria-hidden="true"></span><span class="pbT">AIRLINES</span></button><a class="pbn" href="#pro" data-sec="pro"><span class="pbL" aria-hidden="true"></span><span class="pbT">PRO</span></a><a class="pbn" href="#services" data-sec="services"><span class="pbL" aria-hidden="true"></span><span class="pbT">OFFERS</span></a><a class="pbn" href="#group" data-sec="group"><span class="pbL" aria-hidden="true"></span><span class="pbT">ABOUT</span></a><a class="pbn" href="#contact" data-sec="contact"><span class="pbL" aria-hidden="true"></span><span class="pbT">CONTACT</span></a><button type="button" class="pbn hot" data-dtool="quote"><span class="pbL" aria-hidden="true"></span><span class="pbT">QUOTE</span></button><button type="button" class="mute" id="muteSw" aria-pressed="true" aria-label="Panel sound" title="Panel sound"><span class="mLed"></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z"/><path class="wv" d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg></button>
     </div>
     <div class="lang"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></svg><select id="langSel" aria-label="Language"><option value="en">English</option><option value="ja">日本語</option><option value="ko">한국어</option></select></div>
-    <a class="btn" href="#plan">Plan my trip</a>
+    <div class="navClock" role="timer" aria-live="off" aria-label="Your local time"><small id="tzName" translate="no">LOCAL</small><b id="localTime" translate="no">--:--</b></div>
     <button class="menu" id="menu" aria-label="Open menu" aria-expanded="false" aria-controls="links"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
   </nav>
 </header>
@@ -163,30 +164,6 @@ footer img{height:46px}
       <button class="btn" type="button" id="l-go">Start building my trip →</button>
       <button type="button" class="linkish" id="l-quick">Going abroad instead? Send a quick request</button>
     </div>
-  </div>
-</section>
-
-<section class="deck" aria-label="Travel controls">
-  <div class="panel">
-    <span class="screw s1"></span><span class="screw s2"></span><span class="screw s3"></span><span class="screw s4"></span>
-    <div class="grp"><p class="grpT"><span>PLAN</span></p><div class="ctrls">
-      <button type="button" class="sw" data-dtool="builder"><span class="led" aria-hidden="true"></span><span class="tog" aria-hidden="true"><span class="nut"></span><span class="bat"></span></span><b>TRIP BUILDER</b></button>
-      <button type="button" class="pb" data-dtool="quote"><span class="pbFace">QUOTE</span><b>GET A QUOTE</b></button>
-    </div></div>
-    <div class="grp"><p class="grpT"><span>EXPLORE</span></p><div class="ctrls">
-      <button type="button" class="sw" data-dgo="#explore"><span class="led" aria-hidden="true"></span><span class="tog" aria-hidden="true"><span class="nut"></span><span class="bat"></span></span><b>GLOBE</b></button>
-      <button type="button" class="sw" data-dgo="#packages"><span class="led" aria-hidden="true"></span><span class="tog" aria-hidden="true"><span class="nut"></span><span class="bat"></span></span><b>TRIPS</b></button>
-    </div></div>
-    <div class="grp"><p class="grpT"><span>FLIGHT</span></p><div class="ctrls">
-      <button type="button" class="sw" data-dstudio="airlines"><span class="led" aria-hidden="true"></span><span class="tog" aria-hidden="true"><span class="nut"></span><span class="bat"></span></span><b>AIRLINES</b></button>
-      <button type="button" class="sw" data-dstudio="seats"><span class="led" aria-hidden="true"></span><span class="tog" aria-hidden="true"><span class="nut"></span><span class="bat"></span></span><b>SEATS</b></button>
-    </div></div>
-    <div class="grp stat"><p class="grpT"><span>STATUS</span></p><div class="lcds">
-      <div class="lcd"><small>COLOMBO</small><b id="cmbTime" translate="no">--:--</b></div>
-      <div class="lcd"><small>PLACES</small><b translate="no">21</b></div>
-      <div class="lcd"><small>TRIPS</small><b translate="no">05</b></div>
-      <button type="button" class="mute" id="muteSw" aria-pressed="false" aria-label="Panel sound"><span class="mLed"></span><span>SOUND</span></button>
-    </div></div>
   </div>
 </section>
 
@@ -506,8 +483,8 @@ $('#menu').addEventListener('click',()=>{const o=$('#links').classList.toggle('o
 document.querySelectorAll('#links a').forEach(a=>a.addEventListener('click',()=>{$('#links').classList.remove('open');$('#menu').setAttribute('aria-expanded',false)}));
 }
 </script>
-<script src="explore.js?v=7"></script>
+<script src="explore.js?v=11"></script>
 <script src="packages.js?v=6"></script>
-<script src="i18n.js?v=8"></script>
+<script src="i18n.js?v=11"></script>
 </body>
 </html>
