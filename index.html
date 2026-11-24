@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deima Travels</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="builder.css">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+<style>
+/* VOICE: warm, confident travel desk — "we handle it, you go".
+   IDEA: an airport departures board; every destination is a gate with live footage.
+   PICTURE: full-bleed location video in the hero, then a board of video "gates".
+   COLOUR and TYPE: Deima navy #0F1B38 dominant, brand lime #92C04E accent, white; Outfit + DM Sans.
+   LAYOUT: navy hero and board, light service bands, route line for the process, navy footer. */
+:root{color-scheme:light dark;--navy:#0F1B38;--navy2:#16254a;--lime:#92C04E;--limeInk:light-dark(#4d7a1c,#a9d468);
+--bg:light-dark(#F4F6F1,#0a1229);--card:light-dark(#ffffff,#121d3c);--ink:light-dark(#0F1B38,#eef1f7);--soft:light-dark(#4a5570,#a9b2c8);--line:light-dark(#dde2d6,#24315a)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "DM Sans",system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3{font-family:Outfit,system-ui,sans-serif;line-height:1.05;margin:0;text-wrap:balance}
+h2{font-size:clamp(30px,4vw,46px)}h3{font-size:21px}
+a{color:inherit}
+.wrap{max-width:1240px;margin:0 auto}
+.band{padding:clamp(48px,6vw,96px) max(5vw,16px)}
+.lead{color:var(--soft);max-width:62ch;margin:14px 0 0;font-size:17px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 22px;border-radius:999px;border:0;background:var(--lime);color:var(--navy);font:700 16px "DM Sans",sans-serif;cursor:pointer;text-decoration:none}
+.btn:hover{filter:brightness(1.07)}
+.btn.ghost{background:transparent;color:#fff;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.55)}
+:focus-visible{outline:3px solid var(--lime);outline-offset:3px}
+/* header */
+header{position:sticky;top:0;z-index:20;background:rgba(15,27,56,.92);backdrop-filter:blur(10px);color:#fff}
+.nav{display:flex;align-items:center;gap:24px;padding:10px max(5vw,16px);max-width:1340px;margin:0 auto}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.brand img{height:42px;width:auto}
+.brand span{font:600 20px Outfit,sans-serif;letter-spacing:.01em;border-left:1px solid rgba(255,255,255,.3);padding-left:12px}
+.links{display:flex;gap:22px;margin-left:auto;flex-wrap:wrap}
+.links a{text-decoration:none;opacity:.85;font-weight:500}.links a:hover{opacity:1;color:var(--lime)}
+.menu{display:none;margin-left:auto;background:none;border:0;color:#fff;width:44px;height:44px;cursor:pointer}
+/* hero */
+.hero{position:relative;min-height:min(92vh,820px);color:#fff;background:var(--navy);display:grid;align-items:end;overflow:hidden}
+.slide{position:absolute;inset:0;opacity:0;transition:opacity 1.2s ease}
+.slide.on{opacity:1}
+.slide svg,.slide video,.gate svg,.gate video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.slide video,.gate video{opacity:1}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,27,56,.55) 0%,rgba(15,27,56,.1) 35%,rgba(15,27,56,.85) 100%)}
+.heroIn{position:relative;z-index:2;padding:0 max(5vw,16px) clamp(32px,5vw,64px);max-width:1340px;margin:0 auto;width:100%;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:40px;align-items:end}
+.hero h1{font-size:clamp(40px,6.4vw,80px)}
+.hero p{font-size:18px;max-width:46ch;opacity:.9;margin:18px 0 0}
+.now{display:flex;align-items:center;gap:12px;margin-top:28px;font-size:14px}
+.now b{font-weight:700}
+.dots{display:flex;gap:6px}
+.dots button{width:44px;height:44px;border:0;background:none;cursor:pointer;padding:0;display:grid;place-items:center}
+.dots button::before{content:"";width:28px;height:4px;border-radius:2px;background:rgba(255,255,255,.35)}
+.dots button[aria-current=true]::before{background:var(--lime)}
+/* search */
+.search{background:rgba(255,255,255,.97);color:var(--navy);border-radius:20px;padding:20px;box-shadow:0 30px 60px rgba(0,0,0,.35)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.tabs button{min-height:44px;padding:0 16px;border-radius:999px;border:1px solid #d5dbe6;background:#fff;color:var(--navy);font:600 15px "DM Sans",sans-serif;cursor:pointer}
+.tabs button[aria-selected=true]{background:var(--navy);color:#fff;border-color:var(--navy)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+label{display:block;font-size:13px;font-weight:700;color:#4a5570}
+input,select{width:100%;min-height:46px;margin-top:4px;padding:0 12px;border:1px solid #cfd6e2;border-radius:12px;font:16px "DM Sans",sans-serif;color:var(--navy);background:#fff}
+.search .btn{width:100%;margin-top:14px}
+.linkish{display:block;width:100%;min-height:44px;margin-top:6px;background:none;border:0;color:#33405e;font:600 14px "DM Sans",sans-serif;text-decoration:underline;cursor:pointer}
+.qq .search{box-shadow:none;padding:0}
+.done{display:none;margin-top:12px;padding:14px;border-radius:12px;background:#eef6e3;font-size:15px}
+.done.show{display:block}
+.done pre{white-space:pre-wrap;font:14px/1.5 "DM Sans",sans-serif;margin:8px 0}
+.copy{min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--navy);background:#fff;font:600 14px "DM Sans",sans-serif;cursor:pointer;color:var(--navy)}
+/* departures board */
+.board{background:var(--navy);color:#fff}
+.boardHead{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap;margin-bottom:28px}
+.board .lead{color:#b9c3d8}
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.filters button{min-height:44px;padding:0 18px;border-radius:999px;border:1px solid rgba(255,255,255,.3);background:none;color:#fff;font:600 15px "DM Sans",sans-serif;cursor:pointer}
+.filters button[aria-pressed=true]{background:var(--lime);color:var(--navy);border-color:var(--lime)}
+.gates{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.gate{position:relative;aspect-ratio:3/4;border-radius:18px;overflow:hidden;background:var(--navy2);text-decoration:none;color:#fff;isolation:isolate}
+.gate.wide{grid-column:span 2;aspect-ratio:auto}
+.gate::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(10,18,41,.9));z-index:1}
+.gate .info{position:absolute;inset:auto 0 0 0;padding:18px;z-index:2}
+.gate .row{display:flex;justify-content:space-between;align-items:center;font-size:13px;opacity:.85;font-weight:500}
+.gate .code{font:600 13px Outfit,sans-serif;background:rgba(255,255,255,.14);padding:3px 9px;border-radius:6px}
+.gate h3{font-size:clamp(22px,2.4vw,30px);margin:8px 0 4px}
+.gate p{margin:0;font-size:14px;opacity:.85}
+.gate .ask{margin-top:12px;display:inline-block;font-weight:700;color:var(--lime);font-size:14px}
+.gate:hover video,.gate:focus-visible video{transform:scale(1.04)}
+.gate video,.gate svg{transition:transform 1.2s ease,opacity .6s}
+.gate[hidden]{display:none}
+/* services */
+.services{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:36px}
+.svc{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px}
+.svc svg{width:44px;height:44px;color:var(--limeInk)}
+.svc h3{margin:14px 0 8px}
+.svc p{margin:0;color:var(--soft)}
+.svc ul{margin:12px 0 0;padding-left:18px;color:var(--soft);font-size:15px}
+.svc.feature{background:var(--navy);color:#fff;border-color:var(--navy);grid-row:span 2;display:flex;flex-direction:column}
+.svc.feature p,.svc.feature ul{color:#c7cfe0}
+.svc.feature svg{color:var(--lime)}
+.svc.feature .btn{margin-top:auto;align-self:flex-start}
+/* route */
+.route{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:44px}
+.route::before{content:"";position:absolute;top:22px;left:22px;right:22px;border-top:2px dashed var(--line)}
+.stop{position:relative}
+.pin{width:44px;height:44px;border-radius:50%;background:var(--lime);display:grid;place-items:center;color:var(--navy);position:relative}
+.pin svg{width:22px;height:22px}
+.stop h3{margin:18px 0 6px}.stop p{margin:0;color:var(--soft)}
+/* group */
+.family{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:40px;align-items:center}
+.family img{width:min(320px,70%);height:auto}
+.ents{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.ent{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}
+.ent b{font-family:Outfit,sans-serif;font-size:18px;display:block}
+.ent span{color:var(--soft);font-size:15px}
+.ent.here{border-color:var(--lime);box-shadow:inset 0 0 0 1px var(--lime)}
+.dark-logo{display:block}
+/* contact + footer */
+.contact{background:var(--lime);color:var(--navy)}
+.contactIn{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:32px;align-items:center}
+.contact .lead{color:#22340c}
+.offices{display:grid;gap:12px}
+.office{background:rgba(255,255,255,.55);border-radius:16px;padding:18px}
+.office b{font:600 18px Outfit,sans-serif;display:block}
+footer{background:var(--navy);color:#b9c3d8;padding:40px max(5vw,16px);font-size:14px}
+.foot{max-width:1240px;margin:0 auto;display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:center}
+footer img{height:46px}
+.note{font-size:13px;opacity:.75;margin-top:10px}
+@media(max-width:980px){.heroIn{grid-template-columns:minmax(0,1fr)}.gates{grid-template-columns:repeat(2,minmax(0,1fr))}.services{grid-template-columns:repeat(2,minmax(0,1fr))}.svc.feature{grid-row:auto;grid-column:span 2}.family,.contactIn{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:760px){.links{display:none}.menu{display:grid;place-items:center}.links.open{display:flex;position:absolute;top:64px;left:0;right:0;flex-direction:column;background:var(--navy);padding:16px max(5vw,16px);gap:4px}.links.open a{min-height:44px;display:flex;align-items:center}.nav .btn{display:none}}
+@media(max-width:600px){.heroIn{padding-top:48px}.gates,.services,.ents,.grid2{grid-template-columns:minmax(0,1fr)}.gate.wide{grid-column:auto;aspect-ratio:3/4}.svc.feature{grid-column:auto}.route{grid-template-columns:minmax(0,1fr)}.route::before{top:22px;bottom:22px;left:21px;right:auto;border-top:0;border-left:2px dashed var(--line)}.stop{padding-left:64px}.pin{position:absolute;left:0;top:0}.stop h3{margin-top:8px}.brand span{font-size:17px}.brand img{height:34px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header>
+  <nav class="nav" aria-label="Main">
+    <a class="brand" href="#top" aria-label="Deima Travels home"><img src="assets/logo-light.png" alt="Deima Group"><span>Travels</span></a>
+    <div class="links" id="links">
+      <a href="#destinations">Destinations</a><a href="#services">Services</a><a href="#how">How it works</a><a href="#group">Deima Group</a><a href="#contact">Contact</a>
+    </div>
+    <a class="btn" href="#plan">Plan my trip</a>
+    <button class="menu" id="menu" aria-label="Open menu" aria-expanded="false" aria-controls="links"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </nav>
+</header>
+
+<section class="hero" id="top" aria-label="Featured destinations">
+  <div id="slides"></div>
+  <div class="heroIn">
+    <div>
+      <h1>Where do you want to wake up next?</h1>
+      <p>Air tickets, visas, holiday packages and hotels — planned by one team in Colombo, from the first quote to the flight home.</p>
+      <div class="now"><div class="dots" id="dots" role="group" aria-label="Choose featured location"></div><span>Now showing <b id="nowName">Sigiriya, Sri Lanka</b></span></div>
+    </div>
+    <div class="search launch" id="plan">
+      <p style="margin:0;font:700 13px 'DM Sans',sans-serif;color:#4d7a1c">TRIP BUILDER · SRI LANKA</p>
+      <h2 style="font-size:28px;margin:6px 0 8px;color:var(--navy)">Build your trip, get a priced quote</h2>
+      <p style="margin:0 0 14px;color:#4a5570;font-size:15px;opacity:1">Pick your dates and interests, plan your route on the map, and a Deima consultant sends you prices.</p>
+      <div class="grid2"><label>Arrival date<input id="l-date" type="date"></label><label>Travellers<select id="l-pax"><option value="1">1 adult</option><option value="2" selected>2 adults</option><option value="3">3 adults</option><option value="4">4 adults</option><option value="6">Group (6)</option></select></label></div>
+      <button class="btn" type="button" id="l-go">Start building my trip →</button>
+      <button type="button" class="linkish" id="l-quick">Going abroad instead? Send a quick request</button>
+    </div>
+  </div>
+</section>
+
+<section class="band board" id="destinations">
+  <div class="wrap">
+    <div class="boardHead">
+      <div><h2>Departures</h2><p class="lead">Real footage from places our travellers go — at home in Sri Lanka and across the world. Tap a gate to ask for a plan.</p></div>
+      <div class="filters" role="group" aria-label="Filter destinations">
+        <button aria-pressed="true" data-f="all">All</button><button aria-pressed="false" data-f="lk">Sri Lanka</button><button aria-pressed="false" data-f="world">Abroad</button>
+      </div>
+    </div>
+    <div class="gates" id="gates"></div>
+  </div>
+</section>
+
+<section class="band" id="services">
+  <div class="wrap">
+    <h2>One desk for the whole trip</h2>
+    <p class="lead">Tell us once. We book the seats, file the visa, hold the room and stay on the phone until you are home.</p>
+    <div class="services" id="svcs"></div>
+  </div>
+</section>
+
+<section class="band" id="how" style="padding-top:0">
+  <div class="wrap">
+    <h2>From idea to boarding gate</h2>
+    <div class="route">
+      <div class="stop"><div class="pin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a8 8 0 0 1-11.7 7.1L4 20l1-4.8A8 8 0 1 1 21 12Z"/></svg></div><h3>Tell us where</h3><p>Send the destination, dates and budget by phone, WhatsApp or the form above.</p></div>
+      <div class="stop"><div class="pin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16v14H4zM4 9h16M9 13h6"/></svg></div><h3>We plan and book</h3><p>You get options and a clear price. Once you choose, we book tickets, hotels and file visa papers.</p></div>
+      <div class="stop"><div class="pin"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5Z"/></svg></div><h3>You travel, we stay on call</h3><p>Tickets and documents in one folder, and a real person to call if plans change.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="group" style="padding-top:0">
+  <div class="wrap family">
+    <div><img class="dark-logo" src="assets/logo-dark.png" alt="Deima Group logo"><h2 style="margin-top:28px">Part of Deima Group</h2><p class="lead">Deima Travels works alongside the group's job placement, language and skills teams — so a visa, a ticket and a new career can be planned together.</p></div>
+    <div class="ents">
+      <div class="ent here"><b>Deima Travels</b><span>Air tickets, visas, packaged tours, hotels and corporate travel.</span></div>
+      <div class="ent"><b>Deima Consultancy</b><span>Overseas job placement. SLBFE licence no. 3533.</span></div>
+      <div class="ent"><b>Deima Language Academy</b><span>Language classes for study, work and life abroad.</span></div>
+      <div class="ent"><b>Deima Campus</b><span>Digital and career skills courses. Coming 2027.</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="band contact" id="contact">
+  <div class="wrap contactIn">
+    <div><h2>Talk to a travel planner</h2><p class="lead">Walk in, call, or send a message. Quotes are free and come back the same working day.</p><a class="btn" style="background:var(--navy);color:#fff;margin-top:22px" href="#plan">Start an enquiry</a></div>
+    <div class="offices">
+      <div class="office"><b>Head office, Colombo</b>No 483, Galle Road, Colombo 3</div>
+      <div class="office"><b>Embilipitiya branch</b>Embilipitiya, Sri Lanka</div>
+      <div class="office"><b>Phone and WhatsApp</b>+94 11 000 0000 · travels@deimagroup.com</div>
+    </div>
+  </div>
+</section>
+
+<div class="qq" id="qq" hidden role="dialog" aria-modal="true" aria-labelledby="qqT"><div class="qq-box"><div style="display:flex;justify-content:space-between;align-items:start;gap:10px"><div><h3 id="qqT">Quick quote request</h3><p style="margin:0 0 12px;color:#4a5570">Flights, holidays, visas and hotels anywhere. We'll reply with options.</p></div><button class="tb-x" id="qqX" aria-label="Close">×</button></div>
+<form class="search" id="qform" novalidate>
+  <div class="tabs" role="tablist" aria-label="What do you need?">
+    <button type="button" role="tab" aria-selected="true" data-k="Flights">Flights</button>
+    <button type="button" role="tab" aria-selected="false" data-k="Holiday package">Holidays</button>
+    <button type="button" role="tab" aria-selected="false" data-k="Visa">Visa</button>
+    <button type="button" role="tab" aria-selected="false" data-k="Hotel">Hotels</button>
+  </div>
+  <div class="grid2">
+    <label>From<input id="f-from" value="Colombo (CMB)" autocomplete="off"></label>
+    <label>To<input id="f-to" list="dest-list" placeholder="City or country" autocomplete="off"></label>
+    <label>Travel date<input id="f-date" type="date"></label>
+    <label>Travellers<select id="f-pax"><option>1 adult</option><option selected>2 adults</option><option>Family (2 + kids)</option><option>Group (6+)</option><option>Corporate team</option></select></label>
+  </div>
+  <datalist id="dest-list"></datalist>
+  <button class="btn" type="submit">Get my quote</button>
+  <div class="done" id="done" role="status" aria-live="polite"><b>Your enquiry is ready.</b><pre id="sum"></pre><button type="button" class="copy" id="copy">Copy enquiry</button> <span id="copied"></span></div>
+    </form>
+</div></div>
+<button class="qfab" id="qfab" aria-label="Get a quote: build your trip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3H6v18h12V7z M14 3v4h4 M9 12h6 M9 16h4"/></svg>Get a quote<span class="more">· build your trip in 6 steps</span></button>
+<footer>
+  <div class="foot">
+    <img src="assets/logo-light.png" alt="Deima Group">
+    <span>© 2026 Deima Travels, a Deima Group company · Colombo, Sri Lanka</span>
+  </div>
+  <p class="note" style="max-width:1240px;margin:16px auto 0">Concept site. Location videos from Pixabay. Phone, email and same-day quote promise are placeholders to confirm before launch.</p>
+</footer>
+
+<script src="lkpath.js"></script>
+<script src="builder.js"></script>
+<script>
+{
+const D=[
+ {id:'sigiriya',name:'Sigiriya',place:'Sri Lanka',code:'SGR',r:'lk',tag:'Day tours and cultural triangle trips',sky:['#f6b26b','#e0795a','#5f7f5a'],shape:'rock'},
+ {id:'maldives',name:'Maldives',place:'Malé atolls',code:'MLE',r:'world',tag:'Island resort packages',sky:['#9fe3ef','#3fb5c9','#0d6f8f'],shape:'palm'},
+ {id:'dubai',name:'Dubai',place:'UAE',code:'DXB',r:'world',tag:'City holidays and visit visas',sky:['#ffd29a','#f08a5d','#3a2c4f'],shape:'tower'},
+ {id:'ella',name:'Ella',place:'Sri Lanka',code:'ELA',r:'lk',tag:'Hill country rail journeys',sky:['#cfe8d2','#7fb38a','#2d5d45'],shape:'hills'},
+ {id:'tokyo',name:'Tokyo',place:'Japan',code:'HND',r:'world',tag:'Tours and visa support',sky:['#ffd6e0','#e98aa6','#3b3f73'],shape:'fuji'},
+ {id:'galle',name:'South Coast',place:'Galle, Sri Lanka',code:'GLL',r:'lk',tag:'Beaches, stilt fishermen and Galle Fort stays',sky:['#ffe0a8','#f2a65a','#1e5f74'],shape:'lighthouse'},
+ {id:'london',name:'London',place:'United Kingdom',code:'LHR',r:'world',tag:'Visit and study visas',sky:['#d9e2ec','#9fb3c8','#334e68'],shape:'clock'},
+ {id:'singapore',name:'Singapore',place:'Singapore',code:'SIN',r:'world',tag:'City breaks and stopovers',sky:['#c9b6ff','#7a6cd8','#1d2156'],shape:'city'}
+];
+const HERO=['sigiriya','maldives','dubai','tokyo'];
+const S={
+ rock:'<path d="M0 620 L0 520 Q200 480 300 500 L340 300 Q360 230 470 225 Q590 230 610 300 L650 500 Q800 470 1000 520 L1000 620Z"/>',
+ palm:'<path d="M0 540 Q500 500 1000 540 L1000 620 L0 620Z" opacity=".55"/><path d="M640 540 Q655 380 700 250 L712 254 Q670 390 656 540Z"/><path d="M706 252 Q620 210 560 250 Q640 230 700 262Z M706 252 Q790 200 860 240 Q780 225 712 262Z M706 252 Q700 170 640 140 Q710 180 714 258Z M706 252 Q780 280 800 340 Q760 290 702 262Z"/>',
+ tower:'<path d="M0 620 L0 470 L90 470 L90 420 L160 420 L160 480 L240 480 L240 380 L300 380 L300 470 L430 470 L470 140 L480 40 L490 140 L530 470 L620 470 L620 360 L690 360 L690 450 L790 450 L790 400 L860 400 L860 480 L1000 480 L1000 620Z"/>',
+ hills:'<path d="M0 620 L0 430 Q160 330 330 420 Q470 300 640 400 Q800 320 1000 420 L1000 620Z" opacity=".6"/><path d="M0 620 L0 510 Q250 430 500 500 Q750 440 1000 500 L1000 620Z"/><path d="M0 560 Q500 520 1000 555" stroke="#fff" stroke-width="3" fill="none" opacity=".35"/>',
+ fuji:'<path d="M180 620 L470 250 Q500 225 530 250 L820 620Z" opacity=".55"/><path d="M450 280 L470 250 Q500 225 530 250 L550 280 Q520 270 500 290 Q480 270 450 280Z" fill="#fff" opacity=".8"/><path d="M0 620 L0 500 L120 500 L120 440 L200 440 L200 500 L700 500 L700 420 L760 380 L820 420 L820 500 L1000 500 L1000 620Z"/>',
+ lighthouse:'<path d="M0 530 Q500 500 1000 530 L1000 620 L0 620Z" opacity=".55"/><path d="M0 620 L0 470 L380 470 L380 430 L640 430 L640 470 L1000 470 L1000 620Z"/><path d="M500 430 L512 260 L548 260 L560 430Z"/><path d="M505 260 L530 220 L555 260Z"/>',
+ clock:'<path d="M0 620 L0 470 L140 470 L140 410 L260 410 L260 470 L420 470 L420 210 L450 170 L480 210 L480 470 L560 470 L560 400 L720 400 L720 450 L1000 450 L1000 620Z"/><circle cx="450" cy="250" r="16" fill="#fff" opacity=".6"/>',
+ city:'<path d="M0 620 L0 460 L80 460 L80 360 L140 360 L140 460 L220 460 L220 300 L250 290 L280 300 L280 460 L380 460 L380 340 L420 340 L420 460 L560 460 L560 320 L600 320 L600 460 L640 460 L640 330 L680 330 L680 460 L700 300 L800 300 L800 460 L1000 460 L1000 620Z"/><path d="M520 290 Q630 270 740 290 L740 300 L520 300Z"/>'
+};
+const scene=(d,i)=>`<svg viewBox="0 0 1000 620" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><defs><linearGradient id="g${i}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${d.sky[0]}"/><stop offset=".6" stop-color="${d.sky[1]}"/><stop offset="1" stop-color="${d.sky[2]}"/></linearGradient></defs><rect width="1000" height="620" fill="url(#g${i})"/><circle cx="780" cy="150" r="60" fill="#fff" opacity=".35"/><g fill="#0F1B38" opacity=".88">${S[d.shape]}</g></svg>`;
+const vid=d=>`<video muted loop playsinline preload="metadata" poster="videos/${d.id}.jpg" aria-hidden="true"><source src="videos/${d.id}.mp4" type="video/mp4"></video>`;
+const byId=Object.fromEntries(D.map(d=>[d.id,d]));
+const $=s=>document.querySelector(s);
+
+/* hero slides */
+const slides=$('#slides'),dots=$('#dots');
+slides.innerHTML=HERO.map((k,i)=>`<div class="slide${i?'':' on'}" data-k="${k}">${scene(byId[k],'h'+i)}${vid(byId[k])}</div>`).join('');
+dots.innerHTML=HERO.map((k,i)=>`<button type="button" aria-label="Show ${byId[k].name}" aria-current="${i===0}"></button>`).join('');
+const slideEls=[...slides.children],dotEls=[...dots.children];
+let cur=0,timer;
+const show=i=>{cur=(i+HERO.length)%HERO.length;slideEls.forEach((s,j)=>{s.classList.toggle('on',j===cur);const v=s.querySelector('video');if(j===cur){v.play().catch(()=>{})}else{v.pause()}});dotEls.forEach((b,j)=>b.setAttribute('aria-current',j===cur));const d=byId[HERO[cur]];$('#nowName').textContent=`${d.name}, ${d.place}`};
+const auto=()=>{clearInterval(timer);if(!matchMedia('(prefers-reduced-motion: reduce)').matches)timer=setInterval(()=>show(cur+1),8000)};
+dotEls.forEach((b,i)=>b.addEventListener('click',()=>{show(i);auto()}));
+
+/* departures board */
+const gates=$('#gates');
+gates.innerHTML=D.map((d,i)=>`<a class="gate${d.wide?' wide':''}" href="#plan" data-r="${d.r}" data-to="${d.name}">${scene(d,'g'+i)}${vid(d)}<div class="info"><div class="row"><span>${d.place}</span><span class="code">${d.code}</span></div><h3>${d.name}</h3><p>${d.tag}</p><span class="ask">${d.r==='lk'?'Build this trip →':'Get a quote →'}</span></div></a>`).join('');
+$('#dest-list').innerHTML=D.map(d=>`<option value="${d.name}, ${d.place}">`).join('');
+
+/* attach video files when present: the drawn scene stays as poster otherwise */
+document.querySelectorAll('video').forEach(v=>{
+  v.addEventListener('loadeddata',()=>v.parentElement.classList.add('has-video'));
+  v.querySelector('source').addEventListener('error',()=>v.remove());
+});
+const io=new IntersectionObserver(es=>es.forEach(e=>{const v=e.target.querySelector('video');if(!v)return;e.isIntersecting?v.play().catch(()=>{}):v.pause()}),{threshold:.35});
+document.querySelectorAll('.gate').forEach(g=>io.observe(g));
+show(0);auto();
+
+const openQQ=to=>{$('#qq').hidden=false;if(to)$('#f-to').value=to;setTimeout(()=>$('#f-to').focus(),50)};
+const closeQQ=()=>{$('#qq').hidden=true};
+$('#qqX').addEventListener('click',closeQQ);$('#qq').addEventListener('click',e=>{if(e.target.id==='qq')closeQQ()});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#qq').hidden)closeQQ()});
+const LKMAP={sigiriya:'sigiriya',ella:'ella',galle:'galle'};
+document.querySelectorAll('.gate').forEach(g=>g.addEventListener('click',e=>{e.preventDefault();const d=D.find(x=>x.name===g.dataset.to);if(d.r==='lk')window.DeimaTrip.open({place:LKMAP[d.id]});else openQQ(`${d.name}, ${d.place}`)}));
+const openTB=e=>{if(e)e.preventDefault();window.DeimaTrip.open({date:$('#l-date').value||undefined,adults:e&&e.currentTarget&&e.currentTarget.id==='l-go'?$('#l-pax').value:undefined})};
+$('#l-go').addEventListener('click',openTB);$('#qfab').addEventListener('click',openTB);
+$('#l-quick').addEventListener('click',()=>openQQ(''));
+document.querySelectorAll('a[href="#plan"]').forEach(a=>a.addEventListener('click',openTB));
+$('#l-date').min=new Date().toISOString().slice(0,10);
+document.querySelectorAll('.filters button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.filters button').forEach(x=>x.setAttribute('aria-pressed',x===b));document.querySelectorAll('.gate').forEach(g=>g.hidden=!(b.dataset.f==='all'||g.dataset.r===b.dataset.f))}));
+
+/* services */
+const ic={plane:'<path fill="currentColor" d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5Z"/>',doc:'<path fill="none" stroke="currentColor" stroke-width="1.8" d="M6 3h9l4 4v14H6zM14 3v5h5M9 12h7M9 16h7"/>',map:'<path fill="none" stroke="currentColor" stroke-width="1.8" d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2zM9 4v14M15 6v14"/>',bed:'<path fill="none" stroke="currentColor" stroke-width="1.8" d="M3 19V6M3 14h18v5M21 14v-3a3 3 0 0 0-3-3h-7v6M7 11.5a1.5 1.5 0 1 0 0-.01"/>',brief:'<path fill="none" stroke="currentColor" stroke-width="1.8" d="M3 8h18v12H3zM8 8V5h8v3M3 13h18"/>'};
+const SV=[
+ {k:'map',t:'Packaged tours',p:'Ready-made and tailor-made holidays, abroad and around Sri Lanka.',l:['Flights, hotels and transfers in one price','Family, honeymoon and group trips','Local guides at the destination'],f:1},
+ {k:'plane',t:'Air tickets',p:'Fares compared across airlines for one-way, return and multi-city trips.',l:['Students, workers and families','Date changes handled for you']},
+ {k:'doc',t:'Visas',p:'Forms, documents and appointments prepared and checked before you file.',l:['Visit, study and work visa support','Checklist per country']},
+ {k:'bed',t:'Hotels',p:'Stays matched to budget and plan, from city hotels to island resorts.',l:['Booked with your flights']},
+ {k:'brief',t:'Corporate travel',p:'One account for company trips, with simple monthly reporting.',l:['Team and event travel','A named travel planner']}
+];
+$('#svcs').innerHTML=SV.map(s=>`<article class="svc${s.f?' feature':''}"><svg viewBox="0 0 24 24" aria-hidden="true">${ic[s.k]}</svg><h3>${s.t}</h3><p>${s.p}</p><ul>${s.l.map(x=>`<li>${x}</li>`).join('')}</ul>${s.f?'<a class="btn" style="margin-top:24px" href="#plan">Ask for a package</a>':''}</article>`).join('');
+
+/* enquiry form */
+let kind='Flights';
+document.querySelectorAll('.tabs button').forEach(b=>b.addEventListener('click',()=>{kind=b.dataset.k;document.querySelectorAll('.tabs button').forEach(x=>x.setAttribute('aria-selected',x===b))}));
+$('#f-date').min=new Date().toISOString().slice(0,10);
+$('#qform').addEventListener('submit',e=>{e.preventDefault();
+  const to=$('#f-to').value.trim();if(!to){$('#f-to').focus();$('#f-to').placeholder='Where to? Add a destination';return}
+  $('#sum').textContent=`Hello Deima Travels,\nI'd like a quote for: ${kind}\nFrom: ${$('#f-from').value}\nTo: ${to}\nDate: ${$('#f-date').value||'Flexible'}\nTravellers: ${$('#f-pax').value}`;
+  $('#done').classList.add('show');$('#copied').textContent='';});
+$('#copy').addEventListener('click',()=>{navigator.clipboard.writeText($('#sum').textContent).then(()=>$('#copied').textContent='Copied — paste it into WhatsApp or email.').catch(()=>$('#copied').textContent='Select the text above to copy it.')});
+
+/* mobile menu */
+$('#menu').addEventListener('click',()=>{const o=$('#links').classList.toggle('open');$('#menu').setAttribute('aria-expanded',o)});
+document.querySelectorAll('#links a').forEach(a=>a.addEventListener('click',()=>{$('#links').classList.remove('open');$('#menu').setAttribute('aria-expanded',false)}));
+}
+</script>
+</body>
+</html>
