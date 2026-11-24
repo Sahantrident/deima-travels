@@ -331,3 +331,206 @@
 :lang(ja) .hero h1,:lang(ko) .hero h1{font-size:clamp(34px,5.4vw,68px);line-height:1.2}
 :lang(ja) h2,:lang(ko) h2,:lang(ja) h3,:lang(ko) h3{line-height:1.3}
 .bar{grid-template-columns:120px minmax(0,1fr) 22px}
+
+/* ================= v3: logos, carriers, packages, Airline Studio ================= */
+.logo{display:inline-grid;place-items:center;background:#fff;border-radius:10px;padding:4px 8px;height:34px;min-width:72px;box-shadow:0 1px 0 rgba(15,27,56,.08),inset 0 0 0 1px rgba(15,27,56,.08);flex:none}
+.logo img{display:block;height:22px;width:auto;max-width:110px;object-fit:contain}
+.logo b{font:700 14px Outfit,sans-serif;color:#0F1B38}
+.logo.big{height:52px;min-width:96px;padding:6px 10px;border-radius:14px}
+.logo.big img{height:32px;max-width:120px}
+.air-top{grid-template-columns:auto minmax(0,1fr) auto}
+.air.flash{animation:flash 1.6s ease}
+@keyframes flash{0%,100%{box-shadow:inset 0 0 0 1px var(--lime)}30%,70%{box-shadow:0 0 0 6px color-mix(in srgb,var(--lime) 45%,transparent)}}
+.cmpCol h4{flex-wrap:wrap}
+.snum .logo{height:30px}
+/* carrier picker inside country guide */
+.carriers{margin-top:24px}
+.carRow{display:flex;gap:10px;flex-wrap:wrap}
+.carChip{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 10px 8px;border-radius:16px;border:1px solid var(--line);background:var(--bg);cursor:pointer;transition:transform .2s,border-color .2s,box-shadow .2s}
+.carChip:hover{transform:translateY(-3px);border-color:var(--lime);box-shadow:0 10px 20px rgba(15,27,56,.12)}
+
+/* ---------- packages ---------- */
+.packs{background:linear-gradient(180deg,var(--bg),color-mix(in srgb,var(--lime) 7%,var(--bg)))}
+.packGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:30px}
+.pk{position:relative;display:flex;flex-direction:column;text-align:left;padding:0;border:1px solid var(--line);border-radius:24px;overflow:hidden;background:var(--card);color:var(--ink);font:inherit;cursor:pointer;box-shadow:0 14px 30px rgba(15,27,56,.08);transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s;animation:popIn .5s var(--d) cubic-bezier(.2,.8,.2,1) both}
+.pk:hover{transform:translateY(-6px);box-shadow:0 26px 50px rgba(15,27,56,.18)}
+.pk:hover .pkArt img,.pk:hover .pkArt svg{transform:scale(1.05)}
+.pkArt{position:relative;aspect-ratio:16/9;overflow:hidden;background:var(--navy)}
+.pkArt img,.pkArt svg{width:100%;height:100%;object-fit:cover;display:block;transition:transform 1s ease}
+.pkRibbon{position:absolute;top:14px;left:14px;z-index:2;background:#b03a48;color:#fff;font:700 12px "DM Sans",sans-serif;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px;border-radius:999px;box-shadow:0 6px 14px rgba(0,0,0,.25)}
+.pkBody{display:flex;flex-direction:column;gap:10px;padding:18px 18px 20px;flex:1}
+.pkWhere{margin:0;font:700 12px "DM Sans",sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--limeInk)}
+.pk h3{font-size:24px}
+.pkMeta{display:flex;gap:8px;flex-wrap:wrap;font-size:14px;color:var(--soft);align-items:center}
+.pkDate{background:var(--navy);color:#fff;border-radius:999px;padding:5px 12px;font-weight:700}
+.pkPrice{align-self:flex-start;background:linear-gradient(135deg,#ffe28a,#f6c544);color:#0F1B38;border-radius:14px;padding:8px 14px;box-shadow:0 8px 18px rgba(246,197,68,.35)}
+.pkPrice small{display:block;font:700 12px "DM Sans",sans-serif;opacity:.8}
+.pkPrice b{font:700 24px Outfit,sans-serif;line-height:1.1}
+.pkPrice.ask{background:color-mix(in srgb,var(--lime) 22%,var(--card));box-shadow:none;color:var(--ink)}
+.pkPrice.ask b{font-size:18px}
+.pkAir{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13px;color:var(--soft);font-weight:600}
+.pkIncl{display:flex;gap:6px;flex-wrap:wrap}
+.pkIncl span{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--soft);background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:4px 10px 4px 5px}
+.pkIncl svg{width:22px;height:22px;padding:4px;border-radius:50%;background:var(--navy);color:var(--lime)}
+.pkIncl em{font-style:normal;font-weight:600}
+.pkNote{margin:0;font-size:14px;color:var(--soft)}
+.pkGo{margin-top:auto;font-weight:700;color:var(--limeInk)}
+.pk.feat{grid-column:span 3;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);background:linear-gradient(135deg,#0F1B38,#1a2d5e);color:#fff;border-color:#0F1B38}
+.pk.feat .pkArt{aspect-ratio:auto;min-height:340px;order:2}
+.pk.feat .pkBody{padding:28px 30px;gap:12px}
+.pk.feat h3{font-size:clamp(30px,3.6vw,46px);color:#fff}
+.pk.feat .pkWhere{color:var(--lime)}
+.pk.feat .pkMeta,.pk.feat .pkNote,.pk.feat .pkAir{color:#c7cfe0}
+.pk.feat .pkDate{background:var(--lime);color:var(--navy)}
+.pk.feat .pkPrice b{font-size:34px}
+.pk.feat .pkIncl span{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14);color:#e3e8f2}
+.pk.feat .pkGo{color:var(--lime)}
+.pk.feat .pkRibbon{left:auto;right:14px}
+/* package popup (glass) */
+.pkm{position:fixed;inset:0;z-index:96;display:grid;place-items:center;padding:16px;background:rgba(6,11,28,.45);backdrop-filter:blur(10px) saturate(1.3);-webkit-backdrop-filter:blur(10px) saturate(1.3);animation:fadeIn .25s ease}
+.pkm[hidden]{display:none}
+.pkBox{width:min(1120px,100%);max-height:min(92vh,960px);overflow:auto;overscroll-behavior:contain;border-radius:26px;background:color-mix(in srgb,var(--card) 82%,transparent);backdrop-filter:blur(24px) saturate(1.4);-webkit-backdrop-filter:blur(24px) saturate(1.4);border:1px solid rgba(255,255,255,.35);box-shadow:0 40px 100px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.5);animation:popIn .4s cubic-bezier(.2,.8,.2,1);color:var(--ink)}
+.pkHero{position:relative;min-height:240px;color:#fff;display:flex;align-items:flex-end}
+.pkHero .pkArt{position:absolute;inset:0;aspect-ratio:auto}
+.pkHero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,18,41,.15),rgba(10,18,41,.85))}
+.pkHeroIn{position:relative;z-index:1;padding:28px;width:100%;display:flex;flex-direction:column;gap:10px}
+.pkHeroIn .pkRibbon{position:static;align-self:flex-start}
+.pkHeroIn h3{font-size:clamp(28px,4vw,48px)}
+.pkHeroIn .pkWhere{color:var(--lime)}
+.pkHeroIn .pkMeta{color:#e3e8f2}
+.pkHeroIn .pkDate{background:var(--lime);color:var(--navy)}
+.pkHeroRow{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.pkHeroIn .pkAir{color:#e3e8f2;background:rgba(10,18,41,.45);border:1px solid rgba(255,255,255,.2);border-radius:14px;padding:6px 10px}
+.pkX{position:absolute;top:16px;right:16px;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.4);background:rgba(10,18,41,.45);color:#fff;font:600 22px "DM Sans",sans-serif;cursor:pointer;backdrop-filter:blur(6px)}
+.pkMain{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:20px;padding:22px 24px}
+.pkDays h4{font:700 22px Outfit,sans-serif;margin:0 0 10px}
+.pkDay{display:block;width:100%;text-align:left;font:inherit;color:inherit;cursor:pointer;margin-bottom:10px;padding:14px 16px 12px 18px;border-radius:16px;border:1px solid var(--line);border-left:5px solid var(--c);background:color-mix(in srgb,var(--card) 70%,transparent);transition:transform .2s,box-shadow .2s}
+.pkDay:hover,.pkDay.on{transform:translateX(4px);box-shadow:0 10px 24px rgba(15,27,56,.12)}
+.pkDay.on{background:color-mix(in srgb,var(--c) 10%,var(--card))}
+.pkDay .dn{font:700 12px "DM Sans",sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--c)}
+.pkDay .dw{margin-left:8px;font-size:13px;color:var(--soft)}
+.pkDay b{display:block;font:700 18px Outfit,sans-serif;margin:2px 0 6px}
+.pkDay ol{margin:0;padding-left:22px;display:grid;gap:6px;font-size:14px}
+.pkDay li::marker{font-weight:700;color:var(--c)}
+.pkDay li strong{display:block}
+.pkDay li span{color:var(--soft)}
+.pkIncl.big{margin-top:14px}
+.pkFine{font-size:13px;color:var(--soft);margin:12px 0 0}
+.pkMapWrap{position:sticky;top:0;align-self:start}
+.pkMap{height:min(62vh,560px);border-radius:20px;overflow:hidden;border:1px solid var(--line);background:#e8ecef}
+.pkMapHint{font-size:13px;color:var(--soft);margin:8px 2px 0}
+.pkPin span{display:grid;place-items:center;width:30px;height:30px;border-radius:50% 50% 50% 4px;transform:rotate(-45deg);background:var(--c);color:#fff;border:2px solid #fff;box-shadow:0 6px 12px rgba(0,0,0,.3)}
+.pkPin span{font:700 13px "DM Sans",sans-serif}
+.pkPin.dim{opacity:.35}
+.leaflet-popup-content{font:14px/1.45 "DM Sans",sans-serif;color:#0F1B38}
+.pkCta{position:sticky;bottom:0;display:flex;gap:10px;flex-wrap:wrap;padding:14px 24px 18px;background:color-mix(in srgb,var(--card) 88%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line);z-index:500}
+.btn.wa{background:#25D366;color:#073b1d}
+.btn.wa svg{width:20px;height:20px}
+
+/* ---------- Airline Studio teaser (embossed app) ---------- */
+.studioSec{background:var(--bg)}
+.studioTeaser{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(24px,5vw,64px);align-items:center}
+.appCard{border-radius:32px;padding:22px;background:linear-gradient(145deg,color-mix(in srgb,var(--card) 96%,#fff),color-mix(in srgb,var(--bg) 92%,#000));box-shadow:18px 18px 40px color-mix(in srgb,var(--navy) 18%,transparent),-14px -14px 34px color-mix(in srgb,#fff 70%,transparent),inset 0 1px 0 rgba(255,255,255,.7);border:1px solid color-mix(in srgb,var(--line) 70%,transparent)}
+.appTop{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.appTop b{font:700 18px Outfit,sans-serif}.appTop small{color:var(--soft);font-size:13px;margin-left:auto}
+.appDot{width:28px;height:28px;border-radius:9px;background:linear-gradient(135deg,var(--lime),#4d7a1c);box-shadow:inset 0 -3px 0 rgba(0,0,0,.15)}
+.appTiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.appTile{display:flex;flex-direction:column;align-items:flex-start;gap:6px;text-align:left;padding:18px;border-radius:22px;border:0;cursor:pointer;font:inherit;color:var(--ink);background:var(--bg);box-shadow:8px 8px 18px color-mix(in srgb,var(--navy) 14%,transparent),-8px -8px 18px color-mix(in srgb,#fff 75%,transparent);transition:transform .2s,box-shadow .2s}
+.appTile:hover{transform:translateY(-3px)}
+.appTile:active{box-shadow:inset 6px 6px 14px color-mix(in srgb,var(--navy) 16%,transparent),inset -6px -6px 14px color-mix(in srgb,#fff 70%,transparent);transform:none}
+.appTile svg{width:44px;height:44px;padding:10px;border-radius:14px;background:var(--navy);color:var(--lime);box-shadow:0 8px 16px color-mix(in srgb,var(--navy) 30%,transparent)}
+.appTile b{font:700 17px Outfit,sans-serif;margin-top:6px}
+.appTile small{color:var(--soft);font-size:13px}
+.logoRail{margin-top:18px;overflow:hidden;border-radius:14px;-webkit-mask:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);mask:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
+.rail{display:flex;gap:10px;width:max-content;animation:rail 40s linear infinite}
+@keyframes rail{to{transform:translateX(-50%)}}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]) .appCard{box-shadow:14px 14px 34px rgba(0,0,0,.45),-8px -8px 24px rgba(255,255,255,.03)}:root:not([data-theme=light]) .appTile{box-shadow:8px 8px 18px rgba(0,0,0,.45),-6px -6px 14px rgba(255,255,255,.04)}}
+
+/* ---------- Airline Studio popup (glass) ---------- */
+.studio{position:fixed;inset:0;z-index:97;display:grid;place-items:center;padding:16px;background:rgba(6,11,28,.5);backdrop-filter:blur(12px) saturate(1.3);-webkit-backdrop-filter:blur(12px) saturate(1.3);animation:fadeIn .25s ease}
+.studio[hidden]{display:none}
+.studioBox{width:min(1240px,100%);height:min(92vh,980px);display:grid;grid-template-rows:auto minmax(0,1fr);border-radius:28px;overflow:hidden;background:color-mix(in srgb,var(--bg) 80%,transparent);backdrop-filter:blur(26px) saturate(1.5);-webkit-backdrop-filter:blur(26px) saturate(1.5);border:1px solid rgba(255,255,255,.35);box-shadow:0 40px 110px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.55);animation:popIn .4s cubic-bezier(.2,.8,.2,1)}
+.studioBar{display:flex;align-items:center;gap:14px;padding:12px 16px;background:color-mix(in srgb,var(--card) 70%,transparent);border-bottom:1px solid var(--line)}
+.studioBrand{display:flex;align-items:center;gap:10px;flex:none}.studioBrand b{font:700 17px Outfit,sans-serif}
+.studioTabs{display:flex;gap:4px;margin:0 auto;padding:4px;border-radius:999px;background:var(--bg);box-shadow:inset 2px 2px 6px color-mix(in srgb,var(--navy) 12%,transparent)}
+.studioTabs button{min-height:40px;padding:0 16px;border:0;border-radius:999px;background:none;color:var(--soft);font:700 14px "DM Sans",sans-serif;cursor:pointer;white-space:nowrap}
+.studioTabs button[aria-selected=true]{background:var(--navy);color:#fff;box-shadow:0 6px 14px color-mix(in srgb,var(--navy) 30%,transparent)}
+.studioX{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink);font:600 22px "DM Sans",sans-serif;cursor:pointer;flex:none}
+.studioBody{overflow:auto;overscroll-behavior:contain}
+.studioBody>section{padding:clamp(20px,3vw,36px)}
+.studioBody>section[hidden]{display:none}
+.studioBody .seatSec{background:transparent}
+.studioBody .sinfo{top:12px}
+.studioBody h2{font-size:clamp(26px,3vw,38px)}
+
+@media(max-width:980px){.packGrid{grid-template-columns:repeat(2,minmax(0,1fr))}.pk.feat{grid-column:span 2;grid-template-columns:minmax(0,1fr)}.pk.feat .pkArt{order:0;min-height:0;aspect-ratio:16/9}.studioTeaser,.pkMain{grid-template-columns:minmax(0,1fr)}.pkMapWrap{position:static;order:-1}.pkMap{height:300px}}
+@media(max-width:600px){
+.packGrid{grid-template-columns:minmax(0,1fr)}.pk.feat{grid-column:auto}.pk.feat .pkBody{padding:20px}
+.pkm,.studio{padding:0;place-items:end stretch}
+.pkBox{max-height:96vh;border-radius:24px 24px 0 0}
+.studioBox{height:96vh;border-radius:24px 24px 0 0}
+.studioBar{flex-wrap:wrap;gap:8px;padding:10px 12px}
+.studioTabs{order:3;width:100%;margin:0;overflow-x:auto}
+.studioTabs button{flex:1;padding:0 10px;font-size:13px}
+.studioX{margin-left:auto}
+.pkHeroIn{padding:22px 18px}.pkMain{padding:16px}.pkCta{padding:12px 16px 16px}.pkCta .btn{flex:1 1 100%}
+.pkMap{height:260px}
+.appTiles{gap:10px}.appTile{padding:14px}.appCard{padding:16px;border-radius:26px}
+}
+
+/* ---------- toolkit dock under hero ---------- */
+.dock{position:relative;z-index:5;margin:-44px auto 0;padding:0 max(5vw,16px);max-width:1340px}
+.dockIn{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:6px;padding:10px;border-radius:24px;background:rgba(15,27,56,.82);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border:1px solid rgba(255,255,255,.14);box-shadow:0 24px 60px rgba(10,18,41,.35),inset 0 1px 0 rgba(255,255,255,.12)}
+.tool{display:flex;flex-direction:column;align-items:center;gap:8px;padding:12px 4px 10px;border:0;border-radius:18px;background:none;color:#fff;font:600 13px "DM Sans",sans-serif;text-decoration:none;cursor:pointer;text-align:center;transition:background .2s,transform .2s}
+.tool:hover{background:rgba(255,255,255,.08);transform:translateY(-3px)}
+.tool i{width:46px;height:46px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(145deg,#22356a,#14234a);box-shadow:inset 0 1px 0 rgba(255,255,255,.15),0 8px 16px rgba(0,0,0,.25);color:var(--lime)}
+.tool i svg{width:24px;height:24px}
+.tool.hot i{background:var(--lime);color:var(--navy)}
+.explore{padding-top:clamp(56px,7vw,100px)}
+.svc ul{display:none}
+.place .why{font-size:15px}
+@media(max-width:760px){.dockIn{grid-template-columns:repeat(4,minmax(0,1fr));border-radius:20px}.dock{margin-top:-28px}.tool{font-size:12px;padding:10px 2px 8px}.tool i{width:42px;height:42px}}
+.dock{background:linear-gradient(180deg,transparent 44px,#0b1531 44px)}
+@media(max-width:760px){.dock{background:linear-gradient(180deg,transparent 28px,#0b1531 28px)}}
+.explore{margin-top:-1px}
+
+/* ---------- scroll-first extras ---------- */
+.pkArt.photo{position:relative}
+.pkArt .lights{position:absolute;left:0;right:0;top:0;width:100%;height:46px}
+.pkArt .credit{position:absolute;right:8px;bottom:6px;font-size:10px;color:#fff;opacity:.75;background:rgba(10,18,41,.45);padding:2px 6px;border-radius:4px}
+.pk{cursor:pointer}
+.pkActs{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:auto}
+.pkGo{background:none;border:0;padding:0;font:700 15px "DM Sans",sans-serif;color:var(--limeInk);cursor:pointer;min-height:44px}
+.pk.feat .pkGo{color:var(--lime)}
+.pkStrip{list-style:none;margin:4px 0 2px;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;counter-reset:d}
+.pkStrip li{position:relative;padding:10px 8px 8px;border-radius:12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);font-size:12px;line-height:1.3;color:#dfe5f0}
+.pkStrip li::before{counter-increment:d;content:counter(d);position:absolute;top:-9px;left:8px;width:20px;height:20px;border-radius:50%;background:var(--lime);color:var(--navy);font:700 11px "DM Sans",sans-serif;display:grid;place-items:center}
+.pkStrip b{display:block;color:var(--lime);font-size:11px;letter-spacing:.04em;margin-bottom:2px}
+.quick{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:16px}
+.qpH,.trH{grid-column:1/-1;margin:0;font:700 12px "DM Sans",sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--limeInk)}
+.qp{display:flex;align-items:center;gap:10px;text-align:left;padding:10px;border-radius:16px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;cursor:pointer;transition:transform .2s,border-color .2s}
+.qp:hover{transform:translateY(-2px);border-color:var(--lime)}
+.qp .logo{min-width:64px;height:30px}
+.qp b{display:block;font-size:14px;line-height:1.2}.qp small{color:var(--soft);font-size:12px}
+.trend{margin-top:34px}
+.trH{color:var(--lime);margin-bottom:12px}
+.trRow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.tr{display:flex;flex-direction:column;gap:8px;text-align:left;padding:16px;border-radius:18px;border:1px solid rgba(255,255,255,.14);background:linear-gradient(135deg,color-mix(in srgb,var(--a) 70%,transparent),color-mix(in srgb,var(--b) 55%,transparent));color:#fff;font:inherit;cursor:pointer;transition:transform .25s}
+.tr:hover{transform:translateY(-4px)}
+.tr b{font:700 20px Outfit,sans-serif}
+.trFly{display:flex;align-items:center;gap:6px;font-size:13px;opacity:.9}.trFly svg{width:14px;height:14px}
+.trM{display:grid;grid-template-columns:repeat(12,1fr);gap:2px}.trM i{height:6px;border-radius:3px;background:rgba(255,255,255,.22)}.trM i.on{background:var(--lime)}
+.trP{font-size:13px;opacity:.9}
+@media(max-width:980px){.trRow{grid-template-columns:repeat(2,minmax(0,1fr))}.pkStrip{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:14px}}
+@media(max-width:600px){.quick{grid-template-columns:minmax(0,1fr)}.pkStrip{grid-template-columns:minmax(0,1fr)}.pkStrip li{padding-left:34px}.pkStrip li::before{top:10px;left:8px}}
+@media(hover:hover){.adCard.mini:hover{width:150px;border-radius:18px}.adCard.mini:hover video{aspect-ratio:9/16}.adCard.mini:hover .adLab,.adCard.mini:hover .adFoot{display:flex}.adCard.mini:hover .adLab{display:block}}
+.pkHero .pkArt,.pkHero .pkArt.photo{position:absolute;inset:0}
+.pkMap{position:relative;z-index:0;isolation:isolate}
+.pkCta{z-index:1100}
+.pkHero .credit{z-index:2}
+.pkBox{background:color-mix(in srgb,var(--card) 94%,transparent)}
+.studioBox{background:color-mix(in srgb,var(--bg) 94%,transparent)}
+@media(max-width:600px){.pkCta{display:grid;grid-template-columns:1fr 1fr;gap:8px}.pkCta .btn{flex:none;min-height:46px;font-size:14px;padding:0 10px}.pkCta .btn.wa,.pkCta .btn:only-child{grid-column:1/-1}}
+.air-top{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.air-top>div{flex:1 1 100%;order:3}
+.air-top .pill{margin-left:auto}

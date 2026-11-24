@@ -22,6 +22,7 @@ const IC={
  seat:'<path d="M7 3v10h10M7 13l-2 8M17 13l2 8M7 9h8"/>'
 };
 const ico=(k,cls='')=>`<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[k]}</svg>`;
+const logo=(k,cls='')=>`<span class="logo ${cls}"><img src="assets/airlines/${k}.png" alt="${(typeof AIR!=='undefined'&&AIR[k])?AIR[k].n:k}" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('b'),{textContent:'${k}'}))"></span>`;
 const AREA={'Indian Ocean':['#0d6f8f','#2a9bb3'],'Asia':['#1e5f74','#4d7a1c'],'Middle East':['#3a2c4f','#b5562f'],'Europe':['#1d2c4f','#46607f'],'Oceania':['#0F1B38','#a4502f']};
 const CMB=[79.88,6.93];
 
@@ -241,7 +242,8 @@ function openCountry(c){
   <div class="months" role="img" aria-label="Best months: ${months.join(', ')}">${MON.map((x,j)=>`<i class="${c.best.includes(j+1)?'on':''}" style="--d:${j*35}ms"><b>${x}</b></i>`).join('')}</div>
   <p class="ideal">Great for ${c.ideal.map(x=>`<span>${x}</span>`).join('')}</p>
   <h4>Best places to visit — and why</h4>
-  <div class="places">${c.p.map((p,j)=>`<article class="place" style="--d:${j*90+150}ms"><div class="pl-ic">${ico(p[0])}</div><div><span class="pl-k">${p[0]}</span><h5>${p[1]}</h5><p class="why">${p[2]}</p>${p[3]?`<p class="tip"><b>Tip</b>${p[3]}</p>`:''}</div></article>`).join('')}</div>
+  <div class="places">${c.p.map((p,j)=>`<article class="place" style="--d:${j*90+150}ms"><div class="pl-ic">${ico(p[0])}</div><div><span class="pl-k">${p[0]}</span><h5>${p[1]}</h5><p class="why">${p[2]}</p></div></article>`).join('')}</div>
+  ${c.reg?`<div class="carriers"><p class="mlabel"><span><b>Fly there with</b></span><span>Tap an airline to compare it and see seats</span></p><div class="carRow">${REG[c.reg].a.map(k=>`<button type="button" class="carChip" data-car="${k}" aria-label="${AIR[k].n}">${logo(k)}<span class="pill ${AIR[k].t}">${TYPE[AIR[k].t]}</span></button>`).join('')}</div></div>`:''}
   <div class="xm-cta"><button class="btn" type="button" data-plan>${c.id==='lk'?'Build my Sri Lanka trip':`Get a quote for ${c.name}`}</button>${c.reg?`<button class="btn line" type="button" data-air>Compare airlines for this trip →</button>`:''}</div>
  </div></div>`;
  if(m.hidden){lastFocus=document.activeElement;m.hidden=false;document.body.style.overflow='hidden'}
@@ -249,7 +251,8 @@ function openCountry(c){
  m.querySelector('[data-x]').onclick=closeCountry;
  m.querySelectorAll('[data-nav]').forEach(b=>b.onclick=()=>{const n=C[(i+ +b.dataset.nav+C.length)%C.length];G.sel=n;setChip();fly(n);openCountry(n)});
  m.querySelector('[data-plan]').onclick=()=>{closeCountry();if(c.id==='lk'&&window.DeimaTrip)window.DeimaTrip.open({});else quote(c.name)};
- const a=m.querySelector('[data-air]');if(a)a.onclick=()=>{closeCountry();setRegion(c.reg);$('#airlines').scrollIntoView({behavior:RM?'auto':'smooth'})};
+ const a=m.querySelector('[data-air]');if(a)a.onclick=()=>{closeCountry();setRegion(c.reg);openStudio('airlines')};
+ m.querySelectorAll('[data-car]').forEach(b=>b.onclick=()=>{closeCountry();focusAirline(c.reg,b.dataset.car)});
  m.querySelector('[data-x]').focus();
 }
 function closeCountry(){const m=$('#xm');if(m.hidden)return;m.hidden=true;document.body.style.overflow='';G.idle=Date.now()+4000;if(lastFocus)lastFocus.focus()}
@@ -294,23 +297,22 @@ function renderAir(){
  $('#regTabs').innerHTML=Object.entries(REG).map(([k,v])=>`<button type="button" role="tab" aria-selected="${k===reg}" data-r="${k}">${v.n}</button>`).join('');
  $$('#regTabs button').forEach(b=>b.onclick=()=>setRegion(b.dataset.r));
  $('#airGrid').innerHTML=REG[reg].a.map((code,i)=>{const a=AIR[code],on=cmp.includes(code);return `<article class="air t-${a.t}${on?' on':''}" style="--d:${i*70}ms">
-  <div class="air-top"><span class="iata">${code}</span><div><h3>${a.n}</h3><p class="hub">Hub: ${a.hub}</p></div><span class="pill ${a.t}">${TYPE[a.t]}</span></div>
+  <div class="air-top">${logo(code,'big')}<div><h3>${a.n}</h3><p class="hub">Hub: ${a.hub}</p></div><span class="pill ${a.t}">${TYPE[a.t]}</span></div>
   <div class="bars">${bars(a.s,i*70+200)}</div>
-  <ul class="pc">${a.pro.map(x=>`<li class="pro">${x}</li>`).join('')}${a.con.map(x=>`<li class="con">${x}</li>`).join('')}</ul>
   <p class="bestfor"><b>Best for</b>${a.best}</p>
   <div class="air-act"><button class="btn sm" type="button" data-seat="${code}">See best seats</button><button class="cmpb" type="button" aria-pressed="${on}" data-cmp="${code}">${on?'✓ Comparing':'+ Compare'}</button></div></article>`}).join('');
  $$('#airGrid [data-cmp]').forEach(b=>b.onclick=()=>{const c=b.dataset.cmp;if(cmp.includes(c))cmp=cmp.filter(x=>x!==c);else{cmp.push(c);if(cmp.length>3)cmp.shift()}renderAir()});
- $$('#airGrid [data-seat]').forEach(b=>b.onclick=()=>{seatAir=b.dataset.seat;renderSeatSelect();renderSeats();$('#seats').scrollIntoView({behavior:RM?'auto':'smooth'})});
+ $$('#airGrid [data-seat]').forEach(b=>b.onclick=()=>{seatAir=b.dataset.seat;renderSeatSelect();renderSeats();openStudio('seats')});
  renderCmp();
 }
 function renderCmp(){
  const el=$('#cmp');
  if(!cmp.length){el.innerHTML='<h3>Compare airlines <small>Tap “+ Compare” on up to 3 airlines</small></h3>';return}
  const tot=c=>AIR[c].s.reduce((a,b)=>a+b,0),bestC=cmp.reduce((a,b)=>tot(b)>tot(a)?b:a),bestV=cmp.reduce((a,b)=>AIR[b].s[1]>AIR[a].s[1]?b:a);
- el.innerHTML=`<h3>Side by side <small>${cmp.length} of 3 selected · tap “+ Compare” to change</small></h3><div class="cmpGrid" style="--n:${cmp.length}">${cmp.map((c,i)=>{const a=AIR[c],t=TINFO[a.t];return `<div class="cmpCol" style="--d:${i*90}ms"><h4><span class="pill ${a.t}">${c}</span>${a.n}</h4>
+ el.innerHTML=`<h3>Side by side <small>${cmp.length} of 3 selected · tap “+ Compare” to change</small></h3><div class="cmpGrid" style="--n:${cmp.length}">${cmp.map((c,i)=>{const a=AIR[c],t=TINFO[a.t];return `<div class="cmpCol" style="--d:${i*90}ms"><h4>${logo(c)}<span>${a.n}</span></h4>
  ${c===bestC&&cmp.length>1?'<span class="win">★ Best all-round</span>':''}${c===bestV&&cmp.length>1&&c!==bestC?'<span class="win">★ Best value</span>':''}
  <div class="bars" style="margin:12px 0 0">${bars(a.s,i*90+150)}</div>
- <dl><dt>Type</dt><dd>${TYPE[a.t]}</dd><dt>Checked bag</dt><dd>${t.bag}</dd><dt>Seat choice</dt><dd>${t.seat}</dd><dt>Meals</dt><dd>${t.meal}</dd><dt>Best for</dt><dd>${a.best}</dd></dl></div>`}).join('')}</div>`;
+ <ul class="pc" style="margin-top:12px">${a.pro.map(x=>`<li class="pro">${x}</li>`).join('')}${a.con.map(x=>`<li class="con">${x}</li>`).join('')}</ul><dl><dt>Type</dt><dd>${TYPE[a.t]}</dd><dt>Checked bag</dt><dd>${t.bag}</dd><dt>Seat choice</dt><dd>${t.seat}</dd><dt>Meals</dt><dd>${t.meal}</dd><dt>Best for</dt><dd>${a.best}</dd></dl></div>`}).join('')}</div>`;
 }
 
 /* ---------- true-cost calculator ---------- */
@@ -406,7 +408,7 @@ function showSeat(s){
  if(s.toil){con.push('Next to toilets or galley — light and noise')}
  const t=a.t,cost=s.c==='biz'?'Included with a business-class fare.':t==='budget'?'Paid extra on budget airlines — or accept a random free seat at check-in.':t==='hybrid'?(s.exit||s.bulk||s.front?'Usually a paid seat; free on top fares.':'Free on higher fares, paid on the cheapest ones.'):(s.exit||s.bulk||s.front?'Often a paid "preferred" seat — sometimes free for families or frequent flyers.':'Usually free when online check-in opens.');
  const fits=PRI.filter(p=>p.f(s)).map(p=>p.l);
- el.innerHTML=`<div class="snum"><b translate="no">${s.id}</b><span>${s.c==='biz'?'Business':'Economy'} · ${a.n}</span></div>
+ el.innerHTML=`<div class="snum"><b translate="no">${s.id}</b>${logo(seatAir)}<span>${s.c==='biz'?'Business':'Economy'} · ${a.n}</span></div>
  <div class="stags">${tags.map(x=>`<span>${x}</span>`).join('')}</div>
  ${fits.length?`<p style="margin:0;font-size:14px;color:var(--soft)">Good for: <b style="color:var(--ink)">${fits.join(', ')}</b></p>`:''}
  <h4>Why you'll like it</h4><ul>${pro.slice(0,4).map((x,i)=>`<li class="pro" style="--d:${i*60}ms">${x}</li>`).join('')}</ul>
@@ -432,7 +434,7 @@ function renderSteps(){
  <div class="stepNav"><button class="btn line sm" type="button" id="sPrev"${step?'':' disabled'}>← Back</button><button class="btn sm" type="button" id="sNext">${step<STEPS.length-1?'Next step →':'Plan my trip with Deima'}</button></div></div>
  <div class="ptip"><b>Pro tip</b>${s.tip}</div></div>`;
  $('#sPrev').onclick=()=>{if(step){step--;renderSteps()}};
- $('#sNext').onclick=()=>{if(step<STEPS.length-1){step++;renderSteps()}else quote('')};
+ $('#sNext').onclick=()=>{if(step<STEPS.length-1){step++;renderSteps()}else{closeStudio();quote('')}};
 }
 function buildSteps(){
  $('#track').innerHTML=`<span class="prog"></span><svg class="jet" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5Z"/></svg>`+STEPS.map((s,i)=>`<button class="step" type="button" role="tab" aria-selected="false"><i>${i+1}</i><span>${s.t}</span></button>`).join('');
@@ -440,6 +442,37 @@ function buildSteps(){
  renderSteps();
 }
 
+/* ---------- Airline Studio popup ---------- */
+let studioFocus=null;
+function openStudio(tab){
+ const st=$('#studio');
+ if(st.hidden){studioFocus=document.activeElement;st.hidden=false;document.body.style.overflow='hidden'}
+ $$('#studio [data-tab]').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===tab));
+ ['airlines','fares','seats','planning'].forEach(id=>{$('#'+id).hidden=id!==tab});
+ $('#studioBody').scrollTop=0;
+ const t=$(`#studio [data-tab="${tab}"]`);if(t)t.focus({preventScroll:true});
+}
+function closeStudio(){const st=$('#studio');if(st.hidden)return;st.hidden=true;document.body.style.overflow='';if(studioFocus)studioFocus.focus()}
+function focusAirline(r,code){
+ reg=r;cmp=[code,...REG[r].a.filter(x=>x!==code)].slice(0,2);seatAir=code;renderAir();renderSeatSelect();renderSeats();openStudio('airlines');
+ setTimeout(()=>{const el=$(`#airGrid [data-cmp="${code}"]`);if(el){const card=el.closest('.air');card.scrollIntoView({block:'center',behavior:RM?'auto':'smooth'});card.classList.add('flash');setTimeout(()=>card.classList.remove('flash'),1600)}},120);
+}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-studio]');if(b){e.preventDefault();openStudio(b.dataset.studio)}});
+$$('#studio [data-tab]').forEach(b=>b.onclick=()=>openStudio(b.dataset.tab));
+$('#studioX').onclick=closeStudio;
+$('#studio').addEventListener('click',e=>{if(e.target.id==='studio')closeStudio()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('#pkm').hidden&&$('#xm').hidden)closeStudio()});
+{const all=[...new Set(Object.values(REG).flatMap(r=>r.a))];$('#logoRail').innerHTML=`<div class="rail">${[...all,...all].map(k=>logo(k)).join('')}</div>`}
+
+document.addEventListener('click',e=>{const t=e.target.closest('[data-tool]');if(!t)return;e.preventDefault();if(t.dataset.tool==='builder'&&window.DeimaTrip)window.DeimaTrip.open({});else if(t.dataset.tool==='quote')quote('')});
+/* scroll-only extras: quick airline picks and trending countries */
+{const QP=[['Direct, with family','UL','No connections from Colombo'],['Comfort via the Gulf','EK','Big network to Europe'],['Lowest fare to the UAE','G9','Pay only for extras you need'],['Value to Asia','MH','Full service at fair prices']];
+ $('#quickPick').innerHTML=`<p class="qpH">Quick pick</p>`+QP.map(([n,k,w])=>`<button type="button" class="qp" data-qp="${k}">${logo(k)}<span><b>${n}</b><small>${w}</small></span></button>`).join('');
+ $$('#quickPick [data-qp]').forEach(b=>b.onclick=()=>{const k=b.dataset.qp,r=Object.keys(REG).find(r=>r!=='south'&&REG[r].a.includes(k))||'gulf';focusAirline(k==='MH'?'asia':r,k)});
+ const TR=['jp','th','mv','ae'];
+ $('#trend').innerHTML=`<p class="trH">Trending now</p><div class="trRow">${TR.map(id=>{const c=C.find(x=>x.id===id);return `<button type="button" class="tr" data-c="${id}" style="--a:${AREA[c.area][0]};--b:${AREA[c.area][1]}"><b>${c.name}</b><span class="trFly">${ico('plane')}${c.fly.replace(' from Colombo','')}</span><span class="trM">${MON.map((m,j)=>`<i class="${c.best.includes(j+1)?'on':''}"></i>`).join('')}</span><span class="trP">${c.p.slice(0,2).map(p=>p[1]).join(' · ')}</span></button>`}).join('')}</div>`;
+ $$('#trend .tr').forEach(b=>b.onclick=()=>pick(C.find(x=>x.id===b.dataset.c)));
+}
 /* ---------- init ---------- */
 buildList();initGlobe();
 renderAir();
@@ -464,6 +497,6 @@ if(adC){
  adX.onclick=()=>{adC.hidden=true;adX.hidden=true;pv.pause();try{sessionStorage.setItem('deimaAdClosed','1')}catch(e){}};
 }
 /* on phones the ad shrinks to a round bubble once the visitor scrolls, so it never covers reading */
-if(adC){const mq=matchMedia('(max-width:980px)');const mini=()=>{const m=mq.matches&&scrollY>500;adC.classList.toggle('mini',m);adX.classList.toggle('mini',m)};addEventListener('scroll',mini,{passive:true});mq.addEventListener('change',mini);mini()}
+if(adC){const mq=matchMedia('(min-width:0px)');const mini=()=>{const m=mq.matches&&scrollY>500;adC.classList.toggle('mini',m);adX.classList.toggle('mini',m)};addEventListener('scroll',mini,{passive:true});mq.addEventListener('change',mini);mini()}
 window.DeimaExplore={rerender:()=>{renderAir();renderCalc();applyPrio();if(picked)showSeat(seatMap[picked]);else showSeat(null);renderSteps()}};
 })();
