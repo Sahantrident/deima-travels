@@ -43,7 +43,7 @@ const STEPS=['Where & when','Travel style','Your route','Stay & extras','Your de
 const KEY='deima-trip-v1';
 const fresh=()=>({step:0,max:0,dest:'lk',type:'Holiday',date:'',nights:7,adults:2,kids:0,ints:[],stay:'Premium',pace:'Balanced',route:[],sel:null,meals:'HB',rooms:null,lang:'English',flights:false,flyFrom:'',visa:true,cur:'USD',budget:'',notes:'',name:'',email:'',cc:'+44',phone:'',waSame:true,wa:'',from:'',reach:'WhatsApp',consent:false,sent:false});
 let S=fresh();
-try{const v=JSON.parse(localStorage.getItem(KEY)||'null');if(v&&typeof v==='object')S=Object.assign(fresh(),v,{sent:false})}catch(e){}
+try{const v=JSON.parse(localStorage.getItem(KEY)||'null');if(v&&typeof v==='object')S=Object.assign(fresh(),v,{sent:false,busy:false,stat:null,ref:''})}catch(e){}
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
@@ -173,7 +173,7 @@ function days(){
   return out;
 }
 function quoteText(){
-  const c=ctry(),ro=rooms(),ref='DT-'+(S.date||new Date().toISOString().slice(0,10)).replace(/-/g,'').slice(2)+'-'+String(S.phone||'0000').replace(/\D/g,'').slice(-4).padStart(4,'0');
+  const c=ctry(),ro=rooms(),ref=S.ref||'DT-'+(S.date||new Date().toISOString().slice(0,10)).replace(/-/g,'').slice(2)+'-'+String(S.phone||'0000').replace(/\D/g,'').slice(-4).padStart(4,'0');
   const L=[`DEIMA TRAVELS — TRIP REQUEST  ${ref}`,'',`Client: ${S.name||'—'}`,`Email: ${S.email||'—'}`,`Phone: ${S.cc} ${S.phone||'—'}${S.waSame?' (WhatsApp)':''}`,...(S.waSame?[]:[`WhatsApp: ${S.wa||'—'}`]),`Travelling from: ${c?c[0]:'—'}`,`Contact by: ${S.reach}  ·  Consent: ${S.consent?'yes':'no'}`,'',
   `Destination: Sri Lanka  ·  Trip: ${S.type}`,`Arrival: ${fmtDate(S.date)}  ·  Nights: ${S.nights}  ·  Departure: ${S.date?fmtDate(S.date,S.nights):'–'}`,`Travellers: ${S.adults} adult(s), ${S.kids} child(ren)`,`Stay: ${S.stay}  ·  Pace: ${S.pace}  ·  Meals: ${MEALS.find(m=>m[0]===S.meals)[1]}`,`Rooms: ${ro.s} single, ${ro.d} double/twin, ${ro.t} triple`,`Transport: ${transport()}  ·  Guide language: ${S.lang}`,`Flights: ${S.flights?'yes, from '+(S.flyFrom||'—'):'no'}  ·  Visa/ETA help: ${S.visa?'yes':'no'}`,`Budget per person (excl. flights): ${S.budget?S.cur+' '+S.budget:'not given'}`,`Interests: ${S.ints.map(i=>INT[i]).join(', ')||'—'}`,'','ROUTE'];
   S.route.forEach((r,i)=>L.push(`${i+1}. ${PB[r.id].name} — ${r.n} night(s) — ${r.hotel}`,`   ${r.acts.join(', ')||'no activities chosen'}`));
@@ -186,9 +186,25 @@ function s6(){
   return `<p class="eyebrow">Step 6 of 6</p><h2>Here's your trip so far</h2><p class="sub">This is a draft. A Deima consultant will check it, add prices and send you a full quote.</p>
   <div class="tb-sum"><div><small>Travellers</small><b>${S.adults} adult${S.adults>1?'s':''}${S.kids?`, ${S.kids} child`:''}</b></div><div><small>Arrival</small><b>${fmtDate(S.date)}</b></div><div><small>Length</small><b>${S.nights} nights</b></div><div><small>Trip</small><b>${esc(S.type)}</b></div><div><small>Hotels</small><b>${esc(S.stay)} · ${ro.d+ro.s+ro.t} room${ro.d+ro.s+ro.t>1?'s':''}</b></div><div><small>Meals</small><b>${MEALS.find(m=>m[0]===S.meals)[1]}</b></div><div><small>Transport</small><b>${transport().split(' with')[0]} · ${esc(S.lang)} guide</b></div><div><small>Extras</small><b>${[S.flights&&'Flights',S.visa&&'Visa help'].filter(Boolean).join(' · ')||'None'}</b></div></div>
   <h4>Day by day</h4>${S.route.length?`<div class="tb-days">${days().map(x=>`<div class="tb-day"><div class="d"><b>Day ${x.d+1}</b><small>${fmtDate(S.date,x.d)}</small></div><div><h5>${esc(x.t)}</h5>${x.note?`<p>${esc(x.note)}</p>`:''}${x.acts.length?`<ul>${x.acts.map(a=>`<li>${esc(a)}</li>`).join('')}</ul>`:''}</div></div>`).join('')}</div>`:`<div class="tb-tip tb-warn">No route yet. Go back to step 3 to add places, or send it and Deima will plan the route for you.</div>`}
-  <div class="tb-grid2" style="margin-top:14px"><div class="tb-tip">We'll reply by <b>${esc(S.reach)}</b>${S.reach==='Email'?` to ${esc(S.email||'your email')}`:` to ${esc(S.cc)} ${esc(S.phone||'your number')}`}.</div><div class="tb-tip tb-warn"><b>Demo mode.</b> Nothing is sent yet. You'll see exactly what Deima would receive.</div></div>
-  ${S.sent?`<div class="tb-done"><b>Request ready.</b> In the live site this goes straight to the Deima Travels team. For now, copy it below and send it by WhatsApp or email.</div>`:''}
+  <div class="tb-grid2" style="margin-top:14px"><div class="tb-tip">We'll reply by <b>${esc(S.reach)}</b>${S.reach==='Email'?` to ${esc(S.email||'your email')}`:` to ${esc(S.cc)} ${esc(S.phone||'your number')}`}.</div>${window.DeimaQuote&&DeimaQuote.live?'':'<div class="tb-tip tb-warn"><b>Demo mode.</b> Nothing is sent yet. You\'ll see exactly what Deima would receive.</div>'}</div>
+  ${S.stat?`<p class="qStat" data-state="${S.stat.state}" role="status">${esc(S.stat.text)}</p>`:''}
   <details ${S.sent?'open':''}><summary>What Deima receives (quotation-template format)</summary><pre id="tbQuote">${esc(quoteText())}</pre><button class="tb-pill" data-a="copy">Copy request</button> <span id="tbCopied" style="font-size:13px"></span></details>`;
+}
+/* send the trip as the site's standard quote request (quote.js) */
+async function sendTrip(){
+  const c=ctry(),iso=add=>{if(!S.date)return '';const d=new Date(S.date+'T12:00:00');d.setDate(d.getDate()+add);return d.toISOString().slice(0,10)};
+  const phone=S.phone.trim()?`${S.cc} ${S.phone.trim()}`:'';
+  const svc=['Tour package','Hotels','Transport',...(S.flights?['Flights']:[]),...(S.visa?['Visa']:[])];
+  S.busy=true;S.ref='';render(true);
+  const el=document.createElement('p');
+  const input={
+    customer:{name:S.name,email:S.email,phone,whatsapp:S.waSame?phone:S.wa,countryOfResidence:c?c[0]:'',preferredContact:S.reach,consent:S.consent},
+    trip:{services:svc,origin:S.flights?S.flyFrom:(c?c[0]:''),destination:'Sri Lanka',travelDate:S.date,nights:S.nights,adults:S.adults,children:S.kids,travellersNote:S.type,style:`${S.stay}, ${S.pace} pace`,budget:{amount:S.budget,currency:S.budget?S.cur:''},notes:S.notes},
+    itinerary:days().map(x=>({day:x.d+1,date:iso(x.d),title:x.t,activities:x.acts}))};
+  input.reference=DeimaQuote.build('trip-builder',input).reference;S.ref=input.reference;
+  input.summaryText=quoteText();
+  const {result}=await DeimaQuote.submit('trip-builder',input,el);
+  S.busy=false;S.sent=!result.invalid;S.stat={state:el.dataset.state,text:el.textContent};render(true);
 }
 const VIEWS=[s1,s2,s3,s4,s5,s6];
 function valid(){
@@ -201,7 +217,7 @@ function render(keepScroll){
   stepsBar();main.innerHTML=VIEWS[S.step]();card();
   const v=valid(),nx=$('#tbNext');
   $('#tbHint').textContent=v;
-  nx.innerHTML=S.step===5?(S.sent?'Request ready ✓':'Send to Deima →'):`Next<span class="nx-l">: ${STEPS[S.step+1]}</span> →`;
+  nx.innerHTML=S.step===5?(S.busy?'Sending…':S.sent?(S.stat&&S.stat.state==='ok'?'Sent ✓':'Request ready ✓'):'Send to Deima →'):`Next<span class="nx-l">: ${STEPS[S.step+1]}</span> →`;
   nx.className='tb-btn'+(S.step===5?' go':'');nx.disabled=!!v;
   root.querySelector('[data-a=back]').style.visibility=S.step?'visible':'hidden';
   main.scrollTop=keepScroll?top:0;save();
@@ -213,8 +229,8 @@ root.addEventListener('click',e=>{
   const b=e.target.closest('[data-a]');if(!b||b.disabled)return;
   const a=b.dataset.a,v=b.dataset.v,k=b.dataset.k;
   if(a==='close')return close();
-  if(a==='back'){S.step=Math.max(0,S.step-1);return render()}
-  if(a==='next'){if(valid())return;if(S.step===5){S.sent=true;return render(true)}S.step++;S.max=Math.max(S.max,S.step);if(S.step===2&&!S.route.length&&!S.sel){const m=matches()[0];if(m)S.sel=m.id}return render()}
+  if(a==='back'){S.step=Math.max(0,S.step-1);S.sent=false;S.stat=null;return render()}
+  if(a==='next'){if(valid())return;if(S.step===5){if(S.busy||S.sent)return;return sendTrip()}S.step++;S.max=Math.max(S.max,S.step);if(S.step===2&&!S.route.length&&!S.sel){const m=matches()[0];if(m)S.sel=m.id}return render()}
   if(a==='goto'){S.step=+b.dataset.i;return render()}
   if(a==='set'){S[k]=v;return render(true)}
   if(a==='tog'){S[k]=S[k].includes(v)?S[k].filter(x=>x!==v):[...S[k],v];return render(true)}

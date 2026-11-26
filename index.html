@@ -4,9 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Deima Travels</title>
+<link rel="icon" type="image/png" href="assets/favicon.png"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="builder.css?v=4">
-<link rel="stylesheet" href="explore.css?v=16">
+<link rel="stylesheet" href="explore.css?v=17">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
 <style>
 /* VOICE: warm, confident travel desk — "we handle it, you go".
@@ -137,7 +138,7 @@ footer img{height:46px}
 <body>
 <header>
   <nav class="nav" aria-label="Main">
-    <a class="brand" href="#top" aria-label="Deima Travels home"><img src="assets/logo-light.png" alt="Deima Group"><span translate="no">Travels</span></a>
+    <a class="brand" href="#top" aria-label="Deima Travels home"><img src="assets/deima-travels-lockup.png" alt="Deima Travels" width="200" height="50"></a>
     <div class="links cp" id="links">
       <span class="cpScrew a"></span><span class="cpScrew b"></span>
       <a class="pbn" href="#explore" data-sec="explore"><span class="pbL" aria-hidden="true"></span><span class="pbT">EXPLORE</span></a><a class="pbn" href="#packages" data-sec="packages"><span class="pbL" aria-hidden="true"></span><span class="pbT">TRIPS</span></a><a class="pbn" href="#services" data-sec="services"><span class="pbL" aria-hidden="true"></span><span class="pbT">SERVICES</span></a><a class="pbn" href="#contact" data-sec="contact"><span class="pbL" aria-hidden="true"></span><span class="pbT">CONTACT</span></a><button type="button" class="pbn hot" data-dtool="quote"><span class="pbL" aria-hidden="true"></span><span class="pbT">QUOTE</span></button><button type="button" class="mute" id="muteSw" aria-pressed="true" aria-label="Panel sound" title="Panel sound"><span class="mLed"></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z"/><path class="wv" d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/></svg></button>
@@ -207,10 +208,15 @@ footer img{height:46px}
         <div class="cqPax"><span class="cqL">Travellers</span><div class="cqStep"><button type="button" data-pax="a" data-d="-1" aria-label="Fewer adults">−</button><b id="cqA">2</b><span>Adults</span><button type="button" data-pax="a" data-d="1" aria-label="More adults">+</button></div><div class="cqStep"><button type="button" data-pax="k" data-d="-1" aria-label="Fewer children">−</button><b id="cqK">0</b><span>Children</span><button type="button" data-pax="k" data-d="1" aria-label="More children">+</button></div></div>
         <div><span class="cqL">Style</span><div class="seg" id="cqStyle" role="radiogroup" aria-label="Style"><button type="button" role="radio" aria-checked="false" data-v="Budget">Budget</button><button type="button" role="radio" aria-checked="true" data-v="Comfort">Comfort</button><button type="button" role="radio" aria-checked="false" data-v="Luxury">Luxury</button></div></div>
         <div class="cqInc"><span class="cqL">Include</span><div class="chipsX" id="cqInc"><button type="button" aria-pressed="true" data-v="Flights">Flights</button><button type="button" aria-pressed="true" data-v="Hotels">Hotels</button><button type="button" aria-pressed="false" data-v="Visa">Visa</button><button type="button" aria-pressed="false" data-v="Transfers">Transfers</button><button type="button" aria-pressed="false" data-v="Tours">Tours</button><button type="button" aria-pressed="false" data-v="Insurance">Insurance</button></div></div>
+        <label>Your name<input id="cqName" autocomplete="name"></label>
+        <label>WhatsApp / phone<input id="cqPhone" type="tel" autocomplete="tel" placeholder="+94 77 123 4567"></label>
+        <label>Email<input id="cqEmail" type="email" autocomplete="email" placeholder="Phone or email, at least one"></label>
+        <input class="hp" id="cqHp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
         <label class="cqFlex"><input type="checkbox" id="cqFlex" checked><span><b>Flexible by ±3 days</b><small>Often the biggest saving</small></span></label>
       </div>
       <div class="cqActs"><button class="btn" type="submit">Get my custom quote</button><button class="btn line" type="button" data-tool="builder">Sri Lanka? Build it day by day</button></div>
-      <div class="cqOut" id="cqOut" hidden role="status"><b>Your request is ready.</b><pre id="cqText"></pre><div class="cqOutActs"><a class="btn wa sm" id="cqWa" target="_blank" rel="noopener">Share on WhatsApp</a><button type="button" class="btn line sm" id="cqCopy">Copy</button><span id="cqCopied"></span></div></div>
+      <p class="qStat" id="cqStat" hidden role="status" aria-live="polite"></p><p class="qNote">By sending, you agree Deima Travels may contact you about this request.</p>
+      <div class="cqOut" id="cqOut" hidden><b>Your request</b><pre id="cqText"></pre><div class="cqOutActs"><a class="btn wa sm" id="cqWa" target="_blank" rel="noopener">Share on WhatsApp</a><button type="button" class="btn line sm" id="cqCopy">Copy</button><span id="cqCopied"></span></div></div>
     </form>
   </div>
 </section>
@@ -364,9 +370,17 @@ footer img{height:46px}
     <label>Travel date<input id="f-date" type="date"></label>
     <label>Travellers<select id="f-pax"><option>1 adult</option><option selected>2 adults</option><option>Family (2 + kids)</option><option>Group (6+)</option><option>Corporate team</option></select></label>
   </div>
+  <div class="grid2 qContact">
+    <label>Your name<input id="f-name" autocomplete="name" required></label>
+    <label>WhatsApp / phone<input id="f-phone" type="tel" autocomplete="tel" placeholder="+94 77 123 4567"></label>
+    <label class="span2">Email<input id="f-email" type="email" autocomplete="email" placeholder="Phone or email, at least one"></label>
+  </div>
+  <input class="hp" id="f-hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
   <datalist id="dest-list"></datalist>
   <button class="btn" type="submit">Get my quote</button>
-  <div class="done" id="done" role="status" aria-live="polite"><b>Your enquiry is ready.</b><pre id="sum"></pre><button type="button" class="copy" id="copy">Copy enquiry</button> <span id="copied"></span></div>
+  <p class="qStat" id="qStat" hidden role="status" aria-live="polite"></p>
+  <p class="qNote">By sending, you agree Deima Travels may contact you about this request.</p>
+  <div class="done" id="done" role="status" aria-live="polite"><b>Your request</b><pre id="sum"></pre><button type="button" class="copy" id="copy">Copy enquiry</button> <span id="copied"></span></div>
     </form>
 </div></div>
 <button class="qfab" id="qfab" aria-label="Get a quote: build your trip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3H6v18h12V7z M14 3v4h4 M9 12h6 M9 16h4"/></svg>Get a quote<span class="more">· build your trip in 6 steps</span></button>
@@ -375,14 +389,15 @@ footer img{height:46px}
 <div class="adM" id="adM" hidden role="dialog" aria-modal="true" aria-label="Bingo app video"><div class="adBox"><span class="adBrand">Bingo · a Deima Travels app</span><button class="adClose" type="button" aria-label="Close video">×</button><video id="adVideo" controls playsinline preload="none"><source src="videos/bingo-ad.mp4" type="video/mp4"></video></div></div>
 <footer>
   <div class="foot">
-    <img src="assets/logo-light.png" alt="Deima Group">
+    <img src="assets/deima-travels-logo.png" alt="Deima Travels" class="footLogo">
     <span>© 2026 Deima Travels, a Deima Group company · Colombo, Sri Lanka</span>
   </div>
   <p class="note" style="max-width:1240px;margin:16px auto 0">Concept site. Location videos from Pixabay. Bangkok photo: Chainwit., Wikimedia Commons, CC BY 4.0. Phone, email and same-day quote promise are placeholders to confirm before launch.</p>
 </footer>
 
 <script src="lkpath.js"></script>
-<script src="builder.js?v=4"></script>
+<script src="quote.js?v=1"></script>
+<script src="builder.js?v=5"></script>
 <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
 <script>
@@ -464,9 +479,19 @@ $('#svcs').innerHTML=SV.map(s=>`<article class="svc${s.f?' feature':''}"><svg vi
 let kind='Flights';
 document.querySelectorAll('.tabs button').forEach(b=>b.addEventListener('click',()=>{kind=b.dataset.k;document.querySelectorAll('.tabs button').forEach(x=>x.setAttribute('aria-selected',x===b))}));
 $('#f-date').min=new Date().toISOString().slice(0,10);
-$('#qform').addEventListener('submit',e=>{e.preventDefault();
+$('#qform').addEventListener('submit',async e=>{e.preventDefault();
   const to=$('#f-to').value.trim();if(!to){$('#f-to').focus();$('#f-to').placeholder='Where to? Add a destination';return}
-  $('#sum').textContent=`Hello Deima Travels,\nI'd like a quote for: ${kind}\nFrom: ${$('#f-from').value}\nTo: ${to}\nDate: ${$('#f-date').value||'Flexible'}\nTravellers: ${$('#f-pax').value}`;
+  const name=$('#f-name').value.trim(),phone=$('#f-phone').value.trim(),email=$('#f-email').value.trim();
+  const summary=`Hello Deima Travels,\nI'd like a quote for: ${kind}\nFrom: ${$('#f-from').value}\nTo: ${to}\nDate: ${$('#f-date').value||'Flexible'}\nTravellers: ${$('#f-pax').value}\nName: ${name}\nPhone: ${phone||'—'}\nEmail: ${email||'—'}`;
+  const pax=$('#f-pax').value,ad=/^1 /.test(pax)?1:/^2 /.test(pax)?2:0;
+  const btn=$('#qform [type=submit]');btn.disabled=true;
+  const {payload,result}=await DeimaQuote.submit('quick-quote',{
+    honeypot:$('#f-hp').value,
+    customer:{name,phone,email},
+    trip:{services:[kind],origin:$('#f-from').value,destination:to,travelDate:$('#f-date').value,adults:ad,travellersNote:pax},
+    summaryText:summary},$('#qStat'));
+  btn.disabled=false;if(result.invalid)return;
+  $('#sum').textContent=`Reference: ${payload.reference}\n`+summary;
   $('#done').classList.add('show');$('#copied').textContent='';});
 $('#copy').addEventListener('click',()=>{navigator.clipboard.writeText($('#sum').textContent).then(()=>$('#copied').textContent='Copied — paste it into WhatsApp or email.').catch(()=>$('#copied').textContent='Select the text above to copy it.')});
 
@@ -475,7 +500,7 @@ $('#menu').addEventListener('click',()=>{const o=$('#links').classList.toggle('o
 document.querySelectorAll('#links a').forEach(a=>a.addEventListener('click',()=>{$('#links').classList.remove('open');$('#menu').setAttribute('aria-expanded',false)}));
 }
 </script>
-<script src="explore.js?v=16"></script>
+<script src="explore.js?v=17"></script>
 <script src="packages.js?v=6"></script>
 <script src="i18n.js?v=15"></script>
 </body>

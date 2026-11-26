@@ -1,0 +1,62 @@
+{
+  "type": "object",
+  "properties": {
+    "schema": { "type": "string" },
+    "schemaVersion": { "type": "integer" },
+    "reference": { "type": "string" },
+    "submittedAt": { "type": "string" },
+    "source": { "type": "string" },
+    "language": { "type": "string" },
+    "pageUrl": { "type": "string" },
+    "customer": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "whatsapp": { "type": "string" },
+        "countryOfResidence": { "type": "string" },
+        "preferredContact": { "type": "string" },
+        "consent": { "type": "boolean" }
+      }
+    },
+    "trip": {
+      "type": "object",
+      "properties": {
+        "services": { "type": "array", "items": { "type": "string" } },
+        "origin": { "type": "string" },
+        "destination": { "type": "string" },
+        "travelDate": { "type": "string" },
+        "travelMonth": { "type": "string" },
+        "flexibleDays": { "type": "number" },
+        "nights": { "type": "number" },
+        "adults": { "type": "number" },
+        "children": { "type": "number" },
+        "travellersNote": { "type": "string" },
+        "style": { "type": "string" },
+        "budget": {
+          "type": "object",
+          "properties": {
+            "amount": { "type": "number" },
+            "currency": { "type": "string" }
+          }
+        },
+        "notes": { "type": "string" }
+      }
+    },
+    "itinerary": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "day": { "type": "number" },
+          "date": { "type": "string" },
+          "title": { "type": "string" },
+          "activities": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "summaryText": { "type": "string" }
+  },
+  "required": ["schema", "schemaVersion", "reference", "submittedAt", "source", "customer", "trip", "itinerary", "summaryText"]
+}

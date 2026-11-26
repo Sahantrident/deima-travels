@@ -802,3 +802,14 @@
 @media(max-width:1180px){.nav{grid-template-columns:minmax(0,1fr) auto}.navR .menu{margin-left:0}}
 @media(max-width:600px){.navClock{min-width:0;height:40px;padding:3px 8px}.ncTop #tzName{display:none}.ncTop small+small::before{content:none;margin:0}.navClock b{font-size:14px}.navR{gap:6px}.nav .navR .lang select{width:92px}}
 @media(max-width:360px){.ncTop{display:none}.nav .navR .lang select{width:80px}}
+/* standard quote requests (quote.js) */
+.hp{position:absolute!important;left:-9999px!important;width:1px;height:1px;opacity:0}
+.qContact{margin-top:10px}.qContact .span2{grid-column:1/-1}
+.qStat{margin:12px 0 0;padding:12px 14px;border-radius:12px;font-size:15px;font-weight:600;background:color-mix(in srgb,var(--lime) 14%,var(--card));color:var(--ink);border:1px solid var(--lime)}
+.qStat[data-state=busy]{background:var(--bg);border-color:var(--line)}
+.qStat[data-state=bad],.qStat[data-state=fail]{background:color-mix(in srgb,#b03a48 10%,var(--card));border-color:#b03a48}
+.qStat[data-state=demo]{background:color-mix(in srgb,#e0a100 12%,var(--card));border-color:#e0a100}
+.qNote{margin:8px 0 0;font-size:12.5px;color:var(--soft)}
+.brand img{height:46px;width:auto}
+footer .footLogo{height:96px;width:auto}
+@media(max-width:600px){.brand img{height:38px}footer .footLogo{height:76px}}

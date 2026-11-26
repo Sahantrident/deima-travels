@@ -575,9 +575,18 @@ if($('#tipRail'))$('#tipRail').innerHTML=STEPS.map((t,i)=>`<div class="tipCard">
  const pax={a:2,k:0};$$('#cq [data-pax]').forEach(b=>b.onclick=()=>{const t=b.dataset.pax;pax[t]=Math.max(t==='a'?1:0,Math.min(20,pax[t]+ +b.dataset.d));$('#cqA').textContent=pax.a;$('#cqK').textContent=pax.k});
  $$('#cqStyle button').forEach(b=>b.onclick=()=>$$('#cqStyle button').forEach(x=>x.setAttribute('aria-checked',x===b)));
  $$('#cqInc button').forEach(b=>b.onclick=()=>b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true'));
- f.addEventListener('submit',e=>{e.preventDefault();const to=$('#cqTo').value.trim();if(!to){$('#cqTo').focus();$('#cqTo').classList.add('need');return}$('#cqTo').classList.remove('need');
+ f.addEventListener('submit',async e=>{e.preventDefault();const to=$('#cqTo').value.trim();if(!to){$('#cqTo').focus();$('#cqTo').classList.add('need');return}$('#cqTo').classList.remove('need');
   const o=origin(),style=($('#cqStyle [aria-checked=true]')||{}).dataset?.v||'Comfort',inc=$$('#cqInc [aria-pressed=true]').map(b=>b.dataset.v);
-  const txt=`Hello Deima Travels,\nI'd like a custom quote.\nFrom: ${o[1]} (${o[0]})\nTo: ${to}\nWhen: ${$('#cqWhen').value}${$('#cqFlex').checked?' (flexible ±3 days)':''}\nTravellers: ${pax.a} adult(s)${pax.k?`, ${pax.k} child(ren)`:''}\nStyle: ${style}\nInclude: ${inc.join(', ')||'Flights only'}`;
+  const name=$('#cqName').value.trim(),phone=$('#cqPhone').value.trim(),email=$('#cqEmail').value.trim(),when=$('#cqWhen').value,flex=$('#cqFlex').checked;
+  const txt0=`Hello Deima Travels,\nI'd like a custom quote.\nFrom: ${o[1]} (${o[0]})\nTo: ${to}\nWhen: ${when}${flex?' (flexible ±3 days)':''}\nTravellers: ${pax.a} adult(s)${pax.k?`, ${pax.k} child(ren)`:''}\nStyle: ${style}\nInclude: ${inc.join(', ')||'Flights only'}\nName: ${name}\nPhone: ${phone||'—'}\nEmail: ${email||'—'}`;
+  const btn=f.querySelector('[type=submit]');btn.disabled=true;
+  const {payload,result}=await DeimaQuote.submit('custom-quote',{
+   honeypot:$('#cqHp').value,
+   customer:{name,phone,email},
+   trip:{services:inc.length?inc:['Flights'],origin:`${o[1]} (${o[0]})`,destination:to,travelMonth:when==='Flexible'?'':when,flexibleDays:flex?3:0,adults:pax.a,children:pax.k,style},
+   summaryText:txt0},$('#cqStat'));
+  btn.disabled=false;if(result.invalid){(name?(phone||email?$('#cqEmail'):$('#cqPhone')):$('#cqName')).focus();return}
+  const txt=`Reference: ${payload.reference}\n`+txt0;
   $('#cqText').textContent=txt;$('#cqWa').href='https://wa.me/?text='+encodeURIComponent(txt);$('#cqOut').hidden=false;$('#cqCopied').textContent='';$('#cqOut').scrollIntoView({block:'nearest',behavior:RM?'auto':'smooth'})});
  $('#cqCopy').onclick=()=>navigator.clipboard.writeText($('#cqText').textContent).then(()=>$('#cqCopied').textContent='Copied').catch(()=>$('#cqCopied').textContent='Select the text to copy it')}}
 /* ---------- init ---------- */
