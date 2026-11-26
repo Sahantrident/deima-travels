@@ -24,7 +24,7 @@ Every key is always present. Missing text is `""`, missing numbers are `0` and m
    - **Send an email (V2)** to travels@… with `summaryText` as the body and `reference` in the subject
    - **Post a message** in a Teams channel
    - An auto-reply to `customer.email` when it isn't empty
-5. Finish with a **Response** action: status `200`, body `{"ok":true}`.
+5. (Optional) Finish with a **Response** action: status `200`, body `{"ok":true}`.
 6. Save. Then copy the **HTTP URL** the trigger shows.
 
 ## 2. Connect the site

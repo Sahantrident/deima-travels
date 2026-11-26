@@ -6,7 +6,7 @@
 (function(){
 /* Paste the HTTP POST URL from the flow's "When an HTTP request is received" trigger here.
    Leave it empty to keep the site in demo mode (nothing is sent; customers can copy the request). */
-const ENDPOINT='';
+const ENDPOINT='https://default30ad2cab0a614091a0308f5365a99e.70.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/21/workflows/4c6cdce793cb41d5a85556056956f282/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=vpdSoEXDoaAlQEJQo0nws7fvw91FNzGn9nPSQZCdDWE';
 
 const SCHEMA='deima-travels.quote-request',VERSION=1;
 const str=v=>v==null?'':String(v).trim();
@@ -68,11 +68,8 @@ async function post(p){
   try{
     const r=await fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body,signal:ctl.signal});
     return r.ok?{ok:true}:{ok:false,status:r.status};
-  }catch(e){
-    /* Browser blocked the JSON call (CORS). Send as plain text instead: the flow parses it the same way. */
-    try{await fetch(ENDPOINT,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=UTF-8'},body});return {ok:true,unconfirmed:true}}
-    catch(e2){return {ok:false,error:String(e2)}}
-  }finally{clearTimeout(tm)}
+  }catch(e){return {ok:false,error:String(e)}}
+  finally{clearTimeout(tm)}
 }
 
 /* submit(source, input, statusEl) → {payload, result} ; statusEl gets a friendly message */
