@@ -73,7 +73,8 @@ const P=[
 const DAYC=['#4d7a1c','#1e6f8a','#c2691a','#7a5bbf','#b03a48','#0F1B38'];
 
 function art(p){if(p.photo)return `<div class="pkArt photo"><img src="${p.photo}" alt="Wat Arun at sunset on the Chao Phraya river, Bangkok" loading="lazy"><svg class="lights" viewBox="0 0 600 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0 14Q150 44 300 18T600 22" fill="none" stroke="#ffe9a8" stroke-width="1" opacity=".7"/>${Array.from({length:24},(_,i)=>`<circle cx="${i*26+6}" cy="${22+Math.sin(i/3.8)*7}" r="3.2" fill="${['#ffe9a8','#e8423f','#92C04E'][i%3]}"/>`).join('')}</svg><small class="credit">${p.credit}</small></div>`;if(p.video)return `<div class="pkArt"><video muted loop playsinline preload="none" poster="${p.img}" aria-hidden="true" data-inview><source src="${p.video}" type="video/mp4"></video></div>`;return p.art?`<div class="pkArt">${p.art}</div>`:`<div class="pkArt"><img src="${p.img}" alt="" loading="lazy"></div>`}
-const waLink=p=>`https://wa.me/${p.contact.wa}?text=${encodeURIComponent(`Hi ${p.contact.name}, I'm interested in the ${p.title} (${p.dates}).`)}`;
+/* every package enquiry goes through the quote form (and so the Power Automate flow); WhatsApp comes after, with the reference */
+const ask=(p,wa)=>window.DeimaQQ&&window.DeimaQQ(`${p.title} — ${p.dates}`,{kind:'Holiday package',wa:wa&&p.contact?p.contact:null});
 function card(p,i){
  return `<article class="pk${p.feat?' feat':''}" data-pk="${p.id}" style="--d:${i*80}ms">
  ${art(p)}<span class="pkRibbon">${p.ribbon}</span>
@@ -84,10 +85,10 @@ function card(p,i){
   ${p.airNote?`<div class="pkAir">${logo(p.air[0])}<span>${p.airNote}</span></div>`:`<div class="pkAir">${p.air.map(logo).join('')}</div>`}
   <div class="pkIncl">${p.incl.map(k=>`<span title="${k}" aria-label="${k}">${ico(k)}</span>`).join('')}</div>
   ${p.feat?`<ol class="pkStrip">${p.days.map(d=>`<li><b>${d.when}</b><span>${d.t}</span></li>`).join('')}</ol>`:''}
-  <div class="pkActs"><button type="button" class="btn sm" data-pq>Get a quote</button>${p.contact?`<a class="btn wa sm" href="${waLink(p)}" target="_blank" rel="noopener">WhatsApp ${p.contact.name}</a>`:''}<button type="button" class="pkGo">Itinerary & map →</button></div>
+  <div class="pkActs"><button type="button" class="btn sm" data-pq>Get a quote</button>${p.contact?`<button type="button" class="btn wa sm" data-pw>WhatsApp ${p.contact.name}</button>`:''}<button type="button" class="pkGo">Itinerary & map →</button></div>
  </div></article>`;
 }
-function render(){$('#packGrid').innerHTML=P.map(card).join('');$$('#packGrid .pk').forEach(b=>b.addEventListener('click',e=>{if(e.target.closest('a'))return;const p=P.find(p=>p.id===b.dataset.pk);if(e.target.closest('[data-pq]')){window.DeimaQQ&&window.DeimaQQ(`${p.title} — ${p.dates}`);return}open(p)}));if(window.DeimaInview)$$('#packGrid video[data-inview]').forEach(v=>window.DeimaInview(v));else setTimeout(()=>window.DeimaInview&&$$('#packGrid video[data-inview]').forEach(v=>window.DeimaInview(v)),0)}
+function render(){$('#packGrid').innerHTML=P.map(card).join('');$$('#packGrid .pk').forEach(b=>b.addEventListener('click',e=>{if(e.target.closest('a'))return;const p=P.find(p=>p.id===b.dataset.pk);if(e.target.closest('[data-pq]')){ask(p);return}if(e.target.closest('[data-pw]')){ask(p,true);return}open(p)}));if(window.DeimaInview)$$('#packGrid video[data-inview]').forEach(v=>window.DeimaInview(v));else setTimeout(()=>window.DeimaInview&&$$('#packGrid video[data-inview]').forEach(v=>window.DeimaInview(v)),0)}
 
 /* ---------- itinerary popup ---------- */
 let map=null,markers=[],lastFocus=null,cur=null;
@@ -99,7 +100,6 @@ function loadLeaflet(){
 }
 function open(p){
  cur=p;const m=$('#pkm');let n=0;
- const msg=encodeURIComponent(`Hi ${p.contact?p.contact.name:'Deima Travels'}, I'm interested in the ${p.title} (${p.dates}).`);
  m.innerHTML=`<div class="pkBox">
  <div class="pkHero">${art(p)}<div class="pkHeroIn">
   <button type="button" class="pkX" aria-label="Close">×</button>
@@ -116,13 +116,14 @@ function open(p){
   <div class="pkMapWrap"><div class="pkMap" id="pkMap" role="img" aria-label="Map of the itinerary stops"></div><p class="pkMapHint">Tap a day to zoom to its stops · tap a pin for details</p></div>
  </div>
  <div class="pkCta">
-  ${p.contact?`<a class="btn wa" href="https://wa.me/${p.contact.wa}?text=${msg}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg>WhatsApp ${p.contact.name} · ${p.contact.show}</a><a class="btn line" href="tel:${p.contact.tel}">Call ${p.contact.show}</a>`:''}
+  ${p.contact?`<button type="button" class="btn wa" data-pw><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg>WhatsApp ${p.contact.name} · ${p.contact.show}</button><a class="btn line" href="tel:${p.contact.tel}">Call ${p.contact.show}</a>`:''}
   ${p.builder?`<button type="button" class="btn" data-build>Customise this trip</button>`:''}
   <button type="button" class="btn ${p.contact||p.builder?'line':''}" data-req>Request this package</button>
  </div></div>`;
  if(m.hidden){lastFocus=document.activeElement;m.hidden=false;document.body.style.overflow='hidden'}
  m.querySelector('.pkX').onclick=close;m.querySelector('.pkX').focus();
- m.querySelector('[data-req]').onclick=()=>{close();window.DeimaQQ&&window.DeimaQQ(`${p.title} — ${p.dates}`)};
+ m.querySelector('[data-req]').onclick=()=>{close();ask(p)};
+ const pw=m.querySelector('[data-pw]');if(pw)pw.onclick=()=>{close();ask(p,true)};
  const bld=m.querySelector('[data-build]');if(bld)bld.onclick=()=>{close();window.DeimaTrip&&window.DeimaTrip.open({})};
  $$('#pkm .pkDay').forEach(b=>b.onclick=()=>focusDay(+b.dataset.day));
  $$('#pkm video').forEach(v=>{v.preload='auto';v.play().catch(()=>{})});
