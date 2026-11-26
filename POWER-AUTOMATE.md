@@ -14,11 +14,7 @@ Every key is always present. Missing text is `""`, missing numbers are `0` and m
 
 1. In Power Automate, create an **Instant cloud flow** with the trigger **When an HTTP request is received**.
 2. In the trigger, set **Who can trigger the flow?** to **Anyone**. The website has no Microsoft sign-in, so any other setting blocks it.
-3. Leave the trigger's *Request Body JSON Schema* empty. Then add a **Parse JSON** action:
-   - **Content**: expression `json(string(triggerBody()))`
-   - **Schema**: paste the contents of `quote-schema.json`
-
-   This expression handles both ways the browser can send the request (JSON or plain text).
+3. Paste the contents of `quote-schema.json` into the trigger's **Request Body JSON Schema** box. The site always sends `Content-Type: application/json`, so you don't need a separate Parse JSON step. Every field (`name`, `reference`, `destination`, …) then shows up in **Dynamic content** for the next steps.
 4. Add the steps you want, using the Parse JSON outputs. For example:
    - **Add a row** to an Excel table or SharePoint list (Reference, Source, Name, Email, Phone, Destination, Travel date, Adults, Children, Services, Submitted at)
    - **Send an email (V2)** to travels@… with `summaryText` as the body and `reference` in the subject
